@@ -205,23 +205,25 @@ private List<UUSearchNode> dfsrm(UUSearchNode currentNode,
   // keep track of stats; these calls charge for the current node
   updateMemory(visited.size());
   incrementNodeCount();
-  
+
+  // you write this method. Comments *must* clearly show the
+  // "base case" and "recursive case" that any recursive function has.
+
+  //System.out.println(currentNode);
   List<UUSearchNode> tryPath, path = new ArrayList<UUSearchNode>(
       Arrays.asList(currentNode));
   List<UUSearchNode> successors;
 
-  visited.put(currentNode, 1);
+  visited.put(currentNode, depth);
   if (depth > maxDepth)
     return null;      
   
-  // terminate the recursion when we reach the goal
   if (currentNode.goalTest()) {
     return path;
   } else {
     successors = currentNode.getSuccessors();
     for (UUSearchNode n : successors) {
-      if (!visited.containsKey(n)) {
-      	 // the recursive funciton that goes deeper
+      if(!visited.containsKey(n) || visited.get(n) > depth + 1) {
         tryPath = dfsrm(n, visited, depth + 1, maxDepth);
         if (tryPath != null) {
           path.addAll(tryPath);
@@ -234,7 +236,7 @@ private List<UUSearchNode> dfsrm(UUSearchNode currentNode,
 }
 \end{lstlisting}
 
-The basic idea is, inside dfs, we run dfs for each legal node, and keep track of each node that have been visited.
+The basic idea is, inside dfs, we run dfs for each legal node, and keep track of each node that have been visited. The trick of using \textbf{HashMap} is, in depth limited search, a node may fail due to the limitation of depth, not because there is a dead end. \textbf{HashMap} keeps tracking of the shortest path to the node, so dfs can find the solution as much as it can.
 
 With the input of (8,5,1), the output is as following:
 
@@ -310,7 +312,9 @@ private List<UUSearchNode> dfsrpc(UUSearchNode currentNode,
 }
 \end{lstlisting}
 
-The basic idea is similar to memorizing dfs. The only difference is when rolling the path, it marked the node as not visited. This may cause some redundance when seacrhing the graph. Take Figure \ref{diff} for example, in memorizing, if we first check $(0 -> 1 -> 2 -> 3)$, and turn out to be dead end, we won't check $(0 -> 2 -> 3)$ at all, since node $2$ is visited. But in path-checking, it probably check $(0 -> 1 -> 2 -> 3)$, $(0 -> 2 -> 3)$, and finally $(0 -> 4 -> 5)$.
+The basic idea is similar to memorizing dfs. The only difference is when rolling the path, it marked the node as not visited. We don't have to use \textbf{HashMap} here, because any node being rolled is legal to revisit again.
+
+This may cause some redundance when seacrhing the graph. Take Figure \ref{diff} for example, in memorizing, if we first check $(0 \rightarrow 1 \rightarrow 3 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, and turn out to be dead end. Then we check $(0 \rightarrow 2)$, but we won't go further anymore, since node $3$ is visited. But in path-checking, it probably check $(0 \rightarrow 1 \rightarrow 3 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, $(0 \rightarrow 1 \rightarrow 2 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, and finally $(0 \rightarrow 4 \rightarrow 5)$.
 
 An obvious advantage of path-checking over memorizing is using less memory, the maximum possible memory used is the longest path, which is usually much smaller the size of graph.
 
