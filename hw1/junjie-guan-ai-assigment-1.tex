@@ -26,25 +26,28 @@ stepnumber=2,
 numbersep=10pt,
 tabsize=4,
 showspaces=false,
-showstringspaces=false} 
+showstringspaces=false,
+frame=shadowbox,
+numbers=left
+} 
 
 % set the document title, author, and date here.
 %  once set, the \maketitle command (within the document)
 %  will display them nicely
 \title{Missionaries and Cannibals Solution}
-\author{Junjie Guan}
+\author{Junjie Guan $<$gjj@cs.dartmouth.edu$>$}
 
 \begin{document}
 \maketitle
 
 \section{Introduction}
-We can convert each state of carnibal problem into one code, by using factoring. The only three factors that relate to the state are the numbers of minssionary, carnibals and boats. Assuming there is a the range of the number is $R$, the formula can be described as followed:
+We can convert each state of carnibal problem into a code, by using factoring. The only three factors that relate to the state are the numbers of minssionary, carnibals and boats. Assuming the range of the three numbers is $R$, the formula can be described as followed:
 $$v = n_m \times R^2 + n_c \times R^1 + n_b \times R^0$$
-where the $v$ represents tha encoded value, $n_m, n_c, n_b$ represent the number of missionary, carnibal and boats respectively. Let's say $R = 10$, and the initial state of the problem are $n_m = 3, n_c = 3, n_b = 1$, I can use a graph to describe the relationship between different states (for simplicity, I only the major parts of the graph).
+where the $v$ represents tha encoded value, $n_m, n_c, n_b$ represent the number of missionary, carnibal and boats respectively. Let's say $R = 10$, and the initial state of the problem are $n_m = 3, n_c = 3, n_b = 1$, so that $v = 331$ I can use a graph to describe the relationship between different states (for simplicity, I only the major parts of the graph, and demostrate a valid path).
 
 \begin{figure*}[!h]
 \centering
-\includegraphics[width=0.5\textwidth]{hw1.pdf}
+\includegraphics[width=0.618\textwidth]{hw1.pdf}
 \caption{A sample graph of states that describe carnibal problem starting with (3, 3, 1), the blue nodes are the normal states, green is the final state, and the orange ones are illegal states.}
 \label{states}
 \end{figure*}
@@ -52,18 +55,6 @@ where the $v$ represents tha encoded value, $n_m, n_c, n_b$ represent the number
 In Figure \ref{states}, we can see that from a starting states, differnet actions lead to different path, some of them will eventually go to the goal, some of them will run into a dead end.
 
 \section{Implementation of the model}
-Now you are ready to write and test the code that implements the model. (You'll write the search algorithms in the next section.) CannibalProblem.java is your starting point. Ultimately, this will extend 'UUSearchProblem', but for now, UUSearchProblem is unfinished and thus broken, so you probably want to delete the 'extends' keyword.
-A CannibalProblem instance should keep track of how many cannibals and missionaries there are in the problem (three of each is standard, but your solution should be general).
-
-The CannibalProblem class is also a good place to put an inner class that represents nodes for the search. A CannibalNode will represent the "current" state of the problem at some point in the exploration. For example, at some point in the search, we might be exploring the (2, 2, 1) state.
-
-A 'CannibalNode' should provide a method that creates a list of nodes that represent legal states reachable using legal actions from the current node. I called this getSuccessors, but you'll have ot implement the body of the method. Also implement any other methods that have a comment like "you write this" in the provided code.
-
-Test your code thoroughly before you go on; write some test code (perhaps in a main method of CannibalProblem) that creates some nodes, finds their successors, and prints out the results. The results should agree with those that you drew for the intro. This testing step is not only required, but important. Errors in your model will lead to very-hard to diagnose errors that will make it virtually impossible to debug your search algorithms.
-
-Present the work in your report. Include the key parts of your code using the listings environment in LaTeX, and discuss how the code works. Also describe your testing and convince the reader that your testing process demonstrated correctness of your code.
-
-
 
 The model is implemented in 
 \verb`CannibalProblem.java`.  Here's my code for \verb`getSuccessors`:
@@ -71,12 +62,12 @@ The model is implemented in
 \begin{lstlisting}[numbers=left]
 public ArrayList<UUSearchNode> getSuccessors() {
   ArrayList<UUSearchNode> successors = new ArrayList<>();
+  // assuming that every time I use as much boat as possible
   if (state[2] != 0) {
-    // search from the possible largest number
     for (int i = 0; i <= Math.min(state[2] * BOAT_SIZE, state[0]); i++) {
       for (int j = 0; j <= Math.min(state[2] * BOAT_SIZE - i,
           state[1]); j++) {
-        if(i + j == 0) continue;
+        if (i + j == 0) continue;
         CannibalNode tryNode = new CannibalNode(state[0] - i,
             state[1] - j, 0, 0);
         if (isSafeState(tryNode)) {
@@ -85,32 +76,37 @@ public ArrayList<UUSearchNode> getSuccessors() {
       }
     }
   } else {
-    CannibalNode tryNode = new CannibalNode(state[0], state[1],
-        totalBoats, 0);
-    successors.add(tryNode);
+    int state0 = totalMissionaries - state[0], state1 = totalCannibals
+        - state[1], state2 = totalBoats - state[2];
+    for (int i = 0; i <= Math.min(state2 * BOAT_SIZE, state0); i++) {
+      for (int j = 0; j <= Math.min(state2 * BOAT_SIZE - i,
+          state1); j++) {
+        if (i + j == 0) continue;
+        CannibalNode tryNode = new CannibalNode(state[0] + i,
+            state[1] + j, totalBoats, 0);
+        if (isSafeState(tryNode)) {
+          successors.add(tryNode);
+        }
+      }
+    }
   }
   return successors;
 }
 \end{lstlisting}
 
-The basic idea of \verb`getSuccessors` is to traverse through every possible state that is contraint by the problem defination (such as number of missionary and carnibals, the size of the boat). After getting a new state, it immediately checkes if it is legal. Finally it put the state node into successors list if it is safe.
+The basic idea of \verb`getSuccessors` is to traverse through every possible state that is contraint by the problem defination (line 6-8) , such as total number of missionary and carnibals, the size of the boat. After getting a new state, it immediately checkes if it is legal (line 11-12). Finally it put the state node into successors list if it is safe.
 
-The order of getting successors is vital to depth first search. I did optimize the codes for DFS, so that during each action it can go to the optimal state, which is transmitting as much people as possible. Simply by replacing line 6-7 to :
+You may find that the \textbf{getSuccessors()} a little verbose. I did try to implement in a more contract way, but it makes the codes more difficult to understand. If you have any short and easy-understand expression, please do tell me.
 
-\begin{lstlisting}[numbers=left]
-for (int i = Math.min(state[2] * BOAT_SIZE, state[0]); i >= 0 ; i--) {
-  for (int j = Math.min(state[2] * BOAT_SIZE - i,
-    state[1]); j >= 0; j--) {
-\end{lstlisting}
-However, this will lose a lot fun, because by doing so there are almost no difference between different search algorithm. So latter I stick to the non-optimized one.
-
-I used a method \verb`isSafeState` that returns \verb`true` if the state is legal. Basically it checks the legal state of both side of the river. Here are the codes.
+I used a method called \verb`isSafeState` that returns \verb`true` if the state is legal. Basically it checks the legal state for both side of the river, which is the number of missionsaries should not be less than carnibals'. Or if all the missionaries are at the one side, it is also safe. Here are the codes:
 
 \begin{lstlisting}[numbers=left]
 private boolean isSafeState(CannibalNode tryNode) {
-  if (tryNode.state[0] >= tryNode.state[1]
-      && (totalMissionaries - tryNode.state[0]) 
-        >= (totalCannibals - tryNode.state[1])
+  if (tryNode.state[0] == 0 || tryNode.state[0] == totalMissionaries)
+    return true;
+  else if (tryNode.state[0] >= tryNode.state[1]
+      && (totalMissionaries - tryNode.state[0])
+      	>= (totalCannibals - tryNode.state[1])
       && tryNode.state[0] >= 0 && tryNode.state[1] >= 0)
     return true;
   else
@@ -120,12 +116,15 @@ private boolean isSafeState(CannibalNode tryNode) {
 
 \section{Breadth-first search}
 
+In the following BFS search, I use a queue to keep track of the nodes to be visited. How to determine whether a adjecnt node should be put into the queue? I maintain a hash map for the nodes that have been visited.
+
+Of course the while loop can terminate in two cases, One is when the the current node is the goal, which means we have reached the destination. In this case I use backchrain to build the path. The other is when the queue is empty, which means we've already search the whole connected graph and yet goal is not found. In this case I return null.
 
 \begin{lstlisting}[numbers=left][language=Java]
   public List<UUSearchNode> breadthFirstSearch() {
     resetStats();
 
-    UUSearchNode node = startNode;
+    UUSearchNode node;
     HashMap<UUSearchNode, UUSearchNode> visited = new HashMap<>();
     Queue<UUSearchNode> nqueue = new LinkedList<UUSearchNode>();
     List<UUSearchNode> successors;
@@ -157,17 +156,41 @@ private boolean isSafeState(CannibalNode tryNode) {
   }
 \end{lstlisting}
 
+With the input of (3,3,1), the output is as following. The path is in a reverse style:
+
 \begin{lstlisting}[numbers=left]
-bfs path length:  6 [0, 111, 110, 221, 220, 331]
-Nodes explored during last search:  6
-Maximum memory usage during last search 6
-Total execution time: 0.7 seconds
+bfs path length:  12 [0, 111, 10, 31, 20, 221, 110, 311, 300, 321, 220, 331]
+Nodes explored during last search:  15
+Maximum memory usage during last search 15
+Total execution time: 0.6 seconds
+\end{lstlisting}
+
+As you can see the path is consistent with my drawing in Figure \ref{states}.
+
+With the input of (8,5,1), the output is as following:
+
+\begin{lstlisting}[numbers=left]
+bfs path length:  24 [0, 111, 10, 211, 110, 311, 210, 321, 220, 421, 320,
+	431, 330, 531, 430, 541, 440, 641, 540, 651, 550, 751, 650, 851]
+Nodes explored during last search:  62
+Maximum memory usage during last search 62
 \end{lstlisting}
 
 
 
 
+
+
+
+
+
+
+
+
+
 \section{Memoizing depth-first search}
+
+DFS in recursive style is fairly simple, though I am understand why the provided code indicate me to use \textbf{HashMap$<$UUSearchNode, Integer$>$ visited}, while it could be better done by using \textbf{HashSet}. 
 
 \begin{lstlisting}[numbers=left]
 public List<UUSearchNode> depthFirstMemoizingSearch(int maxDepth) {
@@ -182,11 +205,7 @@ private List<UUSearchNode> dfsrm(UUSearchNode currentNode,
   // keep track of stats; these calls charge for the current node
   updateMemory(visited.size());
   incrementNodeCount();
-
-  // you write this method. Comments *must* clearly show the
-  // "base case" and "recursive case" that any recursive function has.
-
-  //System.out.println(currentNode);
+  
   List<UUSearchNode> tryPath, path = new ArrayList<UUSearchNode>(
       Arrays.asList(currentNode));
   List<UUSearchNode> successors;
@@ -195,13 +214,14 @@ private List<UUSearchNode> dfsrm(UUSearchNode currentNode,
   if (depth > maxDepth)
     return null;      
   
+  // terminate the recursion when we reach the goal
   if (currentNode.goalTest()) {
     return path;
   } else {
     successors = currentNode.getSuccessors();
     for (UUSearchNode n : successors) {
       if (!visited.containsKey(n)) {
-        //System.out.println(visited.size());
+      	 // the recursive funciton that goes deeper
         tryPath = dfsrm(n, visited, depth + 1, maxDepth);
         if (tryPath != null) {
           path.addAll(tryPath);
@@ -213,6 +233,35 @@ private List<UUSearchNode> dfsrm(UUSearchNode currentNode,
   return null;
 }
 \end{lstlisting}
+
+The basic idea is, inside dfs, we run dfs for each legal node, and keep track of each node that have been visited.
+
+With the input of (8,5,1), the output is as following:
+
+\begin{lstlisting}[numbers=left]
+dfs memoizing path length:34 [851, 830, 841, 820, 831, 630, 641, 540, 551,
+  530, 541, 520, 531, 430, 441, 420, 431, 410, 421, 320, 331, 310, 321, 300,
+  311, 210, 221, 200, 211, 100, 111, 10, 21, 0]
+Nodes explored during last search:  40
+Maximum memory usage during last search 39
+Total execution time: 0.6 seconds
+\end{lstlisting}
+
+As you can see, memorizing dfs use less memory while finding a less optimal path comparing to bfs. Actually in the worth case, when the path is not found until the last try, memorizing dfs uses as much memory as bfs.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \section{Path-checking depth-first search}
 
@@ -230,8 +279,8 @@ private List<UUSearchNode> dfsrpc(UUSearchNode currentNode,
   updateMemory(currentPath.size());
   incrementNodeCount();
 
-  List<UUSearchNode> successors, tryPath, path = new ArrayList<UUSearchNode>(
-      Arrays.asList(currentNode));
+  List<UUSearchNode> successors, tryPath, path 
+  	= new ArrayList<UUSearchNode>(Arrays.asList(currentNode));
 
   //System.out.println(currentNode);
   if (depth > maxDepth)
@@ -261,6 +310,38 @@ private List<UUSearchNode> dfsrpc(UUSearchNode currentNode,
 }
 \end{lstlisting}
 
+The basic idea is similar to memorizing dfs. The only difference is when rolling the path, it marked the node as not visited. This may cause some redundance when seacrhing the graph. Take Figure \ref{diff} for example, in memorizing, if we first check $(0 -> 1 -> 2 -> 3)$, and turn out to be dead end, we won't check $(0 -> 2 -> 3)$ at all, since node $2$ is visited. But in path-checking, it probably check $(0 -> 1 -> 2 -> 3)$, $(0 -> 2 -> 3)$, and finally $(0 -> 4 -> 5)$.
+
+An obvious advantage of path-checking over memorizing is using less memory, the maximum possible memory used is the longest path, which is usually much smaller the size of graph.
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.5\textwidth]{hw1-fig-2.pdf}
+\caption{An example that demostrate difference between memorizing and path-checking dfs}
+\label{diff}
+\end{figure*}
+
+With the input of (8,5,1), the output is as following:
+
+\begin{lstlisting}[numbers=left]
+dfs path checking path length:34 [851, 830, 841, 820, 831, 630, 641, 540, 551, 530, 541, 520, 531, 430, 441, 420, 431, 410, 421, 320, 331, 310, 321, 300, 311, 210, 221, 200, 211, 100, 111, 10, 21, 0]
+Nodes explored during last search:  40
+Maximum memory usage during last search 33
+Total execution time: 0.6 seconds
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
 \section{Iterative deepening search}
 
 \begin{lstlisting}[numbers=left]
@@ -277,6 +358,26 @@ public List<UUSearchNode> IDSearch(int maxDepth) {
   return null;
 }
 \end{lstlisting}
+
+The basic idea is use several path-checking dfs, while gradually increasing the maximun search depth, until we reach the goal. In terms of time, bfs might need to search the whole graph for one time, idfs might need several more times. But the bright side is, the big O is still the same. What's more, usually the number of nodes goes exponentially with depth, and idfs just search the closer a lot more than the deeper nodes. So the runtime should be acceptable.
+
+In terms of memory, it use as much memory as path-checking dfs, while guarantee to find the shortest path. Generally, idfs is not bad, especially when we don't have enough memory.
+
+With the input of (8,5,1), the output is as following:
+
+\begin{lstlisting}[numbers=left]
+Iterative deepening (path checking) path length:24 [851, 830, 841, 820,
+  831, 630, 641, 530, 541, 520, 531, 420, 431, 410, 421, 310, 321, 300,
+  311, 200, 211, 100, 111, 0]
+Nodes explored during last search:  38918999
+Maximum memory usage during last search 24
+Total execution time: 4.953 seconds
+\end{lstlisting}
+
+
+
+
+
 
 \section{Lossy missionaries and cannibals}
 
