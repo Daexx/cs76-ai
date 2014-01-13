@@ -67,7 +67,8 @@ public ArrayList<UUSearchNode> getSuccessors() {
     for (int i = 0; i <= Math.min(state[2] * BOAT_SIZE, state[0]); i++) {
       for (int j = 0; j <= Math.min(state[2] * BOAT_SIZE - i,
           state[1]); j++) {
-        if (i + j == 0) continue;
+          // make sure the boat is not empty
+        if (i + j < totalBoats)	continue;
         CannibalNode tryNode = new CannibalNode(state[0] - i,
             state[1] - j, 0, 0);
         if (isSafeState(tryNode)) {
@@ -81,7 +82,7 @@ public ArrayList<UUSearchNode> getSuccessors() {
     for (int i = 0; i <= Math.min(state2 * BOAT_SIZE, state0); i++) {
       for (int j = 0; j <= Math.min(state2 * BOAT_SIZE - i,
           state1); j++) {
-        if (i + j == 0) continue;
+        if (i + j < totalBoats)	continue;
         CannibalNode tryNode = new CannibalNode(state[0] + i,
             state[1] + j, totalBoats, 0);
         if (isSafeState(tryNode)) {
@@ -95,6 +96,16 @@ public ArrayList<UUSearchNode> getSuccessors() {
 \end{lstlisting}
 
 The basic idea of \verb`getSuccessors` is to traverse through every possible state that is contraint by the problem defination (line 6-8) , such as total number of missionary and carnibals, the size of the boat. After getting a new state, it immediately checkes if it is legal (line 11-12). Finally it put the state node into successors list if it is safe.
+
+The order of getting successors is vital to depth first search. I did optimize the codes for DFS, so that during each action it can go to the optimal state, which is transmitting as much people as possible. Simply by replacing line 6-7 as following:
+
+\begin{lstlisting}[numbers=left]
+ for (int i = Math.min(state[2] * BOAT_SIZE, state[0]); i >= 0 ; i--) {
+   for (int j = Math.min(state[2] * BOAT_SIZE - i,
+     state[1]); j >= 0; j--) {
+\end{lstlisting}
+
+However, this might lose a lot fun, because by doing so dfs might perform as well as bfs. So I stick to the non-optimized one.
 
 You may find that the \textbf{getSuccessors()} a little verbose. I did try to implement in a more contract way, but it makes the codes more difficult to understand. If you have any short and easy-understand expression, please do tell me.
 
@@ -314,16 +325,16 @@ private List<UUSearchNode> dfsrpc(UUSearchNode currentNode,
 
 The basic idea is similar to memorizing dfs. The only difference is when rolling the path, it marked the node as not visited. We don't have to use \textbf{HashMap} here, because any node being rolled is legal to revisit again.
 
-This may cause some redundance when seacrhing the graph. Take Figure \ref{diff} for example, in memorizing, if we first check $(0 \rightarrow 1 \rightarrow 3 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, and turn out to be dead end. Then we check $(0 \rightarrow 2)$, but we won't go further anymore, since node $3$ is visited. But in path-checking, it probably check $(0 \rightarrow 1 \rightarrow 3 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, $(0 \rightarrow 1 \rightarrow 2 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, and finally $(0 \rightarrow 4 \rightarrow 5)$.
-
-An obvious advantage of path-checking over memorizing is using less memory, the maximum possible memory used is the longest path, which is usually much smaller the size of graph.
-
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.5\textwidth]{hw1-fig-2.pdf}
 \caption{An example that demostrate difference between memorizing and path-checking dfs}
 \label{diff}
 \end{figure*}
+
+This may cause some redundance when seacrhing the graph. Take Figure \ref{diff} for example, in memorizing, if we first check $(0 \rightarrow 1 \rightarrow 3 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, and turn out to be dead end. Then we check $(0 \rightarrow 2)$, but we won't go further anymore, since node $3$ is visited. But in path-checking, it probably check $(0 \rightarrow 1 \rightarrow 3 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, $(0 \rightarrow 1 \rightarrow 2 \rightarrow 6 \rightarrow 7 \rightarrow 8)$, and finally $(0 \rightarrow 4 \rightarrow 5)$.
+
+An obvious advantage of path-checking over memorizing is using less memory, the maximum possible memory used is the longest path, which is usually much smaller the size of graph.
 
 With the input of (8,5,1), the output is as following:
 

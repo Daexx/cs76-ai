@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.1.7)  13 JAN 2014 10:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.1.7)  13 JAN 2014 11:07
 entering extended mode
 **junjie-guan-ai-assigment-1.tex
 (D:\Github\cs76-ai\hw1\junjie-guan-ai-assigment-1.tex
@@ -153,33 +153,41 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <D:/Github/cs76-ai/hw1/hw1
 .pdf>] [2]
 
-Package Listings Warning: Text dropped after begin of listing on input line 123
+Package Listings Warning: Text dropped after begin of listing on input line 134
 .
 
-
-Overfull \hbox (9.04405pt too wide) in paragraph at lines 162--163
+[3]
+Overfull \hbox (9.04405pt too wide) in paragraph at lines 173--174
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[3] [4]
-Overfull \hbox (9.04405pt too wide) in paragraph at lines 245--246
+[4]
+Overfull \hbox (9.04405pt too wide) in paragraph at lines 256--257
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [5] <hw1-fig-2.pdf, id=66, 110.66344pt x 115.93312pt>
 File: hw1-fig-2.pdf Graphic file (type pdf)
  <use hw1-fig-2.pdf>
-Package pdftex.def Info: hw1-fig-2.pdf used on input line 323.
+Package pdftex.def Info: hw1-fig-2.pdf used on input line 330.
 (pdftex.def)             Requested size: 234.8775pt x 246.07599pt.
 
-Overfull \hbox (783.94255pt too wide) in paragraph at lines 331--332
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (783.94255pt too wide) in paragraph at lines 342--343
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [] 
  []
 
-[6 <D:/Github/cs76-ai/hw1/hw1-fig-2.pdf>] [7]
-(D:\Github\cs76-ai\hw1\junjie-guan-ai-assigment-1.aux) ) 
+[6] [7 <D:/Github/cs76-ai/hw1/hw1-fig-2.pdf>]
+(D:\Github\cs76-ai\hw1\junjie-guan-ai-assigment-1.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
  2582 strings out of 493921
  35950 string characters out of 3147274
@@ -188,19 +196,18 @@ Here is how much of TeX's memory you used:
  7756 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  26i,7n,40p,607b,1528s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTe
-X 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Program Files/MiKTeX 2.9/fo
-nts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
-1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
-/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr1
-0.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:
-/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program 
-Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.pfb><C:/Program Files/MiKT
-eX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Files/MiKTeX 2.9/fon
-ts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1
-/public/amsfonts/cm/cmtt10.pfb>
-Output written on junjie-guan-ai-assigment-1.pdf (7 pages, 398904 bytes).
+<C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
+ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
+les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKT
+eX 2.9/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX 2.9/f
+onts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type
+1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/
+cm/cmr17.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr5.p
+fb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Pro
+gram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Fil
+es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on junjie-guan-ai-assigment-1.pdf (7 pages, 399665 bytes).
 PDF statistics:
  138 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
