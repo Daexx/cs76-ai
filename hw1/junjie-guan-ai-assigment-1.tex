@@ -41,9 +41,15 @@ numbers=left
 \maketitle
 
 \section{Introduction}
+
+
+Considering upper bound of states, we can first compute the total number of states, represented by $(n_m + 1) \times (n_c+1) \times (n_b+1)$, where $n_m, n_c, n_b$ represent the number of missionary, carnibal and boats respectively. Then we can eliminate those logically impossible states, such as all the people on the one side, while all the boat on the other side. Then the upper bound would be $(n_m + 1) \times (n_c+1) \times (n_b+1) - 2$.
+
 We can convert each state of carnibal problem into a code, by using factoring. The only three factors that relate to the state are the numbers of minssionary, carnibals and boats. Assuming the range of the three numbers is $R$, the formula can be described as followed:
 $$v = n_m \times R^2 + n_c \times R^1 + n_b \times R^0$$
-where the $v$ represents tha encoded value, $n_m, n_c, n_b$ represent the number of missionary, carnibal and boats respectively. Let's say $R = 10$, and the initial state of the problem are $n_m = 3, n_c = 3, n_b = 1$, so that $v = 331$ I can use a graph to describe the relationship between different states (for simplicity, I only the major parts of the graph, and demostrate a valid path).
+where the $v$ represents tha encoded value,  Let's say $R = 10$, and the initial state of the problem are $n_m = 3, n_c = 3, n_b = 1$, so that $v = 331$ 
+
+I can use a graph to describe the relationship between different states (for simplicity, I only the major parts of the graph, and demostrate a valid path).
 
 \begin{figure*}[!h]
 \centering
@@ -374,9 +380,7 @@ public List<UUSearchNode> IDSearch(int maxDepth) {
 }
 \end{lstlisting}
 
-The basic idea is use several path-checking dfs, while gradually increasing the maximun search depth, until we reach the goal. In terms of time, bfs might need to search the whole graph for one time, idfs might need several more times. But the bright side is, the big O is still the same. What's more, usually the number of nodes goes exponentially with depth, and idfs just search the closer a lot more than the deeper nodes. So the runtime should be acceptable.
-
-In terms of memory, it use as much memory as path-checking dfs, while guarantee to find the shortest path. Generally, idfs is not bad, especially when we don't have enough memory.
+The basic idea is use several path-checking dfs, while gradually increasing the maximun search depth, until we reach the goal. The problem is, should we choose memorizing or path-checking style dfs as the iterative function? Assuming that the graph is complicate enough. In terms of memory, no doubt that path-checking will be very likely use less memory, since memorizing need to store all the visited nodes. While in terms of time, memorizing may safe some time, when there are two path overlap and paht-checking need to re-visit it. But, on the other hand, there are high chances that ids with memorizing dfs performs worse than simply bfs, in terms of both memory (also need to safe a lot of nodes, and also need extra space in the stack for recursive function) and time. So, we might have just well using bfs. In short, there is no strong reason to use memorizing as interative funciton in ids.
 
 With the input of (8,5,1), the output is as following:
 
@@ -395,5 +399,8 @@ Total execution time: 4.953 seconds
 
 
 \section{Lossy missionaries and cannibals}
+
+In this situation, no more than E missionaries can be eaten. Then I can use a new state to describe: $(m, c, b, e)$, where $m, c, b$ is the same as before, $e$ represent whether the missionaries are eatable. I will basically change the conditions in \textbf{isSafe} depends on how many missionaries have already been eaten, if $n_e$ exceeds E, I will set $e = false$, as no more missionaries should be eaten. An upper bound should be like this:
+$$b_{upper} = \sum_{e = 0}^E[(n_m + 1 - e)(n_c + 1)(n_b + 1) - 2]$$
 
 \end{document}
