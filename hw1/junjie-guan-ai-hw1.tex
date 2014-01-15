@@ -9,10 +9,10 @@
 \usepackage{color}
 \usepackage{graphicx}
 
-\definecolor{javared}{rgb}{0.6,0,0} % for strings
-\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
-\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
-\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{javared}{rgb}{0.7,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.6,0.35} % comments
+\definecolor{javapurple}{rgb}{0.55,0,0.40} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.85} % javadoc
  
 \lstset{language=Java,
 basicstyle=\ttfamily,
@@ -349,7 +349,9 @@ An obvious advantage of path-checking over memorizing is using less memory, the 
 With the input of (8,5,1), the output is as following:
 
 \begin{lstlisting}[numbers=left]
-dfs path checking path length:34 [851, 830, 841, 820, 831, 630, 641, 540, 551, 530, 541, 520, 531, 430, 441, 420, 431, 410, 421, 320, 331, 310, 321, 300, 311, 210, 221, 200, 211, 100, 111, 10, 21, 0]
+dfs path checking path length:34 [851, 830, 841, 820, 831, 630, 641, 540,
+ 551, 530, 541, 520, 531, 430, 441, 420, 431, 410, 421, 320, 331, 310,
+  321, 300, 311, 210, 221, 200, 211, 100, 111, 10, 21, 0]
 Nodes explored during last search:  40
 Maximum memory usage during last search 33
 Total execution time: 0.6 seconds
@@ -399,6 +401,7 @@ Maximum memory usage during last search 24
 Total execution time: 4.953 seconds
 \end{lstlisting}
 
+You can see that ids use less memory than bfs, while also returning the best path.
 
 
 
