@@ -131,6 +131,8 @@ private boolean isSafeState(CannibalNode tryNode) {
 }
 \end{lstlisting}
 
+
+
 \section{Breadth-first search}
 
 In the following BFS search, I use a queue to keep track of the nodes to be visited. How to determine whether a adjecnt node should be put into the queue? I maintain a hash map for the nodes that have been visited.
@@ -266,7 +268,9 @@ Maximum memory usage during last search 39
 Total execution time: 0.6 seconds
 \end{lstlisting}
 
-As you can see, memorizing dfs use less memory while finding a less optimal path comparing to bfs. Actually in the worth case, when the path is not found until the last try, memorizing dfs uses as much memory as bfs.
+As you can see, memorizing dfs use less memory while finding a less optimal path comparing to bfs. Actually in the worth case, when the path is not found until the last try. Whether it uses less memory when comparing to, depends on the situation that whether the solution is far away from the start node, and whether dfs is using a better algorithm for searching. 
+
+What's more, dfs do not gaurantee an optimal solution/goal, unless you can prove that your search algorithm is optimal. 
 
 
 
@@ -380,7 +384,9 @@ public List<UUSearchNode> IDSearch(int maxDepth) {
 }
 \end{lstlisting}
 
-The basic idea is use several path-checking dfs, while gradually increasing the maximun search depth, until we reach the goal. The problem is, should we choose memorizing or path-checking style dfs as the iterative function? Assuming that the graph is complicate enough. In terms of memory, no doubt that path-checking will be very likely use less memory, since memorizing need to store all the visited nodes. While in terms of time, memorizing may safe some time, when there are two path overlap and paht-checking need to re-visit it. But, on the other hand, there are high chances that ids with memorizing dfs performs worse than simply bfs, in terms of both memory (also need to safe a lot of nodes, and also need extra space in the stack for recursive function) and time. So, we might have just well using bfs. In short, there is no strong reason to use memorizing as interative funciton in ids.
+The basic idea is use several path-checking dfs, while gradually increasing the maximun search depth, until we reach the goal. The problem is, should we choose memorizing or path-checking style dfs as the iterative function? In terms of memory, no doubt that path-checking will be very likely use less memory, since memorizing need to store all the visited nodes. While in terms of time, memorizing may safe some time, when there are two path overlap and paht-checking need to re-visit it. 
+
+But, on the other hand, if the goal is not far away from start point, or there is no optimal searching algorihtm for dfs, there are high chances that ids with memorizing dfs performs worse than simply bfs, in terms of both memory (also need to safe a lot of nodes, and also need extra space in the stack for recursive function) and time. So, we might have just well using bfs. In short, there is no strong reason to use memorizing as interative funciton in ids.
 
 With the input of (8,5,1), the output is as following:
 

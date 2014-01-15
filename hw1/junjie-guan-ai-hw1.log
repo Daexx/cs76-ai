@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.1.7)  14 JAN 2014 22:56
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.1.7)  14 JAN 2014 23:08
 entering extended mode
 **junjie-guan-ai-hw1.tex
 (D:\Github\cs76-ai\hw1\junjie-guan-ai-hw1.tex
@@ -102,7 +102,7 @@ Package graphics Info: Driver file: pdftex.def on input line 91.
 ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2013/08/26 1.5b listings language file
 )
-No file junjie-guan-ai-hw1.aux.
+(D:\Github\cs76-ai\hw1\junjie-guan-ai-hw1.aux)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
 LaTeX Font Info:    ... okay on input line 40.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 40.
@@ -116,6 +116,7 @@ LaTeX Font Info:    ... okay on input line 40.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 40.
 LaTeX Font Info:    ... okay on input line 40.
 \c@lstlisting=\count96
+
 ("C:\Program Files\MiKTeX 2.9\tex\context\base\supp-pdf.mkii"
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count97
@@ -156,36 +157,36 @@ LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
 {C:/ProgramData/MiKTeX/2.9/pdftex/config/pdftex.map} <D:/Github/cs76-ai/hw1/hw1
 .pdf>] [2]
 
-Package Listings Warning: Text dropped after begin of listing on input line 140
+Package Listings Warning: Text dropped after begin of listing on input line 142
 .
 
 [3]
-Overfull \hbox (9.04405pt too wide) in paragraph at lines 179--180
+Overfull \hbox (9.04405pt too wide) in paragraph at lines 181--182
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-LaTeX Warning: Reference `states' on page 4 undefined on input line 185.
+LaTeX Warning: Reference `states' on page 4 undefined on input line 187.
 
 [4]
-Overfull \hbox (9.04405pt too wide) in paragraph at lines 262--263
+Overfull \hbox (9.04405pt too wide) in paragraph at lines 264--265
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [5] <hw1-fig-2.pdf, id=66, 110.66344pt x 115.93312pt>
 File: hw1-fig-2.pdf Graphic file (type pdf)
  <use hw1-fig-2.pdf>
-Package pdftex.def Info: hw1-fig-2.pdf used on input line 336.
+Package pdftex.def Info: hw1-fig-2.pdf used on input line 340.
 (pdftex.def)             Requested size: 234.8775pt x 246.07599pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-LaTeX Warning: Reference `diff' on page 6 undefined on input line 341.
+LaTeX Warning: Reference `diff' on page 6 undefined on input line 345.
 
 
-Overfull \hbox (783.94255pt too wide) in paragraph at lines 348--349
+Overfull \hbox (783.94255pt too wide) in paragraph at lines 352--353
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
 [] 
@@ -201,13 +202,13 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 2580 strings out of 493921
- 35782 string characters out of 3147274
+ 2582 strings out of 493921
+ 35870 string characters out of 3147274
  150897 words of memory out of 3000000
  5891 multiletter control sequences out of 15000+200000
  7756 words of font info for 28 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
- 26i,7n,40p,925b,1518s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 26i,7n,40p,608b,1518s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKT
@@ -220,7 +221,7 @@ e1/public/amsfonts/cm/cmmi7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public
 rogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmr7.pfb><C:/Program Fil
 es/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on junjie-guan-ai-hw1.pdf (8 pages, 412866 bytes).
+Output written on junjie-guan-ai-hw1.pdf (8 pages, 413344 bytes).
 PDF statistics:
  145 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
