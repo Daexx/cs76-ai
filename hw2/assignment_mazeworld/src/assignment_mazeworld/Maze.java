@@ -1,5 +1,6 @@
 package assignment_mazeworld;
 
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +17,7 @@ public class Maze {
 	public static int[] EAST = {1, 0};
 	public static int[] SOUTH = {0, -1};
 	public static int[] WEST = {-1, 0};
+	public static int[] STAY = {0, 0};
 	
 	public int width;
 	public int height;

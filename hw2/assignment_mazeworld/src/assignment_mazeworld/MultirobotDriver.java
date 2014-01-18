@@ -11,8 +11,6 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -20,7 +18,7 @@ import javafx.util.Duration;
 import assignment_mazeworld.SearchProblem.SearchNode;
 import assignment_mazeworld.SimpleMazeProblem.SimpleMazeNode;
 
-public class SimpleMazeDriver extends Application {
+public class MultirobotDriver extends Application {
 
 	Maze maze;
 	
@@ -43,27 +41,17 @@ public class SimpleMazeDriver extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 		
-		int sx = 0;
-		int sy = 0;
-		int gx = 12;
-		int gy = 13;
+		Integer[] sx = {0};
+		Integer[] sy = {0};
+		Integer[] gx = {6};
+		Integer[] gy = {0};
 
-		SimpleMazeProblem mazeProblem = new SimpleMazeProblem(maze, sx, sy, gx,
+		MultirobotProblem mazeProblem = new MultirobotProblem(maze, 1, sx, sy, gx,
 				gy);
 
-		List<SearchNode> bfsPath = mazeProblem.breadthFirstSearch();
-		animationPathList.add(new AnimationPath(mazeView, bfsPath));
-		System.out.println("DFS:  ");
-		mazeProblem.printStats();
-
-		List<SearchNode> dfsPath = mazeProblem
-				.depthFirstPathCheckingSearch(5000);
-		animationPathList.add(new AnimationPath(mazeView, dfsPath));
-		System.out.println("BFS:  ");
-		mazeProblem.printStats();
-
 		List<SearchNode> astarPath = mazeProblem.astarSearch();
-		animationPathList.add(new AnimationPath(mazeView, astarPath));
+		//animationPathList.add(new AnimationPath(mazeView, astarPath));
+		System.out.println(astarPath);
 		System.out.println("A*:  ");
 		mazeProblem.printStats();
 
@@ -93,7 +81,7 @@ public class SimpleMazeDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(2);
+		Timeline timeline = new Timeline(1.0);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));
@@ -121,7 +109,7 @@ public class SimpleMazeDriver extends Application {
 	// the underlying search path, the "piece" object used for animation,
 	// etc.
 	private class AnimationPath {
-		private Circle piece;
+		private Node piece;
 		private List<SearchNode> searchPath;
 		private int currentMove = 0;
 
@@ -151,7 +139,6 @@ public class SimpleMazeDriver extends Application {
 				int dx = mazeNode.getX() - lastX;
 				int dy = mazeNode.getY() - lastY;
 				// System.out.println("animating " + dx + " " + dy);
-				mazeView.footPrint(lastX, lastY, piece, (dx + 2) *10 + dy + 2);
 				animateMove(piece, dx, dy);
 				lastX = mazeNode.getX();
 				lastY = mazeNode.getY();
@@ -165,7 +152,7 @@ public class SimpleMazeDriver extends Application {
 		public void animateMove(Node n, int dx, int dy) {
 			animationDone = false;
 			TranslateTransition tt = new TranslateTransition(
-					Duration.millis(150), n);
+					Duration.millis(300), n);
 			tt.setByX(PIXELS_PER_SQUARE * dx);
 			tt.setByY(-PIXELS_PER_SQUARE * dy);
 			// set a callback to trigger when animation is finished
