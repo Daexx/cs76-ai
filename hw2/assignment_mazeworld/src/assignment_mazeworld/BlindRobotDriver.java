@@ -16,11 +16,11 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import assignment_mazeworld.SearchProblem.SearchNode;
-import assignment_mazeworld.MultirobotProblem.MultirobotNode;
+import assignment_mazeworld.BlindRobotProblem.BlindRobotNode;
 
 ;
 
-public class MultirobotDriver extends Application {
+public class BlindRobotDriver extends Application {
 
 	Maze maze;
 
@@ -43,27 +43,11 @@ public class MultirobotDriver extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
-		Integer[] sx = { 0, 4, 9 };
-		Integer[] sy = { 0, 0, 0 };
-		Integer[] gx = { 8, 4, 0 };
-		Integer[] gy = { 8, 8, 8 };
 
-//		Integer[] sx = { 0, 4 };
-//		Integer[] sy = { 0, 0 };
-//		Integer[] gx = { 4, 0 };
-//		Integer[] gy = { 4, 4 };
+		BlindRobotProblem mazeProblem = new BlindRobotProblem(maze, 4, 4);
 		
-//		Integer[] sx = { 0 };
-//		Integer[] sy = { 0 };
-//		Integer[] gx = { 8 };
-//		Integer[] gy = { 8 };
-		
-		MultirobotProblem mazeProblem = new MultirobotProblem(maze, sx.length,
-				sx, sy, gx, gy);
-
-		List<SearchNode> solutionPath = mazeProblem.astarSearch();
-		animationPathList.add(new AnimationPath(mazeView, solutionPath));
-		System.out.println(solutionPath);
+		List<SearchNode> astarPath = mazeProblem.astarSearch();
+		animationPathList.add(new AnimationPath(mazeView, astarPath));
 		System.out.println("A*:  ");
 		mazeProblem.printStats();
 
@@ -76,9 +60,9 @@ public class MultirobotDriver extends Application {
 	// javafx setup of main view window for mazeworld
 	@Override
 	public void start(Stage primaryStage) {
-
+		
 		initMazeView();
-
+	
 		primaryStage.setTitle("CS 76 Mazeworld");
 
 		// add everything to a root stackpane, and then to the main window
@@ -92,7 +76,7 @@ public class MultirobotDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(2.0);
+		Timeline timeline = new Timeline(2);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));
@@ -101,16 +85,16 @@ public class MultirobotDriver extends Application {
 	}
 
 	// every frame, this method gets called and tries to do the next move
-	// for each animationPath.
+	//  for each animationPath.
 	private class GameHandler implements EventHandler<ActionEvent> {
 
 		@Override
 		public void handle(ActionEvent e) {
 			// System.out.println("timer fired");
 			for (AnimationPath animationPath : animationPathList) {
-				// note: animationPath.doNextMove() does nothing if the
-				// previous animation is not complete. If previous is complete,
-				// then a new animation of a piece is started.
+				// note:  animationPath.doNextMove() does nothing if the
+				//  previous animation is not complete.  If previous is complete,
+				//  then a new animation of a piece is started.
 				animationPath.doNextMove();
 			}
 		}
@@ -120,30 +104,21 @@ public class MultirobotDriver extends Application {
 	// the underlying search path, the "piece" object used for animation,
 	// etc.
 	private class AnimationPath {
-		private Circle[] piece;
+		private Circle piece;
 		private List<SearchNode> searchPath;
 		private int currentMove = 0;
 
-		private int[] lastX;
-		private int[] lastY;
-
-		private int cntR;
+		private int lastX;
+		private int lastY;
 
 		boolean animationDone = true;
 
 		public AnimationPath(MazeView mazeView, List<SearchNode> path) {
 			searchPath = path;
-			MultirobotNode firstNode = (MultirobotNode) searchPath.get(0);
-			cntR = firstNode.robots.length;
-			piece = new Circle[cntR];
-			lastX = new int[cntR];
-			lastY = new int[cntR];
-			for (int r = 0; r < cntR; r++) {
-				piece[r] = mazeView.addPiece(firstNode.getX(r),
-						firstNode.getY(r));
-				lastX[r] = firstNode.getX(r);
-				lastY[r] = firstNode.getY(r);
-			}
+			BlindRobotNode firstNode = (BlindRobotNode) searchPath.get(0);
+			piece = mazeView.addPiece(firstNode.getX(), firstNode.getY());
+			lastX = firstNode.getX();
+			lastY = firstNode.getY();
 		}
 
 		// try to do the next step of the animation. Do nothing if
@@ -151,46 +126,41 @@ public class MultirobotDriver extends Application {
 		public void doNextMove() {
 
 			// animationDone is an instance variable that is updated
-			// using a callback triggered when the current animation
-			// is complete
+			//  using a callback triggered when the current animation
+			//  is complete
 			if (currentMove < searchPath.size() && animationDone) {
-				MultirobotNode mazeNode = (MultirobotNode) searchPath
+				BlindRobotNode mazeNode = (BlindRobotNode) searchPath
 						.get(currentMove);
-				int[] dx = new int[cntR];
-				int[] dy = new int[cntR];
-				for (int r = 0; r < cntR; r++) {
-					dx[r] = mazeNode.getX(r) - lastX[r];
-					dy[r] = mazeNode.getY(r) - lastY[r];
-				}
+				int dx = mazeNode.getX() - lastX;
+				int dy = mazeNode.getY() - lastY;
 				// System.out.println("animating " + dx + " " + dy);
+				mazeView.footPrint(lastX, lastY, piece, (dx + 2) *10 + dy + 2);
 				animateMove(piece, dx, dy);
-				mazeView.footPrint4Multi(lastX, lastY, piece, dx, dy);
-				for (int r = 0; r < cntR; r++) {
-					lastX[r] = mazeNode.getX(r);
-					lastY[r] = mazeNode.getY(r);
-				}
+				lastX = mazeNode.getX();
+				lastY = mazeNode.getY();
+
 				currentMove++;
 			}
 
 		}
 
 		// move the piece n by dx, dy cells
-		public void animateMove(Node[] n, int[] dx, int[] dy) {
+		public void animateMove(Node n, int dx, int dy) {
 			animationDone = false;
-			for (int r = 0; r < cntR; r++) {
-				TranslateTransition tt = new TranslateTransition(
-						Duration.millis(150), n[r]);
-				tt.setByX(PIXELS_PER_SQUARE * dx[r]);
-				tt.setByY(-PIXELS_PER_SQUARE * dy[r]);
-				// set a callback to trigger when animation is finished
-				tt.setOnFinished(new AnimationFinished());
-				tt.play();
-			}
+			TranslateTransition tt = new TranslateTransition(
+					Duration.millis(150), n);
+			tt.setByX(PIXELS_PER_SQUARE * dx);
+			tt.setByY(-PIXELS_PER_SQUARE * dy);
+			// set a callback to trigger when animation is finished
+			tt.setOnFinished(new AnimationFinished());
+
+			tt.play();
+
 		}
 
 		// when the animation is finished, set an instance variable flag
-		// that is used to see if the path is ready for the next step in the
-		// animation
+		//  that is used to see if the path is ready for the next step in the
+		//  animation
 		private class AnimationFinished implements EventHandler<ActionEvent> {
 			@Override
 			public void handle(ActionEvent event) {

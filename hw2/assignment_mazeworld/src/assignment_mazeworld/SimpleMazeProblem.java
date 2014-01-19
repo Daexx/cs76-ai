@@ -43,7 +43,6 @@ public class SimpleMazeProblem extends InformedSearchProblem {
 			state = new int[2];
 			this.state[0] = x;
 			this.state[1] = y;
-		
 			cost = c;
 
 		}
