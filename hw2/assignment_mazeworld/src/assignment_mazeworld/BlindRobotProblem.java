@@ -44,7 +44,7 @@ public class BlindRobotProblem extends InformedSearchProblem {
 		// location of the agent in the maze
 		protected int[] previous;
 		protected int[] current;
-		protected boolean inWall;
+		protected boolean wallTouched;
 		protected ArrayList<Coordinate> candidates;
 
 		// how far the current node is from the start. Not strictly required
@@ -52,18 +52,22 @@ public class BlindRobotProblem extends InformedSearchProblem {
 		// and for comparing paths
 		private double cost;
 
-		public BlindRobotNode(int cx, int cy, boolean iw, BlindRobotNode prev,
+		public BlindRobotNode(int cx, int cy, boolean wt, BlindRobotNode prev,
 				double c) {
 			// initiate the positions
+			wallTouched = wt;
+			cost = c;
 			current = new int[2];
 			previous = new int[2];
 			candidates = new ArrayList<>();
-			cost = c;
 			current[0] = cx;
 			current[1] = cy;
 			if (prev != null) {
 				previous[0] = prev.current[0];
-				previous[0] = prev.current[1];
+				previous[1] = prev.current[1];
+			}else {
+				previous[0] = current[0];
+				previous[1] = current[1];
 			}
 
 			// initiate the candidates
@@ -72,27 +76,25 @@ public class BlindRobotProblem extends InformedSearchProblem {
 				for (int x = 0; x < maze.width; x++) {
 					for (int y = 0; y < maze.height; y++) {
 						if (maze.getChar(x, y) == '.') {
-							System.out.println(x + "," + y);
+							//System.out.println(x + "," + y);
 							Coordinate tmp = new Coordinate(x, y);
 							candidates.add(tmp);
 						}
 					}
 				}
-			} else if (!prev.inWall) {
-				// if now is one of the searching node
-				// pay attention that you can only come from a legal state,
-				// even you yourself can be illegal (in the wall)
-				int dx = current[0] - previous[0], dy = current[1]
-						- previous[1];
-				for (Coordinate cd : prev.candidates) {
-					// if the action do not match, we eliminate this candidate
-					if (maze.isLegal(cd.x + dx, cd.y + dy) == iw)
-						candidates.add(cd);
-				}
 			} else {
-				// if come from a inwall node that want to go back
-				for (Coordinate cd : prev.candidates)
-					candidates.add(cd);
+				// if now is one of the searching node, compute derection first
+				int dx = current[0] - previous[0], 
+						dy = current[1]	- previous[1];
+				for (Coordinate cd : prev.candidates) {
+					// if it comes from in wall node, or if the action matches
+					// we add this candidate
+					if (prev.wallTouched 
+							|| maze.isLegal(cd.x + dx, cd.y + dy) == !wt) {
+						Coordinate tmp = new Coordinate(cd.x + dx, cd.y + dy);
+						candidates.add(tmp);
+					}
+				}
 			}
 		}
 
@@ -109,7 +111,7 @@ public class BlindRobotProblem extends InformedSearchProblem {
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 
 			// if you not in wall, you may try any direction you want
-			if (!inWall) {
+			if (!wallTouched) {
 				for (int[] action : actions) {
 					int xNew = current[0] + action[0];
 					int yNew = current[1] + action[1];
@@ -121,7 +123,7 @@ public class BlindRobotProblem extends InformedSearchProblem {
 			// if you in the wall, the only successor is the backward node
 			// cost - 1, because it is backward
 			else {
-				SearchNode succ = new BlindRobotNode(previous[0], previous[0],
+				SearchNode succ = new BlindRobotNode(previous[0], previous[1],
 						false, this, getCost() - 1.0);
 				successors.add(succ);
 			}
@@ -132,7 +134,8 @@ public class BlindRobotProblem extends InformedSearchProblem {
 
 		@Override
 		public boolean goalTest() {
-			return candidates.size() == 1;
+			System.out.println("candidates.size(): " + candidates.size() + ". At " + getX() + "," + getY());
+			return candidates.size() == 1 && !wallTouched;
 		}
 
 		// an equality test is required so that visited sets in searches
