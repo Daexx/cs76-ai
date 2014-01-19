@@ -24,7 +24,7 @@ public class MultirobotProblem extends InformedSearchProblem {
 			Integer[] gx, Integer[] gy) {
 
 		R = sr;
-		startNode = new MultirobotNode(sx, sy, 0, 0);
+		startNode = new MultirobotNode(sx, sy, 0);
 		xStart = sx;
 		yStart = sy;
 		xGoal = gx;
@@ -38,20 +38,18 @@ public class MultirobotProblem extends InformedSearchProblem {
 
 		// location of the agent in the maze
 		protected int[][] robots;
-		protected int turn;
 
 		// how far the current node is from the start. Not strictly required
 		// for uninformed search, but useful information for debugging,
 		// and for comparing paths
 		private double cost;
 
-		public MultirobotNode(Integer[] x, Integer[] y, double c, int t) {
+		public MultirobotNode(Integer[] x, Integer[] y, double c) {
 			robots = new int[R][2];
 			for (int i = 0; i < R; i++) {
 				this.robots[i][0] = x[i];
 				this.robots[i][1] = y[i];
 			}
-			turn = t;
 			cost = c;
 		}
 
@@ -74,59 +72,45 @@ public class MultirobotProblem extends InformedSearchProblem {
 				yNew[r] = robots[r][1];
 			}
 
-			//boolean actionAvailable = false;
-			for (int[] action : actions) {
-				//if (action == Maze.STAY && actionAvailable)
-					//break;
-				xNew[turn] = robots[turn][0] + action[0];
-				yNew[turn] = robots[turn][1] + action[1];
-				if (maze.isLegal(xNew[turn], yNew[turn])
-						&& noCollision(xNew, yNew)) {
-					SearchNode succ = new MultirobotNode(xNew, yNew, getCost()
-							+ Math.abs(action[0]) + Math.abs(action[1]),
-							(turn + 1) % R);
-					successors.add(succ);
-					//actionAvailable = true;
-				}
-			}
+			getSuccessorsDFS(xNew, yNew, successors, 0, 0);
 
 			// System.out.println(this.toString() + ":\n" + successors);
 			return successors;
 		}
 
-		/*		private void getSuccessorsDFS(Integer[] xNow, Integer[] yNow,
-						ArrayList<SearchNode> successors, double theirCost, int r) {
-					// this is the base case of dfs recursion
-					if (r == R)
-						return;
+		private void getSuccessorsDFS(Integer[] xNow, Integer[] yNow,
+				ArrayList<SearchNode> successors, double theirCost, int r) {
+			// this is the base case of dfs recursion
+			if (r == R)
+				return;
 
-					Integer[] xNew = new Integer[3], yNew = new Integer[3];
-					boolean actionAvailable = false;
-					// this is the recursive function
-					for (int[] action : actions) {
-						if(action == Maze.STAY && actionAvailable) break;
-						iniNew(xNew, yNew, xNow, yNow);
-						xNew[r] = robots[r][0] + action[0];
-						yNew[r] = robots[r][1] + action[1];
-						double myCost = Math.abs(action[0]) + Math.abs(action[1]);
-						if (maze.isLegal(xNew[r], yNew[r]) && noCollision(xNew, yNew)) {
-							SearchNode succ = new MultirobotNode(xNew, yNew, getCost()
-									+ myCost + theirCost);
-							successors.add(succ);
-							getSuccessorsDFS(xNew, yNew, successors,
-									myCost + theirCost, r + 1);
-							actionAvailable = true;
-						}
-					}
-				}*/
+			Integer[] xNew = new Integer[3], yNew = new Integer[3];
+			boolean actionAvailable = false;
+			// this is the recursive function
+			for (int[] action : actions) {
+				if(action == Maze.STAY && actionAvailable) break;
+				iniNew(xNew, yNew, xNow, yNow);
+				xNew[r] = robots[r][0] + action[0];
+				yNew[r] = robots[r][1] + action[1];
+				double myCost = Math.abs(action[0]) + Math.abs(action[1]);
+				if (maze.isLegal(xNew[r], yNew[r]) && noCollision(xNew, yNew)) {
+					SearchNode succ = new MultirobotNode(xNew, yNew, getCost()
+							+ myCost + theirCost);
+					successors.add(succ);
+					getSuccessorsDFS(xNew, yNew, successors,
+							myCost + theirCost, r + 1);
+					actionAvailable = true;
+				}
+			}
+		}
 
-/*		private void iniNew(Integer[] xNew, Integer[] yNew, Integer[] xNow,
+		private void iniNew(Integer[] xNew, Integer[] yNew, Integer[] xNow,
 				Integer[] yNow) {
 			for (int r = 0; r < R; r++) {
 				xNew[r] = xNow[r];
 				yNew[r] = yNow[r];
 			}
-		}*/
+		}
 
 		private boolean noCollision(Integer[] xNew, Integer[] yNew) {
 			HashSet<Integer> existed = new HashSet<>();
@@ -150,13 +134,10 @@ public class MultirobotProblem extends InformedSearchProblem {
 		}
 
 		// an equality test is required so that visited sets in searches
-		// can check for containment of robots
+		// can check for containment of robotss
 		@Override
 		public boolean equals(Object other) {
-			boolean equal = true;
-			for(int r = 0; r < R; r++)
-				equal &= Arrays.equals(robots[r], ((MultirobotNode) other).robots[r]);
-			return equal;
+			return Arrays.equals(robots, ((MultirobotNode) other).robots);
 		}
 
 		@Override

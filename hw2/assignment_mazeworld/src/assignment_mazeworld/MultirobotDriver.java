@@ -43,15 +43,15 @@ public class MultirobotDriver extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
-//		Integer[] sx = { 0, 2, 4 };
-//		Integer[] sy = { 0, 0, 0 };
-//		Integer[] gx = { 4, 2, 0 };
-//		Integer[] gy = { 4, 4, 4 };
+		Integer[] sx = { 0, 4, 8 };
+		Integer[] sy = { 0, 0, 0 };
+		Integer[] gx = { 8, 4, 0 };
+		Integer[] gy = { 8, 8, 8 };
 
-		Integer[] sx = { 0, 4 };
-		Integer[] sy = { 0, 0 };
-		Integer[] gx = { 4, 0 };
-		Integer[] gy = { 4, 4 };
+//		Integer[] sx = { 0, 4 };
+//		Integer[] sy = { 0, 0 };
+//		Integer[] gx = { 4, 0 };
+//		Integer[] gy = { 4, 4 };
 		
 //		Integer[] sx = { 0 };
 //		Integer[] sy = { 0 };
@@ -92,7 +92,7 @@ public class MultirobotDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(1.0);
+		Timeline timeline = new Timeline(2.0);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));
@@ -179,7 +179,7 @@ public class MultirobotDriver extends Application {
 			animationDone = false;
 			for (int r = 0; r < cntR; r++) {
 				TranslateTransition tt = new TranslateTransition(
-						Duration.millis(300), n[r]);
+						Duration.millis(150), n[r]);
 				tt.setByX(PIXELS_PER_SQUARE * dx[r]);
 				tt.setByY(-PIXELS_PER_SQUARE * dy[r]);
 				// set a callback to trigger when animation is finished

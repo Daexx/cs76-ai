@@ -96,12 +96,16 @@ public abstract class SearchProblem {
 			HashMap<SearchNode, SearchNode> visited) {
 
 		LinkedList<SearchNode> solution = new LinkedList<SearchNode>();
+		SearchNode nextNode;
 
 		// chain through the visited hashmap to find each previous node,
 		// add to the solution
 		while (node != null) {
 			solution.addFirst(node);
-			node = visited.get(node);
+			nextNode = visited.get(node);
+			while(nextNode == node)
+				nextNode = visited.get(nextNode);
+			node = nextNode;
 		}
 		return solution;
 	}

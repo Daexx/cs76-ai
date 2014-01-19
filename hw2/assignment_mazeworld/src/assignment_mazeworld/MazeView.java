@@ -121,11 +121,12 @@ public class MazeView extends Group {
 		int radius = (int)(pixelsPerSquare * .4);
 		
 		for(int r = 0; r < lastX.length; r++) {
+			
 			Double x = squareCenterX(lastX[r]) + (oldPiece[r].getFill().hashCode() / 2500000.);
 			Double y = squareCenterY(lastY[r]) + (oldPiece[r].getFill().hashCode() / 2500000.);
 			
 			int direction = (dx[r] + 2) * 10 + dy[r] + 2;
-			if(direction == 22) return;
+			if(direction == 22) continue;
 	
 			Polygon piece = new Polygon();
 			piece.getPoints().addAll(new Double[]{
