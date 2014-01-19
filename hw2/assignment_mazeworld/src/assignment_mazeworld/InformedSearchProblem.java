@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 public class InformedSearchProblem extends SearchProblem {
 
 	public List<SearchNode> astarSearch() {
+		resetStats();
 		// implementing priority queue for the frontiers
 		PriorityQueue<SearchNode> frontiers = new PriorityQueue<>();
 		// implementing hashmap for the chain and the visited nodes
@@ -37,13 +38,12 @@ public class InformedSearchProblem extends SearchProblem {
 				if (!visited.containsKey(n)
 						|| visited.get(n) > n.priority()) {
 					reachedFrom.put(n, currentNode);
+					//System.out.println(n + " vs " + currentNode);
 					visited.put(n, n.priority());
 					frontiers.add(n);
 				}
 			}
 		}
-
-		resetStats();
 
 		return null;
 	}

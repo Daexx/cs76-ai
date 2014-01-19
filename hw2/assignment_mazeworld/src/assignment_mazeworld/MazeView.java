@@ -117,6 +117,35 @@ public class MazeView extends Group {
 		this.getChildren().add(piece);		
 	}
 	
+	public void footPrint4Multi(int[] lastX, int[] lastY, Circle[] oldPiece, int[] dx, int[] dy) {
+		int radius = (int)(pixelsPerSquare * .4);
+		
+		for(int r = 0; r < lastX.length; r++) {
+			Double x = squareCenterX(lastX[r]) + (oldPiece[r].getFill().hashCode() / 2500000.);
+			Double y = squareCenterY(lastY[r]) + (oldPiece[r].getFill().hashCode() / 2500000.);
+			
+			int direction = (dx[r] + 2) * 10 + dy[r] + 2;
+			if(direction == 22) return;
+	
+			Polygon piece = new Polygon();
+			piece.getPoints().addAll(new Double[]{
+				     x, y + radius,
+				    x - radius * 0.466, y - radius / 2.0,
+				    x + radius * 0.466, y - radius / 2.0 });
+			piece.setFill(oldPiece[r].getFill());
+			if(direction == 32)
+				piece.setRotate(270);
+			else if(direction == 23)
+				piece.setRotate(180);
+			else if(direction == 12)
+				piece.setRotate(90);
+			else if(direction == 21)
+				piece.setRotate(0);
+			
+			this.getChildren().add(piece);
+		}
+	}
+	
 	/*
 	public boolean doMove(short move) {
 	

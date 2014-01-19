@@ -18,6 +18,8 @@ public abstract class SearchProblem {
 
 	protected SearchNode startNode;
 
+	protected List<SearchNode> thePath = null; 
+	
 	protected interface SearchNode extends Comparable<SearchNode> {
 		public ArrayList<SearchNode> getSuccessors();
 
@@ -32,6 +34,7 @@ public abstract class SearchProblem {
 		//  heuristic is ignored for uninformed searches
 		public double heuristic();
 		public double priority();
+		
 	}
 
 	// breadthFirstSearch: return a list of connecting Nodes, or null
@@ -59,12 +62,15 @@ public abstract class SearchProblem {
 		int currentDepth = 0;
 
 		while (!fringe.isEmpty()) {
+			
 			incrementNodeCount();
 
 			updateMemory(fringe.size() + reachedFrom.size());
 
 			SearchNode currentNode = fringe.remove();
-
+			
+			//System.out.println(currentNode);
+			
 			if (currentNode.goalTest()) {
 				return backchain(currentNode, reachedFrom);
 			}
@@ -97,7 +103,6 @@ public abstract class SearchProblem {
 			solution.addFirst(node);
 			node = visited.get(node);
 		}
-
 		return solution;
 	}
 
@@ -259,6 +264,7 @@ public abstract class SearchProblem {
 
 	protected void incrementNodeCount() {
 		nodesExplored++;
+		//System.out.println(nodesExplored);
 	}
 
 }

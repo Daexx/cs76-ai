@@ -2,6 +2,7 @@ package assignment_mazeworld;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 // Find a path for a single agent to get from a start location (xStart, yStart)
 //  to a goal location (xGoal, yGoal)
