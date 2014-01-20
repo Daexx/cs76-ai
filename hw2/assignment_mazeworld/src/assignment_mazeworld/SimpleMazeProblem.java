@@ -9,35 +9,51 @@ import java.util.List;
 
 public class SimpleMazeProblem extends InformedSearchProblem {
 
-	private static int actions[][] = {Maze.NORTH, Maze.EAST, Maze.SOUTH, Maze.WEST}; 
-	
+	private static int actions[][] = { Maze.NORTH, Maze.EAST, Maze.SOUTH,
+			Maze.WEST };
+
 	private int xStart, yStart, xGoal, yGoal;
 
 	private Maze maze;
 	
+	private Double alpha;
+
 	public SimpleMazeProblem(Maze m, int sx, int sy, int gx, int gy) {
 		startNode = new SimpleMazeNode(sx, sy, 0);
 		xStart = sx;
 		yStart = sy;
 		xGoal = gx;
 		yGoal = gy;
-		
-		maze = m;		
+
+		maze = m;
 	}
 	
+	public SimpleMazeProblem(Maze m, int sx, int sy, int gx, int gy, Double alp) {
+		startNode = new SimpleMazeNode(sx, sy, 0);
+		alpha = alp;
+		xStart = sx;
+		yStart = sy;
+		xGoal = gx;
+		yGoal = gy;
 
+		maze = m;
+	}
 	
-	// node class used by searches.  Searches themselves are implemented
-	//  in SearchProblem.
+	public void setAlpha(Double alp) {
+		alpha = alp;
+	}
+
+	// node class used by searches. Searches themselves are implemented
+	// in SearchProblem.
 	public class SimpleMazeNode implements SearchNode {
 
 		// location of the agent in the maze
-		protected int[] state; 
-		
-		// how far the current node is from the start.  Not strictly required
-		//  for uninformed search, but useful information for debugging, 
-		//  and for comparing paths
-		private double cost;  
+		protected int[] state;
+
+		// how far the current node is from the start. Not strictly required
+		// for uninformed search, but useful information for debugging,
+		// and for comparing paths
+		private double cost;
 
 		public SimpleMazeNode(int x, int y, double c) {
 			state = new int[2];
@@ -46,11 +62,11 @@ public class SimpleMazeProblem extends InformedSearchProblem {
 			cost = c;
 
 		}
-		
+
 		public int getX() {
 			return state[0];
 		}
-		
+
 		public int getY() {
 			return state[1];
 		}
@@ -59,28 +75,33 @@ public class SimpleMazeProblem extends InformedSearchProblem {
 
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 
-			for (int[] action: actions) {
+			for (int[] action : actions) {
 				int xNew = state[0] + action[0];
-				int yNew = state[1] + action[1]; 
-				
-				//System.out.println("testing successor " + xNew + " " + yNew);
-				
-				if(maze.isLegal(xNew, yNew)) {
-					//System.out.println("legal successor found " + " " + xNew + " " + yNew);
-					SearchNode succ = new SimpleMazeNode(xNew, yNew, getCost() + 1.0);
+				int yNew = state[1] + action[1];
+
+				// System.out.println("testing successor " + xNew + " " + yNew);
+
+				if (maze.isLegal(xNew, yNew)) {
+					// System.out.println("legal successor found " + " " + xNew
+					// + " " + yNew);
+					SearchNode succ = new SimpleMazeNode(xNew, yNew, getCost()
+							+ maze.getInt(xNew, yNew));
 					successors.add(succ);
 				}
-				
+
 			}
 			return successors;
 
 		}
-		
+
 		@Override
 		public boolean goalTest() {
-			return state[0] == xGoal && state[1] == yGoal;
+			if(state[0] == xGoal && state[1] == yGoal) {
+				
+				return true;
+			}else
+				return false;
 		}
-
 
 		// an equality test is required so that visited sets in searches
 		// can check for containment of states
@@ -91,7 +112,7 @@ public class SimpleMazeProblem extends InformedSearchProblem {
 
 		@Override
 		public int hashCode() {
-			return state[0] * 100 + state[1]; 
+			return state[0] * 100 + state[1];
 		}
 
 		@Override
@@ -104,7 +125,6 @@ public class SimpleMazeProblem extends InformedSearchProblem {
 		public double getCost() {
 			return cost;
 		}
-		
 
 		@Override
 		public double heuristic() {
@@ -118,10 +138,11 @@ public class SimpleMazeProblem extends InformedSearchProblem {
 		public int compareTo(SearchNode o) {
 			return (int) Math.signum(priority() - o.priority());
 		}
-		
+
 		@Override
 		public double priority() {
-			return heuristic() + getCost();
+			//System.out.print(alpha + ' ');
+			return alpha * heuristic() + (1 - alpha) * getCost();
 		}
 
 	}

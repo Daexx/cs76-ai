@@ -43,15 +43,20 @@ public class MultirobotDriver extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
-		Integer[] sx = { 0, 4, 9 };
-		Integer[] sy = { 0, 0, 0 };
-		Integer[] gx = { 8, 4, 0 };
-		Integer[] gy = { 8, 8, 8 };
+		int H = maze.height - 1;
+		Integer[] sx = { 0, 1, 0, 1 };
+		Integer[] sy = { 0, 0, 1 , 1};
+		Integer[] gx = { H, H - 1, H  , H - 1};
+		Integer[] gy = { H, H - 1, H - 1, H};
+//		Integer[] sx = { 0, 1, 0 };
+//		Integer[] sy = { 0, 0, 1 };
+//		Integer[] gx = { H, H - 1, H - 2 };
+//		Integer[] gy = { H, H, H };
 
-//		Integer[] sx = { 0, 4 };
+//		Integer[] sx = { 0, 1 };
 //		Integer[] sy = { 0, 0 };
-//		Integer[] gx = { 4, 0 };
-//		Integer[] gy = { 4, 4 };
+//		Integer[] gx = { 39, 38 };
+//		Integer[] gy = { 39, 39 };
 		
 //		Integer[] sx = { 0 };
 //		Integer[] sy = { 0 };
@@ -62,7 +67,10 @@ public class MultirobotDriver extends Application {
 				sx, sy, gx, gy);
 
 		List<SearchNode> solutionPath = mazeProblem.astarSearch();
-		animationPathList.add(new AnimationPath(mazeView, solutionPath));
+		if(solutionPath == null)
+			System.out.println("path not found");
+		else
+			animationPathList.add(new AnimationPath(mazeView, solutionPath));
 		System.out.println(solutionPath);
 		System.out.println("A*:  ");
 		mazeProblem.printStats();
@@ -92,7 +100,7 @@ public class MultirobotDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(2.0);
+		Timeline timeline = new Timeline(5.0);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));
@@ -174,12 +182,12 @@ public class MultirobotDriver extends Application {
 
 		}
 
-		// move the piece n by dx, dy cells
-		public void animateMove(Node[] n, int[] dx, int[] dy) {
+		// move the piece H by dx, dy cells
+		public void animateMove(Circle[] H, int[] dx, int[] dy) {
 			animationDone = false;
 			for (int r = 0; r < cntR; r++) {
 				TranslateTransition tt = new TranslateTransition(
-						Duration.millis(150), n[r]);
+						Duration.millis(100), H[r]);
 				tt.setByX(PIXELS_PER_SQUARE * dx[r]);
 				tt.setByY(-PIXELS_PER_SQUARE * dy[r]);
 				// set a callback to trigger when animation is finished

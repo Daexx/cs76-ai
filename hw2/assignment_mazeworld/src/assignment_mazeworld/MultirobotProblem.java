@@ -156,6 +156,7 @@ public class MultirobotProblem extends InformedSearchProblem {
 			boolean equal = true;
 			for(int r = 0; r < R; r++)
 				equal &= Arrays.equals(robots[r], ((MultirobotNode) other).robots[r]);
+			equal &= turn == ((MultirobotNode) other).turn;
 			return equal;
 		}
 

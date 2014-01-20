@@ -25,7 +25,7 @@ public class BlindRobotDriver extends Application {
 	Maze maze;
 
 	// instance variables used for graphical display
-	private static final int PIXELS_PER_SQUARE = 32;
+	private static final int PIXELS_PER_SQUARE = 20;
 	MazeView mazeView;
 	List<AnimationPath> animationPathList;
 

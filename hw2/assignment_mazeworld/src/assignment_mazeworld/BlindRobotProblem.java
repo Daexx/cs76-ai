@@ -75,7 +75,7 @@ public class BlindRobotProblem extends InformedSearchProblem {
 			if (prev == null) {
 				for (int x = 0; x < maze.width; x++) {
 					for (int y = 0; y < maze.height; y++) {
-						if (maze.getChar(x, y) == '.') {
+						if (maze.getInt(x, y) == 0) {
 							//System.out.println(x + "," + y);
 							Coordinate tmp = new Coordinate(x, y);
 							candidates.add(tmp);

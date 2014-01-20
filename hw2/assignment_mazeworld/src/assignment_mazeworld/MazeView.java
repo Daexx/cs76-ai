@@ -21,8 +21,8 @@ public class MazeView extends Group {
 	
 	private int numCurrentAnimations;
 	
-	private static Color[] colors = {Color.RED, Color.ORANGE, Color.BLACK, Color.BROWN,
-		Color.DARKGOLDENROD, Color.GREEN, Color.BLUE, Color.VIOLET, Color.CRIMSON};
+	private static Color[] colors = {Color.RED, Color.ORANGE, Color.BLUE, Color.CRIMSON,
+		Color.GREEN, Color.BROWN, Color.DARKGOLDENROD, Color.VIOLET, Color.BLACK};
 
 	int currentColor;
 	
@@ -47,10 +47,13 @@ public class MazeView extends Group {
 						pixelsPerSquare);
 
 				square.setStroke(Color.GRAY);
-				if(maze.getChar(c, r) == '.') {
-					square.setFill(Color.WHITE);
-				} else {
+				
+				int colorGrey = 255 - 255 * maze.getInt(c, r) / 20;
+				
+				if(maze.getInt(c, r) == -1) {
 					square.setFill(Color.LIGHTGRAY);
+				} else {
+					square.setFill(Color.rgb(colorGrey, colorGrey,colorGrey));
 				}
 				
 
@@ -93,9 +96,10 @@ public class MazeView extends Group {
 	// create a new piece on the board.
 	//  return the piece as a Node for use in animations
 	public void footPrint(int c, int r, Circle oldPiece, int direction) {
-		int radius = (int)(pixelsPerSquare * .4);
-		Double x = squareCenterX(c) + (oldPiece.getFill().hashCode() / 2500000.);
-		Double y = squareCenterY(r) + (oldPiece.getFill().hashCode() / 2500000.);
+		int radius = (int)(pixelsPerSquare * .7);
+		Double offset = (oldPiece.getFill().hashCode() / 7500000.) * .0;
+		Double x = squareCenterX(c) + offset;
+		Double y = squareCenterY(r) + offset;
 		
 		if(direction == 22) return;
 
@@ -114,6 +118,7 @@ public class MazeView extends Group {
 		else if(direction == 21)
 			piece.setRotate(0);
 		
+		piece.toBack();
 		this.getChildren().add(piece);		
 	}
 	
@@ -121,9 +126,9 @@ public class MazeView extends Group {
 		int radius = (int)(pixelsPerSquare * .4);
 		
 		for(int r = 0; r < lastX.length; r++) {
-			
-			Double x = squareCenterX(lastX[r]) + (oldPiece[r].getFill().hashCode() / 2500000.);
-			Double y = squareCenterY(lastY[r]) + (oldPiece[r].getFill().hashCode() / 2500000.);
+			Double offset = (oldPiece[r].getFill().hashCode() % 1000 / 250.);
+			Double x = squareCenterX(lastX[r]) + offset;
+			Double y = squareCenterY(lastY[r]) + offset;
 			
 			int direction = (dx[r] + 2) * 10 + dy[r] + 2;
 			if(direction == 22) continue;
@@ -143,6 +148,7 @@ public class MazeView extends Group {
 			else if(direction == 21)
 				piece.setRotate(0);
 			
+			piece.toFront();
 			this.getChildren().add(piece);
 		}
 	}

@@ -22,7 +22,7 @@ public class Maze {
 	public int width;
 	public int height;
 	
-	private char[][] grid;
+	private Integer[][] grid;
 
 	public static Maze readFromFile(String filename) {
 		Maze m = new Maze();
@@ -32,14 +32,21 @@ public class Maze {
 			m.height = lines.size();
 
 			int y = 0;
-			m.grid = new char[m.height][];
+			m.grid = new Integer[m.height][];
 			for (String line : lines) {
 				m.width = line.length();
-				m.grid[m.height - y - 1] = new char[m.width];
+				m.grid[m.height - y - 1] = new Integer[m.width];
 				for (int x = 0; x < line.length(); x++) {
 					// (0, 0) should be bottom left, so flip y as 
 					//  we read from file into array:
-					m.grid[m.height - y - 1][x] = line.charAt(x);
+					Character tmpc = line.charAt(x);
+					if(tmpc == '.')
+						m.grid[m.height - y - 1][x] = 0;
+					else if (tmpc == '#'){
+						m.grid[m.height - y - 1][x] = -1;
+					}else {
+						m.grid[m.height - y - 1][x] = Character.getNumericValue(tmpc);
+					}
 				}
 				y++;
 
@@ -57,7 +64,7 @@ public class Maze {
 		return Files.readAllLines(path, ENCODING);
 	}
 
-	public char getChar(int x, int y) {
+	public Integer getInt(int x, int y) {
 		return grid[y][x];
 	}
 	
@@ -66,7 +73,7 @@ public class Maze {
 		// on the map
 		if(x >= 0 && x < width && y >= 0 && y < height) {
 			// and it's a floor tile, not a wall tile:
-			return getChar(x, y) == '.';
+			return getInt(x, y) != -1;
 		}
 		return false;
 	}
