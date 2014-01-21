@@ -44,55 +44,8 @@ numbers=left
 
 Sovling maze is one of the most classic and popular problems in Artificial Intelligence. This report majorly cover three parts, 1) indroducing the A* algorithm as a searching method; 2) Multirobot problem, where we need to take collision into consideration; 3) Blind robot problem, where the robot need to find out its current coordinate in the maze; 4) finally, some further discussion.
 
-\begin{figure*}[!h]
-\centering
-\includegraphics[width=0.618\textwidth]{hw1.pdf}
-\caption{A sample graph of states that describe carnibal problem starting with (3, 3, 1), the blue nodes are the normal states, green is the final state, and the orange ones are illegal states.}
-\label{states}
-\end{figure*}
+\input{1-astar}
 
-In Figure \ref{states}, we can see that from a starting states, differnet actions lead to different path, some of them will eventually go to the goal, some of them will run into a dead end.
-
-\section{Implementation of the model}
-
-The model is implemented in 
-\verb`CannibalProblem.java`.  Here's my code for \verb`getSuccessors`:
-
-\begin{lstlisting}[numbers=left]
-public ArrayList<UUSearchNode> getSuccessors() {
-  ArrayList<UUSearchNode> successors = new ArrayList<>();
-  // assuming that every time I use as much boat as possible
-  if (state[2] != 0) {
-    for (int i = 0; i <= Math.min(state[2] * BOAT_SIZE, state[0]); i++) {
-      for (int j = 0; j <= Math.min(state[2] * BOAT_SIZE - i,
-          state[1]); j++) {
-          // make sure the boat is not empty
-        if (i + j < totalBoats)	continue;
-        CannibalNode tryNode = new CannibalNode(state[0] - i,
-            state[1] - j, 0, 0);
-        if (isSafeState(tryNode)) {
-          successors.add(tryNode);
-        }
-      }
-    }
-  } else {
-    int state0 = totalMissionaries - state[0], state1 = totalCannibals
-        - state[1], state2 = totalBoats - state[2];
-    for (int i = 0; i <= Math.min(state2 * BOAT_SIZE, state0); i++) {
-      for (int j = 0; j <= Math.min(state2 * BOAT_SIZE - i,
-          state1); j++) {
-        if (i + j < totalBoats)	continue;
-        CannibalNode tryNode = new CannibalNode(state[0] + i,
-            state[1] + j, totalBoats, 0);
-        if (isSafeState(tryNode)) {
-          successors.add(tryNode);
-        }
-      }
-    }
-  }
-  return successors;
-}
-\end{lstlisting}
 
 The basic idea of \verb`getSuccessors` is to traverse through every possible state that is contraint by the problem defination (line 6-8) , such as total number of missionary and carnibals, the size of the boat. After getting a new state, it immediately checkes if it is legal (line 11-12). Finally it put the state node into successors list if it is safe.
 

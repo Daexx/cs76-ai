@@ -57,7 +57,7 @@ public class BlindRobotDriver extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
-		BlindRobotProblem mazeProblem = new BlindRobotProblem(maze, 1, 1);
+		BlindRobotProblem mazeProblem = new BlindRobotProblem(maze, 0, 0);
 
 		List<SearchNode> astarPath = mazeProblem.astarSearch();
 		animationPathList.add(new AnimationPath(mazeView, astarPath));
@@ -89,7 +89,7 @@ public class BlindRobotDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(1);
+		Timeline timeline = new Timeline(0.1);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));

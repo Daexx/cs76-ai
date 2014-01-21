@@ -24,27 +24,25 @@ public class InformedSearchProblem extends SearchProblem {
 			// keep track of resource
 			updateMemory(frontiers.size() + reachedFrom.size());
 			incrementNodeCount();
-			
 			// retrieve from queue
-			SearchNode currentNode = frontiers.poll();
-
+			SearchNode current = frontiers.poll();
+			// discard the node if a shorter one is visitedxx
+			if (visited.containsKey(current)
+					&& visited.get(current) <= current.priority())
+				continue;
 			// mark the goal
-			if (currentNode.goalTest())
-				return backchain(currentNode, reachedFrom);
-
+			if (current.goalTest())
+				return backchain(current, reachedFrom);
 			// keep adding the frontiers and update visited
-			ArrayList<SearchNode> successors = currentNode.getSuccessors();
+			ArrayList<SearchNode> successors = current.getSuccessors();
 			for (SearchNode n : successors) {
-				if (!visited.containsKey(n)
-						|| visited.get(n) > n.priority()) {
-					reachedFrom.put(n, currentNode);
-					//System.out.println(n + " vs " + currentNode);
+				if (!visited.containsKey(n) || visited.get(n) > n.priority()) {
+					reachedFrom.put(n, current);
 					visited.put(n, n.priority());
 					frontiers.add(n);
 				}
 			}
 		}
-
 		return null;
 	}
 }
