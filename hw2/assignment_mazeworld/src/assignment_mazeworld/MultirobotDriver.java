@@ -37,17 +37,23 @@ public class MultirobotDriver extends Application {
 		animationPathList = new ArrayList<AnimationPath>();
 		// build the board
 		mazeView = new MazeView(maze, PIXELS_PER_SQUARE);
-
 	}
 
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
 		int H = maze.height - 1;
-		Integer[] sx = { 0, 1, 0, 1 };
-		Integer[] sy = { 0, 0, 1 , 1};
-		Integer[] gx = { H, H - 1, H  , H - 1};
-		Integer[] gy = { H, H - 1, H - 1, H};
+		
+		Integer[] sx = { 2, 1, 0, 2, 1, 0, 2, 0};
+		Integer[] sy = { 2, 2, 2, 1, 1, 1, 0, 0};
+		Integer[] gx = { 0, 1, 0, 2, 1, 0, 2, 2};
+		Integer[] gy = { 0, 2, 2, 1, 1, 1, 0, 2};
+		
+//		Integer[] sx = { 0, 1, 0, 1 };
+//		Integer[] sy = { 0, 0, 1 , 1};
+//		Integer[] gx = { H, H - 1, H  , H - 1};
+//		Integer[] gy = { H, H - 1, H - 1, H};
+		
 //		Integer[] sx = { 0, 1, 0 };
 //		Integer[] sy = { 0, 0, 1 };
 //		Integer[] gx = { H, H - 1, H - 2 };
@@ -74,7 +80,6 @@ public class MultirobotDriver extends Application {
 		System.out.println(solutionPath);
 		System.out.println("A*:  ");
 		mazeProblem.printStats();
-
 	}
 
 	public static void main(String[] args) {

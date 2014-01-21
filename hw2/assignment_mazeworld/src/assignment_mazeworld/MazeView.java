@@ -95,6 +95,19 @@ public class MazeView extends Group {
 	
 	// create a new piece on the board.
 	//  return the piece as a Node for use in animations
+	public Circle addCandidate(int c, int r) {
+		
+		int radius = (int)(pixelsPerSquare * .4);
+
+		Circle piece = new Circle(squareCenterX(c), squareCenterY(r), radius);
+		piece.setStroke(Color.GRAY);
+		piece.setFill(Color.WHITE);
+		this.getChildren().add(piece);
+		return piece;
+	}
+	
+	// create a new piece on the board.
+	//  return the piece as a Node for use in animations
 	public void footPrint(int c, int r, Circle oldPiece, int direction) {
 		int radius = (int)(pixelsPerSquare * .7);
 		Double offset = (oldPiece.getFill().hashCode() / 7500000.) * .0;
