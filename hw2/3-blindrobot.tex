@@ -1,0 +1,32 @@
+\clearpage
+\section{Multirobot problem}
+\subsection{Problem definition and states}
+
+The basic idea is put a robot at any abitrary legal position, and give the robot a map. Let the robot try to figure out where it is.
+
+The problem definition is significantly different from the previous two. This time, the state is all the possible current posiiton. At each movement we can eliminate all those positions that does not match the robot's action. Finally, there will be only one position left in the state. The coordinate become nothing but a auxiliary tool this time.
+
+At first sight I think of pattern recognition. For example, let the robot try to go to 4 direction and do the mathcing on the map. Though it can exploit maximum information at each position, it has some drawbacks. Such as no metric to evaluate which direction should go. We probably have no choice but do random search here. What's more, matching four directions looks redundant, which is just a repeat of four checking.
+
+There must a smaller atom in this problem model. So, instead of matching four direction at one position, I try to match the states only when I am moving. And at each move, I can eliminate some candidates.
+
+The initial state looks similar to multi robot problem, which is also a 2-D matrix. Except that the list of the state will shrink during the searching.
+
+
+
+$$\begin{pmatrix}
+x_0 & y_0 \\
+x_1 & y_1 \\
+\vdots & \vdots \\	
+x_{k-1} & y_{k-1}
+\end{pmatrix}$$
+
+
+
+
+
+
+
+
+
+\subsection{Discussions Polynomial-time blind robot planning}

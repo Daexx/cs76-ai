@@ -7,51 +7,127 @@ The different between single robot problem and multi robot problem is, every rob
 
 
 $$\begin{pmatrix}
-  x_0 & y_0 \\
-  x_1 & y_1 \\
-  \vdots & \vdots \\	
-  x_{k-1} & y_{k-1}
- \end{pmatrix}$$
- 
- However, this is not enough for the states. We still one parameter, which the turn of the robot. This parameter is not necessary, which means you can still solve the problem without it in the state. However, returning all the possible states of $k$ can be very redundant and time consumming for latter searching. If I have k robot, and five actions (4 directions plus not moving), the upper bound of states would be $5^k$. It is like giving too much options more next step, while I am not making any decision. 
+x_0 & y_0 \\
+x_1 & y_1 \\
+\vdots & \vdots \\	
+x_{k-1} & y_{k-1}
+\end{pmatrix}$$
+However, this is not enough for the states. We still one parameter, which the turn of the robot. This parameter is not necessary, which means you can still solve the problem without it in the state. However, returning all the possible states of $k$ can be very redundant and time consumming for latter searching. If I have k robot, and five actions (4 directions plus not moving), the upper bound of states would be $5^k$. It is like giving too much options more next step, while I am not making any decision.
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Discussions}
+ith $n\times n$ size of maze and $k$ robots， the upper bound of this problem, meaning to neglect the legal problem, is $n^k$. Because each robot has $n$ possible position.
+
+If number of wall square is $w$, then the number of collisions would be total state minus legal states, $(n-w)^k - C_{n-w}^k$.
+
+As for $100\times100$, with a few walls and several robot discussion. States number grows exponentially with $k$, and bfs tends to search all the state starting from start node. I think this problem still depends on whether the goal is close to the starting point.
+
+As for the design of heuristic, I will use the following function,
+$h = \sum^{k-1}_{i=0}h_i$, where $h_i$ represents the Manhattan distance from robot $i$ to the goal. A function is monotonic as long as\footnote{from \url{wiki: http://en.wikipedia.org/wiki/Consistent_heuristic}}:
+
+$$h(N) \leq c(N,P)+h(P) $$
+$$h(G)=0$$
+where
+
+\begin{itemize}
+\item h is the consistent heuristic function,
+\item N is any node in the graph,
+\item P is any descendant of N,
+\item G is any goal node,
+\item c(N,P) is the cost of reaching node P from N.
+\end{itemize}
+
+It is obvious that for single robot, the single heuristic satisfy this condtions. Adding them together should not affect the monotonicity.
+
+The 8-puzzle problem is the case of multi-robot where there is no walls, and there is only one free space to move, and the goal is letting each robots move to its corresponding positions.
+
+Whether 8-puzzle can be divided into two disjoint? This is similar to graph connectivity problem, or disjoint set problem. There is no better way but to traverse through all the possible states in 8 puzzle.
+
+Let's say the total I calculate that the total states amount of this problem is $N$. My basic idea is, first I pick an arbitrary state, and use bfs to traverse all the connected states, push every one of them into a \textbf{hash set}. At this point the number of the set should be less then $N$. (Otherwise we turn out to prove there is no disjoint set.) Then I will pick antoher state that is not blong to the first set, and also use bfs to create another \textbf{hash set}. Finally, the sum of this two set should equal to $N$.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \subsection{Code implementation}
 
 
-
-
 \subsubsection{getSuccessors}
 
+\textbf{getSuccessors} is used to expand new states from the current state.
+
 \textbf{Line 4:} Iterate through all the 5 possible actions (4 directions plus not moving).
-
-
 \textbf{Line 6-7:} Initiate the coordinates for the successor's state, noted that only the robot in turn can take action here.
-
-
 \textbf{Line 11-13:} Construct the successor with new coordinates, and new cost based on whether it moves, and also keep looping the turn through $R$ robots.
-
 
 \begin{lstlisting}[numbers=left]
 public ArrayList<SearchNode> getSuccessors() {
-  ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
-  Integer[] xNew = new Integer[R], yNew = new Integer[R];
-  for (int[] action : actions) {
-    for (int r = 0; r < R; r++) {
-      xNew[r] = robots[r][0] + action[0] * (r == turn ? 1 : 0);
-      yNew[r] = robots[r][1] + action[1] * (r == turn ? 1 : 0);
-    }
-    if (maze.isLegal(xNew[turn], yNew[turn])
-        && noCollision(xNew, yNew)) {
-      SearchNode succ = new MultirobotNode(xNew, yNew, getCost()
-          + Math.abs(action[0]) + Math.abs(action[1]),
-          (turn + 1) % R);
-      successors.add(succ);
-    }
-  }
-  return successors;
+ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
+Integer[] xNew = new Integer[R], yNew = new Integer[R];
+for (int[] action : actions) {
+for (int r = 0; r < R; r++) {
+xNew[r] = robots[r][0] + action[0] * (r == turn ? 1 : 0);
+yNew[r] = robots[r][1] + action[1] * (r == turn ? 1 : 0);
+}
+if (maze.isLegal(xNew[turn], yNew[turn])
+&& noCollision(xNew, yNew)) {
+SearchNode succ = new MultirobotNode(xNew, yNew, getCost()
++ Math.abs(action[0]) + Math.abs(action[1]),
+(turn + 1) % R);
+successors.add(succ);
+}
+}
+return successors;
 }
 \end{lstlisting}
+
+
+\subsubsection{noCollision}
+
+\textbf{noCollision} is used to determine whether there is a collision of robots. I set it as private seems it is not used for outter class.
+
+The basic idea is, I hash the position of each robot, and and check if the hash code already exists. If so, means there is another robot at this coordinate $(x,y)$; if not, push it into the hash set.
+
+If I implement \textbf{noCollision} in simple iteration, the time complexity would be $O(k^2)$, while $k$ is the number of robots. By doing so, I reduce time complexity to $O(k)$.
+
+\begin{lstlisting}[numbers=left]
+private boolean noCollision(Integer[] xNew, Integer[] yNew) {
+HashSet<Integer> existed = new HashSet<>();
+for (int r = 0; r < R; r++) {
+Integer tmpHash = oneHash(xNew[r], yNew[r]);
+if (!existed.contains(tmpHash)) {
+existed.add(tmpHash);
+} else {
+return false;
+}
+}
+return true;
+}
+\end{lstlisting}
+
 
 
 
@@ -60,13 +136,26 @@ Node constructor, it initiates the positions of robots iteratively.
 
 \begin{lstlisting}[numbers=left]
 public MultirobotNode(Integer[] x, Integer[] y, double c, int t) {
-  robots = new int[R][2];
-  for (int i = 0; i < R; i++) {
-    this.robots[i][0] = x[i];
-    this.robots[i][1] = y[i];
-  }
-  turn = t;
-  cost = c;
+robots = new int[R][2];
+for (int i = 0; i < R; i++) {
+this.robots[i][0] = x[i];
+this.robots[i][1] = y[i];
+}
+turn = t;
+cost = c;
+}
+\end{lstlisting}
+
+Change the heuristic method to interative way.
+
+\begin{lstlisting}[numbers=left]
+public double heuristic() {
+// manhattan distance metric for simple maze with one agent:
+double hValue = 0;
+for (int i = 0; i < R; i++)
+hValue += Math.abs(xGoal[i] - robots[i][0])
++ Math.abs(yGoal[i] - robots[i][1]);
+return hValue;
 }
 \end{lstlisting}
 
@@ -77,68 +166,170 @@ public MultirobotNode(Integer[] x, Integer[] y, double c, int t) {
 
 
 \subsection{Output demonstration}
-I use Simplex Noise to generate the maze.\footnote{I use authoried code from http://webstaff.itn.liu.se/~stegu/simplexnoise/SimplexNoise.java to help me with the noise} Figure \ref{s-1} shows a $40\times40$ maze, where all three robots try to move from bottom-left to middle-right. I leave the direction of robot at every single node. You can see that bfs and A* perform quite almost equally well, while dfs goes through a lengthy path. 
 
-\begin{figure*}[!h]
-\centering
-\includegraphics[width=0.927\textwidth]{s-1-1.JPG}
-\caption{Searhing path of dfs(orange), bfs(red) and A*(black)}
-\label{s-1}
-\end{figure*}
-
-The following output shows that, A* explored significantly less node than bfs, while the path length (cost) almost as less as bfs, while comparing to dfs.
-
-
-
+Output of shifting 3 robots If we substract start and end, we know averagely every robot take 4 actions, that is acceptable in a wall-free space. (Figure \ref{m-1}):
 \begin{lstlisting}[numbers=left]
-BFS:  
-  Nodes explored during search:  1064
-  Maximum space usage during search 1099
-  path length: 60
-  
-DFS:  
-  Nodes explored during search:  399
-  Maximum space usage during search 242
-  path length: 242
-  
-A*:  
-  Nodes explored during search:  79
-  Maximum space usage during search 224
-  path length: 72
+A*:
+path length: 14
+Nodes explored during search: 167
+Maximum space usage during search 577
+\end{lstlisting}
+
+Output of reodering robot in narrow corridor The path length is much longer that I expected. I guess it is because for an amount of time the robot just stay still, waiting for others. It is not easy to move in a narrow space. (Figure \ref{m-2}):
+\begin{lstlisting}[numbers=left]
+A*:
+path length: 52
+Nodes explored during search: 953
+Maximum space usage during search 861
 \end{lstlisting}
 
 
+Output of cross road conflict. The average number of movements is 9, which is also reasonable. (Figure \ref{m-3}):
+\begin{lstlisting}[numbers=left]
+A*:
+path length: 20
+Nodes explored during search: 105
+Maximum space usage during search 177
+\end{lstlisting}
+
+Output of moving relatively large number of robots. (Figure \ref{m-4}):
+\begin{lstlisting}[numbers=left]
+A*:
+path length: 115
+Nodes explored during search: 5070107
+Maximum space usage during search 9081343
+\end{lstlisting}
+
+Output of moving relatively large maze. Noted that, although path length is much longer than the previous one, the explored nodes is actually much less. This is because states space size grow expoentially with number of robots. (Figure \ref{m-5}):
+\begin{lstlisting}[numbers=left]
+path length: 233
+Nodes explored during search: 109132
+Maximum space usage during search 184020
+\end{lstlisting}
 
 
-
-
-
-\subsection{Discussion on cost and heuristic}
-A* leverage both the cost (penalty) and the heuristic (search speed). Currently we use $f = h + g$ for priority, which seems quite a balanced solution. What happens if we go to extrem where the priority only related to $g$ or $h$? Or, is 50:50 the best choice for $f$?
-
-Before I begin to discuss, I want to introduce a new kind of maze, where the obstacles can be crossed, while there is a certain amount of penalty. While I am first use Simplex Noise generate a maze, i replace the wall with number ranging from 1 to 10 to represent the weights. I use the following functions to differentiate nodes with different weights.
-$$Grayscale = 255 - 255 \times weight / 20$$
-
-Here I modify the expression of priority as following:
-$$f = \alpha \cdot h + (1 - \alpha ) \cdot g$$
-Then I vary $\alpha$ from 0 to 1, and observe their path length and cost. Figure \ref{s-2} shows the performance of different configuration. 
-\begin{itemize}
-  \item Red ($\alpha = 0.0$) is an extreme case when A* only considers the cost, and becomes uninformed search. (I think it act like Dijkstra Algorithm). Since we are using Manhattan distance and the goal is at top-right, every action of moving south or west is a compromise of cost, and neglecting of path length ( search speed).
-  \item Brown ($\alpha = 1.0$) is another extreme case when A* only considers the heuristic, and becomes best-first search. We can observe that it totally neglect the cost/penalty, rushing to the goal in the simplest path.
-\end{itemize}
-Figure \ref{gh-plot} shows the change of path length and cost while varying $\alpha$. Depending on whether 
-
-\begin{figure*}[!h]
+\begin{figure*}[!t]
+% ensure that we have normalsize text
+\normalsize
+% Store the current equation number.
+% Set the equation number to one less than the one
+% desired for the first equation here.
+% The value here will have to changed if equations
+% are added or removed prior to the place these
+% equations are referenced in the main text.
 \centering
-\includegraphics[width=0.628\textwidth]{astar_alpha.eps}
-\caption{Plot describes the relationship between cost, path length, and $\alpha$}
-\label{gh-plot}
+\subfigure[start]{
+\label{m-1-3} %% label for first subfigure
+\includegraphics[width=0.16\textwidth]{m-1-3.JPG}}
+\subfigure[step 1]{
+\label{m-1-0} %% label for second subfigure
+\includegraphics[width=0.16\textwidth]{m-1-0.JPG}}
+\subfigure[step 2]{
+\label{m-1-1} %% label for second subfigure
+\includegraphics[width=0.16\textwidth]{m-1-1.JPG}}
+\subfigure[step 3]{
+\label{m-1-2} %% label for second subfigure
+\includegraphics[width=0.16\textwidth]{m-1-2.JPG}}
+\subfigure[end]{
+\label{m-1-4} %% label for second subfigure
+\includegraphics[width=0.16\textwidth]{m-1-4.JPG}}
+\caption{Demo of shifting 3 robots}
+\label{m-1} %% label for entire figure
 \end{figure*}
 
-\begin{figure*}[!h]
+\begin{figure*}[!t]
+% ensure that we have normalsize text
+\normalsize
+% Store the current equation number.
+% Set the equation number to one less than the one
+% desired for the first equation here.
+% The value here will have to changed if equations
+% are added or removed prior to the place these
+% equations are referenced in the main text.
 \centering
-\includegraphics[width=1\textwidth]{s-2-1.JPG}
-\caption{Varying the $\alpha$ in A* as 0.0 (red), 0.25 (orange), 0.5 (blue), 0.75 (crimson), 0.9 (green), 1.0 (brown)}
-\label{s-2}
+\subfigure[start]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-0.JPG}}
+\subfigure[step 1]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-1.JPG}}
+\subfigure[step 2]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-2.JPG}}
+\subfigure[step 3]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-3.JPG}}
+\subfigure[step 4]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-4.JPG}}
+\subfigure[step 5]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-5.JPG}}
+\subfigure[step 6]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-6.JPG}}
+\subfigure[end]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-2-7.JPG}}
+\caption{Demo of reodering robot in narrow corridor}
+\label{m-2} %% label for entire figure
 \end{figure*}
+
+\begin{figure*}[!t]
+% ensure that we have normalsize text
+\normalsize
+% Store the current equation number.
+% Set the equation number to one less than the one
+% desired for the first equation here.
+% The value here will have to changed if equations
+% are added or removed prior to the place these
+% equations are referenced in the main text.
+\centering
+\subfigure[start]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-3-0.JPG}}
+\subfigure[step 1]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-3-1.JPG}}
+\subfigure[end]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{m-3-2.JPG}}
+\caption{Demo of cross road conflict}
+\label{m-3} %% label for entire figure
+\end{figure*}
+
+\begin{figure*}[!t]
+% ensure that we have normalsize text
+\normalsize
+% Store the current equation number.
+% Set the equation number to one less than the one
+% desired for the first equation here.
+% The value here will have to changed if equations
+% are added or removed prior to the place these
+% equations are referenced in the main text.
+\centering
+\subfigure[start]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.618\textwidth]{m-4-1.JPG}}
+\caption{Demo of moving relatively large number of robots}
+\label{m-4} %% label for entire figure
+\end{figure*}
+
+\begin{figure*}[!t]
+% ensure that we have normalsize text
+\normalsize
+% Store the current equation number.
+% Set the equation number to one less than the one
+% desired for the first equation here.
+% The value here will have to changed if equations
+% are added or removed prior to the place these
+% equations are referenced in the main text.
+\centering
+\subfigure[start]{
+\label{m-2-0} %% label for first subfigure
+\includegraphics[width=0.818\textwidth]{m-5-1.JPG}}
+\caption{Demo of moving relatively large large maze}
+\label{m-5} %% label for entire figure
+\end{figure*}
+
 

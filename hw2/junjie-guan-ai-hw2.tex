@@ -8,7 +8,9 @@
 
 \usepackage{listings}  %  needed for source code listings
 \usepackage{color}
+\usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage[tight,footnotesize]{subfigure}
 
 \definecolor{javared}{rgb}{0.7,0,0} % for strings
 \definecolor{javagreen}{rgb}{0.25,0.6,0.35} % comments
@@ -36,7 +38,7 @@ numbers=left
 %  once set, the \maketitle command (within the document)
 %  will display them nicely
 \title{Mazeworld Solution}
-\author{Junjie Guan $<$gjj@cs.dartmouth.edu$>$}
+\author{Junjie Guan $<gjj@cs.dartmouth.edu>$}
 
 \begin{document}
 \maketitle
@@ -49,6 +51,7 @@ Sovling maze is one of the most classic and popular problems in Artificial Intel
 
 \input{1-astar}
 \input{2-multirobot}
+\input{3-blindrobot}
 
 
 

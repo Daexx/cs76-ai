@@ -25,7 +25,7 @@ public class MultirobotDriver extends Application {
 	Maze maze;
 
 	// instance variables used for graphical display
-	private static final int PIXELS_PER_SQUARE = 40;
+	private static final int PIXELS_PER_SQUARE = 50;
 	MazeView mazeView;
 	List<AnimationPath> animationPathList;
 
@@ -54,15 +54,15 @@ public class MultirobotDriver extends Application {
 //		Integer[] gx = { H, H - 1, H  , H - 1};
 //		Integer[] gy = { H, H - 1, H - 1, H};
 		
-		Integer[] sx = { 0, 1, 2 };
-		Integer[] sy = { 0, 0, 0 };
-		Integer[] gx = { 6, 5, 4 };
-		Integer[] gy = { 6, 6, 6 };
+//		Integer[] sx = { 0, 1, 2 };
+//		Integer[] sy = { 0, 0, 0 };
+//		Integer[] gx = { 6, 5, 4 };
+//		Integer[] gy = { 0, 0, 0 };
 
-//		Integer[] sx = { 0, 2 };
-//		Integer[] sy = { 0, 0 };
-//		Integer[] gx = { 6, 6 };
-//		Integer[] gy = { 0, 1 };
+		Integer[] sx = { 0, 1 };
+		Integer[] sy = { 0, 0 };
+		Integer[] gx = { 39, 38 };
+		Integer[] gy = { 39, 39 };
 		
 //		Integer[] sx = { 0 };
 //		Integer[] sy = { 0 };
@@ -79,6 +79,7 @@ public class MultirobotDriver extends Application {
 			animationPathList.add(new AnimationPath(mazeView, solutionPath));
 		System.out.println(solutionPath);
 		System.out.println("A*:  ");
+		System.out.println("  path length: " + solutionPath.size());
 		mazeProblem.printStats();
 	}
 
@@ -105,7 +106,7 @@ public class MultirobotDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(3);
+		Timeline timeline = new Timeline(.3);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));

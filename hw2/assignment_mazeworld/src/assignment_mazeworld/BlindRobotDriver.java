@@ -39,7 +39,7 @@ public class BlindRobotDriver extends Application {
 	Maze maze;
 
 	// instance variables used for graphical display
-	private static final int PIXELS_PER_SQUARE = 40;
+	private static final int PIXELS_PER_SQUARE = 20;
 	MazeView mazeView;
 	List<AnimationPath> animationPathList;
 
@@ -89,7 +89,7 @@ public class BlindRobotDriver extends Application {
 		runSearches();
 
 		// sets mazeworld's game loop (a javafx Timeline)
-		Timeline timeline = new Timeline(0.1);
+		Timeline timeline = new Timeline(1);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));

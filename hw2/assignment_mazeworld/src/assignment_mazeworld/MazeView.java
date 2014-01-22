@@ -133,7 +133,7 @@ public class MazeView extends Group {
 	}
 	
 	public void footPrint4Multi(int[] lastX, int[] lastY, Circle[] oldPiece, int[] dx, int[] dy) {
-		int radius = (int)(pixelsPerSquare * .1);
+		int radius = (int)(pixelsPerSquare * .25);
 		
 		for(int r = 0; r < lastX.length; r++) {
 			Double offset = (oldPiece[r].getFill().hashCode() % 1000 / 250.);
