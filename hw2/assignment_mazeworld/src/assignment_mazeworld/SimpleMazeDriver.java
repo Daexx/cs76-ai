@@ -25,7 +25,7 @@ public class SimpleMazeDriver extends Application {
 	Maze maze;
 	
 	// instance variables used for graphical display
-	private static final int PIXELS_PER_SQUARE = 13;
+	private static final int PIXELS_PER_SQUARE = 20;
 	MazeView mazeView;
 	List<AnimationPath> animationPathList;
 	
@@ -45,29 +45,43 @@ public class SimpleMazeDriver extends Application {
 		
 		int sx = 0;
 		int sy = 0;
-		int gx = 99;
-		int gy = 59;
+		int gx = 39;
+		int gy = 20;
+		
+//		int sx = 0;
+//		int sy = 0;
+//		int gx = 39;
+//		int gy = 20;
 
 		SimpleMazeProblem mazeProblem = new SimpleMazeProblem(maze, sx, sy, gx,
 				gy);
 
-//		List<SearchNode> bfsPath = mazeProblem.breadthFirstSearch();
-//		animationPathList.add(new AnimationPath(mazeView, bfsPath));
-//		System.out.println("BFS:  ");
-//		mazeProblem.printStats();
-//		System.out.println("  path length: " + bfsPath.size());
-//		System.out.println("  cost: " + bfsPath.get(bfsPath.size() - 1).getCost());
-//
-//		List<SearchNode> dfsPath = mazeProblem
-//				.depthFirstPathCheckingSearch(5000);
-//		animationPathList.add(new AnimationPath(mazeView, dfsPath));
-//		System.out.println("DFS:  ");
-//		mazeProblem.printStats();
-//		System.out.println("  path length: " + dfsPath.size());
-//		System.out.println("  cost: " + dfsPath.get(dfsPath.size() - 1).getCost());
+		List<SearchNode> bfsPath = mazeProblem.breadthFirstSearch();
+		animationPathList.add(new AnimationPath(mazeView, bfsPath));
+		System.out.println("BFS:  ");
+		mazeProblem.printStats();
+		System.out.println("  path length: " + bfsPath.size());
+		System.out.println("  cost: " + bfsPath.get(bfsPath.size() - 1).getCost());
+
+		List<SearchNode> dfsPath = mazeProblem
+				.depthFirstPathCheckingSearch(5000);
+		animationPathList.add(new AnimationPath(mazeView, dfsPath));
+		System.out.println("DFS:  ");
+		mazeProblem.printStats();
+		System.out.println("  path length: " + dfsPath.size());
+		System.out.println("  cost: " + dfsPath.get(dfsPath.size() - 1).getCost());
 		
 
-		Double alpha = 0.;
+		Double alpha = 0.5;
+		mazeProblem.setAlpha(alpha);
+		List<SearchNode> astarPath = mazeProblem.astarSearch();
+		animationPathList.add(new AnimationPath(mazeView, astarPath));
+		System.out.println("A* with alpha " + alpha +":  ");
+		mazeProblem.printStats();
+		System.out.println("  path length: " + astarPath.size());
+		System.out.println("  cost: " + astarPath.get(astarPath.size() - 1).getCost());
+		
+/*		Double alpha = 0.0;
 		mazeProblem.setAlpha(alpha);
 		List<SearchNode> astarPath = mazeProblem.astarSearch();
 		animationPathList.add(new AnimationPath(mazeView, astarPath));
@@ -119,7 +133,7 @@ public class SimpleMazeDriver extends Application {
 		System.out.println("A* with alpha " + alpha +":  ");
 		mazeProblem.printStats();
 		System.out.println("  path length: " + astarPath5.size());
-		System.out.println("  cost: " + astarPath5.get(astarPath5.size() - 1).getCost());
+		System.out.println("  cost: " + astarPath5.get(astarPath5.size() - 1).getCost());*/
 
 	}
 

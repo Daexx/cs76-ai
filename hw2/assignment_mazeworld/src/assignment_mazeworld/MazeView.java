@@ -21,8 +21,8 @@ public class MazeView extends Group {
 	
 	private int numCurrentAnimations;
 	
-	private static Color[] colors = {Color.RED, Color.ORANGE, Color.BLUE, Color.CRIMSON,
-		Color.GREEN, Color.BROWN, Color.DARKGOLDENROD, Color.VIOLET, Color.BLACK};
+	private static Color[] colors = {Color.RED, Color.ORANGE, Color.BLACK, Color.BLUE, Color.CRIMSON,
+		Color.GREEN, Color.BROWN, Color.DARKGOLDENROD, Color.VIOLET};
 
 	int currentColor;
 	
@@ -67,9 +67,6 @@ public class MazeView extends Group {
 			}
 		
 		}
-
-		
-
 	}
 
 	private int squareCenterX(int c) {
@@ -136,7 +133,7 @@ public class MazeView extends Group {
 	}
 	
 	public void footPrint4Multi(int[] lastX, int[] lastY, Circle[] oldPiece, int[] dx, int[] dy) {
-		int radius = (int)(pixelsPerSquare * .4);
+		int radius = (int)(pixelsPerSquare * .1);
 		
 		for(int r = 0; r < lastX.length; r++) {
 			Double offset = (oldPiece[r].getFill().hashCode() % 1000 / 250.);

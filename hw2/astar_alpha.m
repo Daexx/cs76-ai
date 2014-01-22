@@ -1,0 +1,27 @@
+cost = [32.0 41.0 46.0 85.0 193.0 353.0];
+length = [217 215 181 167 159 159];
+alpha = [0 0.25 0.5 0.75 0.9 1];
+
+x = alpha;
+y1 = length;
+y2 = cost;
+[AX,H1,H2] = plotyy(x,y1,x,y2,'plot');
+set(AX(2),'xtick',[0:0.1:1]);
+set(AX(1),'XColor','k','YColor','b');
+set(AX(2),'XColor','k','YColor','r');
+HH1=get(AX(1),'Ylabel');
+set(HH1,'String','');
+set(HH1,'color','b');
+set(AX(1),'ytick',[140:10:220]);
+HH2=get(AX(2),'Ylabel');
+set(HH2,'String','');
+set(HH2,'color','r');
+set(AX(2),'ytick',[0:40:400]);
+set(H1,'LineStyle','-','Marker','v');
+set(H1,'color','b','MarkerFaceColor','b');
+set(H2,'LineStyle','-','Marker','s');
+set(H2,'color','r','MarkerFaceColor','r');
+legend([H1,H2],{'cost';'path length'});
+xlabel('\alpha parameter in A*');
+grid on;
+%title('Labeling plotyy');

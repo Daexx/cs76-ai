@@ -1,0 +1,14 @@
+\contentsline {section}{\numberline {1}Introduction}{1}
+\contentsline {section}{\numberline {2}A-star search}{2}
+\contentsline {subsection}{\numberline {2.1}Basic Idea}{2}
+\contentsline {subsection}{\numberline {2.2}Single robot problem model}{2}
+\contentsline {subsection}{\numberline {2.3}Code implementation}{2}
+\contentsline {subsection}{\numberline {2.4}Output demonstration}{3}
+\contentsline {subsection}{\numberline {2.5}Discussion on cost and heuristic}{4}
+\contentsline {section}{\numberline {3}Multirobot problem}{7}
+\contentsline {subsection}{\numberline {3.1}Problem definition and states}{7}
+\contentsline {subsection}{\numberline {3.2}Code implementation}{7}
+\contentsline {subsubsection}{\numberline {3.2.1}getSuccessors}{7}
+\contentsline {subsubsection}{\numberline {3.2.2}Ohter methods}{7}
+\contentsline {subsection}{\numberline {3.3}Output demonstration}{8}
+\contentsline {subsection}{\numberline {3.4}Discussion on cost and heuristic}{8}

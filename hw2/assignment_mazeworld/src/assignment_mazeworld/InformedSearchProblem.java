@@ -17,7 +17,6 @@ public class InformedSearchProblem extends SearchProblem {
 
 		// initiate the visited with startnode
 		reachedFrom.put(startNode, null);
-		visited.put(startNode, startNode.priority());
 		// initiate the frontier
 		frontiers.add(startNode);
 		while (!frontiers.isEmpty()) {
@@ -26,10 +25,12 @@ public class InformedSearchProblem extends SearchProblem {
 			incrementNodeCount();
 			// retrieve from queue
 			SearchNode current = frontiers.poll();
-			// discard the node if a shorter one is visitedxx
+			// discard the node if a shorter one is visited
 			if (visited.containsKey(current)
 					&& visited.get(current) <= current.priority())
 				continue;
+			else
+				visited.put(current, current.priority());
 			// mark the goal
 			if (current.goalTest())
 				return backchain(current, reachedFrom);
@@ -38,7 +39,6 @@ public class InformedSearchProblem extends SearchProblem {
 			for (SearchNode n : successors) {
 				if (!visited.containsKey(n) || visited.get(n) > n.priority()) {
 					reachedFrom.put(n, current);
-					visited.put(n, n.priority());
 					frontiers.add(n);
 				}
 			}

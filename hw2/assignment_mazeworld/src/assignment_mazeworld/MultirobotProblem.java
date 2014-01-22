@@ -22,7 +22,6 @@ public class MultirobotProblem extends InformedSearchProblem {
 
 	public MultirobotProblem(Maze m, int sr, Integer[] sx, Integer[] sy,
 			Integer[] gx, Integer[] gy) {
-
 		R = sr;
 		startNode = new MultirobotNode(sx, sy, 0, 0);
 		xStart = sx;
@@ -65,32 +64,21 @@ public class MultirobotProblem extends InformedSearchProblem {
 
 		public ArrayList<SearchNode> getSuccessors() {
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
-			Integer[] xNew = new Integer[R];
-			Integer[] yNew = new Integer[R];
-
-			// initiate the potential new coordinate
-			for (int r = 0; r < R; r++) {
-				xNew[r] = robots[r][0];
-				yNew[r] = robots[r][1];
-			}
-
-			//boolean actionAvailable = false;
+			Integer[] xNew = new Integer[R], yNew = new Integer[R];
+			// take actions
 			for (int[] action : actions) {
-				//if (action == Maze.STAY && actionAvailable)
-					//break;
-				xNew[turn] = robots[turn][0] + action[0];
-				yNew[turn] = robots[turn][1] + action[1];
+				for (int r = 0; r < R; r++) {
+					xNew[r] = robots[r][0] + action[0] * (r == turn ? 1 : 0);
+					yNew[r] = robots[r][1] + action[1] * (r == turn ? 1 : 0);
+				}
 				if (maze.isLegal(xNew[turn], yNew[turn])
 						&& noCollision(xNew, yNew)) {
 					SearchNode succ = new MultirobotNode(xNew, yNew, getCost()
 							+ Math.abs(action[0]) + Math.abs(action[1]),
 							(turn + 1) % R);
 					successors.add(succ);
-					//actionAvailable = true;
 				}
 			}
-
-			// System.out.println(this.toString() + ":\n" + successors);
 			return successors;
 		}
 
@@ -120,13 +108,13 @@ public class MultirobotProblem extends InformedSearchProblem {
 					}
 				}*/
 
-/*		private void iniNew(Integer[] xNew, Integer[] yNew, Integer[] xNow,
-				Integer[] yNow) {
-			for (int r = 0; r < R; r++) {
-				xNew[r] = xNow[r];
-				yNew[r] = yNow[r];
-			}
-		}*/
+		/*		private void iniNew(Integer[] xNew, Integer[] yNew, Integer[] xNow,
+						Integer[] yNow) {
+					for (int r = 0; r < R; r++) {
+						xNew[r] = xNow[r];
+						yNew[r] = yNow[r];
+					}
+				}*/
 
 		private boolean noCollision(Integer[] xNew, Integer[] yNew) {
 			HashSet<Integer> existed = new HashSet<>();
@@ -154,8 +142,9 @@ public class MultirobotProblem extends InformedSearchProblem {
 		@Override
 		public boolean equals(Object other) {
 			boolean equal = true;
-			for(int r = 0; r < R; r++)
-				equal &= Arrays.equals(robots[r], ((MultirobotNode) other).robots[r]);
+			for (int r = 0; r < R; r++)
+				equal &= Arrays.equals(robots[r],
+						((MultirobotNode) other).robots[r]);
 			equal &= turn == ((MultirobotNode) other).turn;
 			return equal;
 		}
