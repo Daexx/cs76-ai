@@ -16,7 +16,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 	private static int actions[][] = { Maze.NORTH, Maze.EAST, Maze.SOUTH,
 			Maze.WEST };
 
-	private Coordinate coordGoal;
+	private Coordinate coordStart, coordGoal;
 
 	private Maze maze;
 
@@ -77,8 +77,9 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		}
 	}
 
-	public BlindRobotProblemV2(Maze m, int gx, int gy) {
+	public BlindRobotProblemV2(Maze m, int sx, int sy, int gx, int gy) {
 		maze = m;
+		coordStart = new Coordinate(sx, sy);
 		coordGoal = new Coordinate(gx, gy);
 		startNode = new BlindRobotNode();
 	}

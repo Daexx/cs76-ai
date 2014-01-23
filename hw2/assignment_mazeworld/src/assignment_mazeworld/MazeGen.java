@@ -13,7 +13,7 @@ public class MazeGen {
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
 				Double rnd = SimplexNoise.noise(y, x);
-				if(rnd > 0.45) {
+				if(rnd > 0.35) {
 //					if(x > size / 2 && y < size / 2)
 //						writer.print((int)(Math.random() * 10. % 2 + 1));
 //					else if(x < size / 2 && y > size / 2)

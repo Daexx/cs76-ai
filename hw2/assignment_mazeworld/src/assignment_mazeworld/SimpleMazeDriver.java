@@ -25,7 +25,7 @@ public class SimpleMazeDriver extends Application {
 	Maze maze;
 	
 	// instance variables used for graphical display
-	private static final int PIXELS_PER_SQUARE = 20;
+	private static final int PIXELS_PER_SQUARE = 18;
 	MazeView mazeView;
 	List<AnimationPath> animationPathList;
 	
