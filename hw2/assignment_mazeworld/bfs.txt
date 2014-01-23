@@ -1,9 +1,0 @@
-[{(0,0)(2,0)}
-, {(0,1)(2,1)}
-, {(0,2)(1,1)}
-, {(1,2)(0,1)}
-, {(2,2)(0,2)}
-]
-A*:  
-  Nodes explored during search:  15167
-  Maximum space usage during search 636788

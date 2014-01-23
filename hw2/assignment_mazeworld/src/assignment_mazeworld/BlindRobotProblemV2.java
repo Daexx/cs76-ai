@@ -1,5 +1,11 @@
 package assignment_mazeworld;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,7 +22,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 	private static int actions[][] = { Maze.NORTH, Maze.EAST, Maze.SOUTH,
 			Maze.WEST };
 
-	private Coordinate coordStart, coordGoal;
+	private Coordinate coordGoal;
 
 	private Maze maze;
 
@@ -53,7 +59,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		}
 
 		private boolean equalWithCast(Object other) {
-			return Math.abs((x - ((Coordinate) other).x))< 0.01
+			return Math.abs((x - ((Coordinate) other).x)) < 0.01
 					&& (Math.abs(y - ((Coordinate) other).y) < 0.01);
 		}
 
@@ -70,18 +76,28 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		public int hashCode() {
 			return (int) (x + 1000 * y);
 		}
-		
+
 		@Override
-		public String toString(){
-			return "(" + x + "," + y + ")";
+		public String toString() {
+			DecimalFormat df = new DecimalFormat("0.0");
+			return "(" + df.format(x) + "," + df.format(y) + ")";
 		}
 	}
 
-	public BlindRobotProblemV2(Maze m, int sx, int sy, int gx, int gy) {
+	public BlindRobotProblemV2(Maze m, int gx, int gy) {
 		maze = m;
-		coordStart = new Coordinate(sx, sy);
 		coordGoal = new Coordinate(gx, gy);
-		startNode = new BlindRobotNode();
+		// initiate the allCoord
+		HashSet<Coordinate> newCoords = new HashSet<>();
+		for (int x = 0; x < maze.width; x++) {
+			for (int y = 0; y < maze.height; y++) {
+				if (maze.getInt(x, y) == 0) {
+					Coordinate newNode = new Coordinate(x, y);
+					newCoords.add(newNode);
+				}
+			}
+		}
+		startNode = new BlindRobotNode(newCoords, 0);
 	}
 
 	// node class used by searches. Searches themselves are implemented
@@ -97,36 +113,10 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		// and for comparing paths
 		private double cost;
 
-		public BlindRobotNode() {
-			allCoord = new HashSet<>();
-			cost = 0;
-
-			// initiate the allCoord
-			// if it is at start node, where previous = null
-			for (int x = 0; x < maze.width; x++) {
-				for (int y = 0; y < maze.height; y++) {
-					if (maze.getInt(x, y) == 0) {
-						Coordinate newNode = new Coordinate(x, y);
-						allCoord.add(newNode);
-					}
-				}
-			}
-			newCenDev();
-		}
-
-		public BlindRobotNode(Coordinate dxdy, BlindRobotNode prev, double c) {
+		public BlindRobotNode(HashSet<Coordinate> coords, double c) {
 			// initiate the positions
-			allCoord = new HashSet<>();
+			allCoord = coords;
 			cost = c;
-			// move all the node in the belief set to direction dxdy
-			for (Coordinate xy : prev.allCoord) {
-				if (maze.isLegal((int) (xy.x + dxdy.x), (int) (xy.y + dxdy.y))) {
-					allCoord.add(new Coordinate(xy.x + dxdy.x, xy.y + dxdy.y));
-				} else {
-					// if not legal, simply not moving
-					allCoord.add(new Coordinate(xy.x, xy.y));
-				}
-			}
 			newCenDev();
 		}
 
@@ -159,10 +149,52 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		}
 
 		public ArrayList<SearchNode> getSuccessors() {
+			// PrintWriter writer;
+			// try {
+			// writer = new PrintWriter(new FileOutputStream(new File(
+			// "debug.log"), true));
+			// writer.println("---------------------------------------");
+			// writer.close();
+			// } catch (FileNotFoundException e) {
+			// // TODO Auto-generated catch block
+			// e.printStackTrace();
+			// }
+
+			DecimalFormat df = new DecimalFormat("0.0");
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for (int[] action : actions) {
+				HashSet<Coordinate> newCoords = new HashSet<>();
+				// move all the node in the belief set to direction dxdy
 				Coordinate dxdy = new Coordinate(action[0], action[1]);
-				successors.add(new BlindRobotNode(dxdy, this, getCost() + 1.0));
+				for (Coordinate xy : this.allCoord) {
+					if (maze.isLegal(xy.x + dxdy.x, xy.y + dxdy.y)) {
+						newCoords.add(new Coordinate(xy.x + dxdy.x, xy.y
+								+ dxdy.y));
+					} else {
+						// if not legal, simply not moving
+						newCoords.add(new Coordinate(xy.x, xy.y));
+					}
+					// System.out.println(xy + "+" + dxdy + "=" + newCoords);
+				}
+
+				// new java.util.Scanner(System.in).nextLine();
+				SearchNode succ = new BlindRobotNode(newCoords, getCost() + 1.0
+						* newCoords.size());
+				successors.add(succ);
+
+				// try {
+				// writer = new PrintWriter(new FileOutputStream(new File(
+				// "debug.log"), true));
+				// writer.println("avg: " + this.center + " dev: "
+				// + this.sDeviation + " set: " + this.allCoord
+				// + " pty: " + df.format(priority()) + " cost: "
+				// + getCost() + " " + " dir: " + dxdy + " new set: "
+				// + newCoords + " new pty:" + df.format(succ.priority()));
+				// writer.close();
+				// } catch (FileNotFoundException e) {
+				// // TODO Auto-generated catch block
+				// e.printStackTrace();
+				// }
 			}
 			return successors;
 		}
@@ -173,7 +205,8 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 
 		@Override
 		public boolean goalTest() {
-			System.out.println(center + " and " + sDeviation + " and " + coordGoal);
+			// System.out.println(center + " and " + sDeviation + " and "
+			// + coordGoal);
 			return center.equalWithCast(coordGoal) && sDeviation.isZero();
 		}
 
@@ -205,7 +238,10 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			// manhattan distance metric for simple maze with one agent:
 			double dx = coordGoal.x - center.x;
 			double dy = coordGoal.y - center.y;
-			return Math.abs(dx) + Math.abs(dy) + sDeviation.x + sDeviation.y;
+//			return Math.max((Math.abs(dx) + Math.abs(dy)) ,
+//					allCoord.size());
+			return Math.max((Math.abs(dx) + Math.abs(dy)) ,
+					(sDeviation.x + sDeviation.y));
 			// return allCoord.size() - 1;
 		}
 

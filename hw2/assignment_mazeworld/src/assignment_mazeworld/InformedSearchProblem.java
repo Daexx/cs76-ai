@@ -42,6 +42,7 @@ public class InformedSearchProblem extends SearchProblem {
 					frontiers.add(n);
 				}
 			}
+//			System.out.println(frontiers.size());
 		}
 		return null;
 	}

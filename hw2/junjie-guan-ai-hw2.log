@@ -1,7 +1,7 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  23 JAN 2014 03:07
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  23 JAN 2014 17:41
 entering extended mode
 **junjie-guan-ai-hw2.tex
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\junjie-guan-ai-hw2.tex
+(D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -305,7 +305,7 @@ Package: subfigure 2002/07/30 v2.1.4 subfigure package
 ("C:\Program Files\MiKTeX 2.9\tex\latex\listings\lstlang1.sty"
 File: lstlang1.sty 2013/08/26 1.5b listings language file
 )
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\junjie-guan-ai-hw2.aux
+(D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.aux
 
 LaTeX Warning: Label `m-2-0' multiply defined.
 
@@ -415,49 +415,34 @@ LaTeX Warning: Label `b-2-0' multiply defined.
 LaTeX Warning: Label `sub@b-2-0' multiply defined.
 
 
-LaTeX Warning: Label `b-2-0' multiply defined.
+LaTeX Warning: Label `b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
+LaTeX Warning: Label `sub@b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `b-2-0' multiply defined.
+LaTeX Warning: Label `b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
+LaTeX Warning: Label `sub@b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `b-2-0' multiply defined.
+LaTeX Warning: Label `b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
+LaTeX Warning: Label `sub@b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `b-2-0' multiply defined.
+LaTeX Warning: Label `b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
+LaTeX Warning: Label `sub@b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `b-2-0' multiply defined.
+LaTeX Warning: Label `b-1-0' multiply defined.
 
 
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
-
-
-LaTeX Warning: Label `b-2-0' multiply defined.
-
-
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
-
-
-LaTeX Warning: Label `b-2-0' multiply defined.
-
-
-LaTeX Warning: Label `sub@b-2-0' multiply defined.
-
-
-LaTeX Warning: Label `b-2' multiply defined.
+LaTeX Warning: Label `sub@b-1-0' multiply defined.
 
 
 LaTeX Warning: Label `b-2-0' multiply defined.
@@ -530,8 +515,8 @@ LaTeX Info: Redefining \ref on input line 43.
 LaTeX Info: Redefining \pageref on input line 43.
 LaTeX Info: Redefining \nameref on input line 43.
 
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\junjie-guan-ai-hw2.out)
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\junjie-guan-ai-hw2.out)
+(D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.out)
+(D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.out)
 \@outlinefile=\write3
 Requested font "cmr17" at 17.28pt
 Requested font "cmr12" at 12.0pt
@@ -549,7 +534,7 @@ Requested font "cmex7" at 6.0pt
 Requested font "cmr12" at 14.4pt
 Requested font "cmbx12" at 14.4pt
 
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\junjie-guan-ai-hw2.toc
+(D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.toc
 Requested font "cmbx10" at 10.0pt
 Requested font "cmex7" at 7.0pt
 Requested font "cmex7" at 5.0pt
@@ -560,25 +545,23 @@ Requested font "cmex7" at 5.0pt
 File: se-ascii-print.def 2011/12/02 v1.10 stringenc: Printable ASCII characters
 
 )
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\1-astar.tex [1
+[1
 
 ]
 Requested font "cmbx12" at 12.0pt
 File: astar.pdf Graphic file (type QTm)
-
-<use  "astar.pdf" >
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 28.
+ <use  "astar.pdf" >
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 79.
  ("C:\Program Files\MiKTeX 2.9\tex\latex\base\omscmr.fd"
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 28.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 79.
 Requested font "cmti10" at 10.0pt
 Requested font "cmtt10" at 10.0pt
 LaTeX Font Info:    Font shape `OT1/cmtt/bx/n' in size <10> not available
-(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 33.
-
-[2
+(Font)              Font shape `OT1/cmtt/m/n' tried instead on input line 84.
+ [2
 
 ]
 Requested font "cmtt8" at 8.0pt
@@ -592,121 +575,86 @@ File: s-2-1.JPG Graphic file (type QTm)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-) (C:\Users\jack\Documents\GitHub\cs76-ai\hw2\2-multirobot.tex [5] [6]
+[5] [6]
 Missing character: There is no ， in font cmr10!
  [7
 
-]
-[8] [9]
+] [8] [9]
 File: m-1-3.JPG Graphic file (type QTm)
  <use  "m-1-3.JPG" >
 File: m-1-0.JPG Graphic file (type QTm)
  <use  "m-1-0.JPG" >
 File: m-1-1.JPG Graphic file (type QTm)
- <use  "m-1-1.JPG" >
-File: m-1-2.JPG Graphic file (type QTm)
 
-<use  "m-1-2.JPG" >
+<use  "m-1-1.JPG" >
+File: m-1-2.JPG Graphic file (type QTm)
+ <use  "m-1-2.JPG" >
 File: m-1-4.JPG Graphic file (type QTm)
  <use  "m-1-4.JPG" >
 File: m-2-0.JPG Graphic file (type QTm)
- <use  "m-2-0.JPG" >
-File: m-2-1.JPG Graphic file (type QTm)
 
-<use  "m-2-1.JPG" >
+<use  "m-2-0.JPG" >
+File: m-2-1.JPG Graphic file (type QTm)
+ <use  "m-2-1.JPG" >
 File: m-2-2.JPG Graphic file (type QTm)
  <use  "m-2-2.JPG" >
 File: m-2-3.JPG Graphic file (type QTm)
- <use  "m-2-3.JPG" >
-File: m-2-4.JPG Graphic file (type QTm)
 
-<use  "m-2-4.JPG" >
+<use  "m-2-3.JPG" >
+File: m-2-4.JPG Graphic file (type QTm)
+ <use  "m-2-4.JPG" >
 File: m-2-5.JPG Graphic file (type QTm)
  <use  "m-2-5.JPG" >
 File: m-2-6.JPG Graphic file (type QTm)
- <use  "m-2-6.JPG" >
-File: m-2-7.JPG Graphic file (type QTm)
 
-<use  "m-2-7.JPG" >
+<use  "m-2-6.JPG" >
+File: m-2-7.JPG Graphic file (type QTm)
+ <use  "m-2-7.JPG" >
 File: m-3-0.JPG Graphic file (type QTm)
  <use  "m-3-0.JPG" >
 File: m-3-1.JPG Graphic file (type QTm)
- <use  "m-3-1.JPG" >
-File: m-3-2.JPG Graphic file (type QTm)
 
-<use  "m-3-2.JPG" >
+<use  "m-3-1.JPG" >
+File: m-3-2.JPG Graphic file (type QTm)
+ <use  "m-3-2.JPG" >
 File: m-4-1.JPG Graphic file (type QTm)
  <use  "m-4-1.JPG" >
 File: m-5-1.JPG Graphic file (type QTm)
- <use  "m-5-1.JPG" >)
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\3-blindrobot.tex [10] [11] [12]
-[13] [14
+
+<use  "m-5-1.JPG" > [10] [11] [12] [13] [14
 
 ] [15]
 File: b-2-1.JPG Graphic file (type QTm)
  <use  "b-2-1.JPG" >
 File: b-2-2.JPG Graphic file (type QTm)
- <use  "b-2-2.JPG" >
+
+<use  "b-2-2.JPG" >
 File: b-2-3.JPG Graphic file (type QTm)
  <use  "b-2-3.JPG" >
 File: b-2-4.JPG Graphic file (type QTm)
-
-<use  "b-2-4.JPG" >
+ <use  "b-2-4.JPG" >
 File: b-2-5.JPG Graphic file (type QTm)
- <use  "b-2-5.JPG" >
+
+<use  "b-2-5.JPG" >
 File: b-2-6.JPG Graphic file (type QTm)
  <use  "b-2-6.JPG" >
 File: b-2-7.JPG Graphic file (type QTm)
-
-<use  "b-2-7.JPG" >
+ <use  "b-2-7.JPG" >
 File: b-1-2.JPG Graphic file (type QTm)
- <use  "b-1-2.JPG" >
+
+<use  "b-1-2.JPG" >
 File: b-1-3.JPG Graphic file (type QTm)
  <use  "b-1-3.JPG" >
 File: b-1-4.JPG Graphic file (type QTm)
-
-<use  "b-1-4.JPG" >
+ <use  "b-1-4.JPG" >
 File: b-1-5.JPG Graphic file (type QTm)
- <use  "b-1-5.JPG" >
+
+<use  "b-1-5.JPG" >
 File: b-1-6.JPG Graphic file (type QTm)
  <use  "b-1-6.JPG" >
 File: b-1-7.JPG Graphic file (type QTm)
-
-<use  "b-1-7.JPG" >
+ <use  "b-1-7.JPG" >
 File: b-2-2.JPG Graphic file (type QTm)
- <use  "b-2-2.JPG" >
-File: b-2-3.JPG Graphic file (type QTm)
- <use  "b-2-3.JPG" >
-File: b-2-4.JPG Graphic file (type QTm)
 
-<use  "b-2-4.JPG" >
-File: b-2-5.JPG Graphic file (type QTm)
- <use  "b-2-5.JPG" >
-File: b-2-6.JPG Graphic file (type QTm)
- <use  "b-2-6.JPG" >
-File: b-2-7.JPG Graphic file (type QTm)
-
-<use  "b-2-7.JPG" >)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 71.
- [16] [17] [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 71.
-
-(C:\Users\jack\Documents\GitHub\cs76-ai\hw2\junjie-guan-ai-hw2.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 71.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 71.
-
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 71.
- ) 
-Here is how much of TeX's memory you used:
- 10315 strings out of 429025
- 140776 string characters out of 3167800
- 263293 words of memory out of 3000000
- 13482 multiletter control sequences out of 15000+200000
- 10065 words of font info for 37 fonts, out of 3000000 for 9000
- 912 hyphenation exceptions out of 8191
- 32i,8n,45p,762b,1745s stack positions out of 5000i,500n,10000p,200000b,50000s
-
-Output written on junjie-guan-ai-hw2.pdf (18 pages).
+<use  "b-2-2.JPG" >
+File: b-2-3.JPG Graphic file (type 

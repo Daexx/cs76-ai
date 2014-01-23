@@ -78,6 +78,16 @@ public class Maze {
 		return false;
 	}
 	
+	// is the location x, y on the map, and also a legal floor tile (not a wall)?
+	public boolean isLegal(Double x, Double y) {
+		// on the map
+		if(x >= 0 && x < width && y >= 0 && y < height) {
+			// and it's a floor tile, not a wall tile:
+			return getInt(x.intValue(), y.intValue()) != -1;
+		}
+		return false;
+	}
+	
 	
 	public String toString() {
 		String s = "";
