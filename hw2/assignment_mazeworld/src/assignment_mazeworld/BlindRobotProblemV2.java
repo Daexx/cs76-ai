@@ -53,8 +53,8 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		}
 
 		private boolean equalWithCast(Object other) {
-			return (x - ((Coordinate) other).x < 0.01)
-					&& (y - ((Coordinate) other).y < 0.01);
+			return Math.abs((x - ((Coordinate) other).x))< 0.01
+					&& (Math.abs(y - ((Coordinate) other).y) < 0.01);
 		}
 
 		private boolean isZero() {
@@ -70,13 +70,18 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		public int hashCode() {
 			return (int) (x + 1000 * y);
 		}
+		
+		@Override
+		public String toString(){
+			return "(" + x + "," + y + ")";
+		}
 	}
 
 	public BlindRobotProblemV2(Maze m, int sx, int sy, int gx, int gy) {
 		maze = m;
 		coordStart = new Coordinate(sx, sy);
 		coordGoal = new Coordinate(gx, gy);
-		startNode = new BlindRobotNode(0);
+		startNode = new BlindRobotNode();
 	}
 
 	// node class used by searches. Searches themselves are implemented
@@ -92,9 +97,9 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		// and for comparing paths
 		private double cost;
 
-		public BlindRobotNode(double c) {
+		public BlindRobotNode() {
 			allCoord = new HashSet<>();
-			cost = c;
+			cost = 0;
 
 			// initiate the allCoord
 			// if it is at start node, where previous = null
@@ -109,12 +114,12 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			newCenDev();
 		}
 
-		public BlindRobotNode(Coordinate dxdy, double c) {
+		public BlindRobotNode(Coordinate dxdy, BlindRobotNode prev, double c) {
 			// initiate the positions
 			allCoord = new HashSet<>();
 			cost = c;
 			// move all the node in the belief set to direction dxdy
-			for (Coordinate xy : allCoord) {
+			for (Coordinate xy : prev.allCoord) {
 				if (maze.isLegal((int) (xy.x + dxdy.x), (int) (xy.y + dxdy.y))) {
 					allCoord.add(new Coordinate(xy.x + dxdy.x, xy.y + dxdy.y));
 				} else {
@@ -157,7 +162,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for (int[] action : actions) {
 				Coordinate dxdy = new Coordinate(action[0], action[1]);
-				successors.add(new BlindRobotNode(dxdy, getCost() + 1.0));
+				successors.add(new BlindRobotNode(dxdy, this, getCost() + 1.0));
 			}
 			return successors;
 		}
@@ -168,6 +173,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 
 		@Override
 		public boolean goalTest() {
+			System.out.println(center + " and " + sDeviation + " and " + coordGoal);
 			return center.equalWithCast(coordGoal) && sDeviation.isZero();
 		}
 

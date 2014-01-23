@@ -160,7 +160,7 @@ public class BlindRobotDriver extends Application {
 				int dx = mazeNode.getX() - lastX;
 				int dy = mazeNode.getY() - lastY;
 				// System.out.println("animating " + dx + " " + dy);
-				mazeView.footPrint(lastX, lastY, piece, (dx + 2) * 10 + dy + 2);
+				//mazeView.footPrint(lastX, lastY, piece, (dx + 2) * 10 + dy + 2);
 				animateMove(piece, dx, dy);
 				lastX = mazeNode.getX();
 				lastY = mazeNode.getY();
