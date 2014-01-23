@@ -2,17 +2,9 @@
 \section{Multirobot problem}
 \subsection{Problem definition and states}
 
-The basic idea is put a robot at any abitrary legal position, and give the robot a map. Let the robot try to figure out where it is.
+The basic idea is fill the maze with robots, give them instruction simultaneously, while gradually merging them to one point, which is the goal point.
 
-The problem definition is significantly different from the previous two. This time, the state is all the possible current posiiton. At each movement we can eliminate all those positions that does not match the robot's action. Finally, there will be only one position left in the state. The coordinate become nothing but a auxiliary tool this time.
-
-At first sight I think of pattern recognition. For example, let the robot try to go to 4 direction and do the mathcing on the map. Though it can exploit maximum information at each position, it has some drawbacks. Such as no metric to evaluate which direction should go. We probably have no choice but do random search here. What's more, matching four directions looks redundant, which is just a repeat of four checking.
-
-There must a smaller atom in this problem model. So, instead of matching four direction at one position, I try to match the states only when I am moving. And at each move, I can eliminate some candidates.
-
-The initial state looks similar to multi robot problem, which is also a 2-D matrix. Except that the list of the state will shrink during the searching.
-
-
+The initial state looks similar to multi robot problem, which is also a 2-D matrix. $k$ equals to number of cell that is not wall.
 
 $$\begin{pmatrix}
 x_0 & y_0 \\
@@ -21,12 +13,18 @@ x_1 & y_1 \\
 x_{k-1} & y_{k-1}
 \end{pmatrix}$$
 
+The key of the problem is to design a consistent heuristic funciton. Which satisfy the formula in previous section. My intuition is approaching the goal while shrinking the range of robot positions. I think calculating the average and standard deviation of all the coordinates is a reasonable approach. The average describe the center of the group, the deviation describes the convergence. 
 
+So, the state of this problem is as following, noted that $[x_i,y_i]$ is a $1\times 2$ matrix :
+$$c_{x,y} = \sum^{k-1}_{i=0}[x_i,y_i]/k$$
+$$d_{x,y} = ||\sqrt{ c_{x^2,y^2} - (c_{x,y})^2}||$$
 
+Then, the heuristic function would be:
+$$h = manhattan(c_{x,y}, g_{x,y}) + d_{x,y}$$
 
-
-
-
-
+How do I prove that the heuristic function is consistent? First, it apparently satisfy $h(G)=0$, because at that point, all robot will stay at one point, which makes $ d_{x,y} = 0$. Since the point is the goal, which makes, $manhattan(c_{x,y})=0$. As for $h(N) \leq c(N,P)+h(P) $, it is similar to the way that I used to prove monotonic previously. First let's assume an extreme case where there is an empty $N \times N$ maze, and the goal is at the top-right. I do a little math on it, it seems that if $N > 1 or N < -0.4$, the $cost$ is always larger than $h$. It is obvious always satisfied. (Since I must say I am not a mathematician, I'm not sure if I do it right, feel free to discuss with me if you doubt it).
 
 \subsection{Discussions Polynomial-time blind robot planning}
+If we take it as k-robot problem, where $k$ equals to number of cell. Then upper bound of the sates should be $(n-w)^k$. However, 
+
+\subsection{Code implementation}

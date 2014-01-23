@@ -97,7 +97,7 @@ public class MazeView extends Group {
 		int radius = (int)(pixelsPerSquare * .4);
 
 		Circle piece = new Circle(squareCenterX(c), squareCenterY(r), radius);
-		piece.setStroke(Color.GRAY);
+		piece.setStroke(Color.RED);
 		piece.setFill(Color.WHITE);
 		this.getChildren().add(piece);
 		return piece;
