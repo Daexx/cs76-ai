@@ -23,7 +23,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 	public class Coordinate {
 		public Double x;
 		public Double y;
-		
+
 		void add2center(Coordinate other, int newN) {
 			x = (x * (newN - 1) + other.x) / newN;
 			y = (y * (newN - 1) + other.y) / newN;
@@ -33,7 +33,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			x = (double) a;
 			y = (double) b;
 		}
-		
+
 		Coordinate(double a, double b) {
 			x = a;
 			y = b;
@@ -44,9 +44,21 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			y = other.y;
 		}
 
+		public int getX() {
+			return x.intValue();
+		}
+
+		public int getY() {
+			return y.intValue();
+		}
+
 		private boolean equalWithCast(Object other) {
 			return (x - ((Coordinate) other).x < 0.01)
 					&& (y - ((Coordinate) other).y < 0.01);
+		}
+
+		private boolean isZero() {
+			return (x < 0.01) && (y < 0.01);
 		}
 
 		@Override
@@ -102,12 +114,12 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			allCoord = new HashSet<>();
 			cost = c;
 			// move all the node in the belief set to direction dxdy
-			for (Coordinate bs : allCoord) {
-				if (maze.isLegal((int)(bs.x + dxdy.x), (int)(bs.y + dxdy.y))) {
-					allCoord.add(new Coordinate(bs.x + dxdy.x, bs.y + dxdy.y));
+			for (Coordinate xy : allCoord) {
+				if (maze.isLegal((int) (xy.x + dxdy.x), (int) (xy.y + dxdy.y))) {
+					allCoord.add(new Coordinate(xy.x + dxdy.x, xy.y + dxdy.y));
 				} else {
 					// if not legal, simply not moving
-					allCoord.add(new Coordinate(bs.x, bs.y));
+					allCoord.add(new Coordinate(xy.x, xy.y));
 				}
 			}
 			newCenDev();
@@ -117,11 +129,11 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		private void newCenDev() {
 			center = new Coordinate(0, 0);
 			sDeviation = new Coordinate(0, 0);
-			for (Coordinate cd : allCoord) {
-				center.x += cd.x;
-				center.y += cd.y;
-				sDeviation.x += Math.pow(cd.x, 2);
-				sDeviation.y += Math.pow(cd.y, 2);
+			for (Coordinate xy : allCoord) {
+				center.x += xy.x;
+				center.y += xy.y;
+				sDeviation.x += Math.pow(xy.x, 2);
+				sDeviation.y += Math.pow(xy.y, 2);
 			}
 			center.x /= allCoord.size();
 			center.y /= allCoord.size();
@@ -129,15 +141,17 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			sDeviation.y = Math.pow(sDeviation.y - center.y * center.y, 0.5);
 		}
 
-		public boolean inallCoord(Coordinate cd) {
-			return allCoord.contains(cd);
+		public boolean inallCoord(Coordinate xy) {
+			return allCoord.contains(xy);
 		}
 
-		/*
-		 * public int getX() { return current.x; }
-		 * 
-		 * public int getY() { return current.y; }
-		 */
+		public int getX() {
+			return center.x.intValue();
+		}
+
+		public int getY() {
+			return center.y.intValue();
+		}
 
 		public ArrayList<SearchNode> getSuccessors() {
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
@@ -154,9 +168,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 
 		@Override
 		public boolean goalTest() {
-			// System.out.println("allCoord.size(): " + allCoord.size()
-			// + ". At " + getX() + "," + getY());
-			return allCoord.size() == 1 && center == coordGoal;
+			return center.equalWithCast(coordGoal) && sDeviation.isZero();
 		}
 
 		// an equality test is required so that visited sets in searches
@@ -173,8 +185,8 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 
 		@Override
 		public String toString() {
-			return new String("Maze state " + center.x + ", " + center.y
-					+ " " + " depth " + getCost());
+			return new String("Maze state " + center.x + ", " + center.y + " "
+					+ " depth " + getCost());
 		}
 
 		@Override
