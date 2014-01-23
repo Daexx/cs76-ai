@@ -21,10 +21,20 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 	private Maze maze;
 
 	public class Coordinate {
-		public int x;
-		public int y;
+		public Double x;
+		public Double y;
+		
+		void add2center(Coordinate other, int newN) {
+			x = (x * (newN - 1) + other.x) / newN;
+			y = (y * (newN - 1) + other.y) / newN;
+		}
 
 		Coordinate(int a, int b) {
+			x = (double) a;
+			y = (double) b;
+		}
+		
+		Coordinate(double a, double b) {
 			x = a;
 			y = b;
 		}
@@ -34,6 +44,11 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			y = other.y;
 		}
 
+		private boolean equalWithCast(Object other) {
+			return (x - ((Coordinate) other).x < 0.01)
+					&& (y - ((Coordinate) other).y < 0.01);
+		}
+
 		@Override
 		public boolean equals(Object other) {
 			return hashCode() == ((Coordinate) other).hashCode();
@@ -41,7 +56,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 
 		@Override
 		public int hashCode() {
-			return x + 10000 * y;
+			return (int) (x + 1000 * y);
 		}
 	}
 
@@ -57,109 +72,108 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 	public class BlindRobotNode implements SearchNode {
 
 		// location of the agent in the maze
-		protected Coordinate current, previous;
-		protected HashSet<Coordinate> candidates;
+		protected Coordinate center, sDeviation; // center & standard deviation
+		protected HashSet<Coordinate> allCoord;
 
 		// how far the current node is from the start. Not strictly required
 		// for uninformed search, but useful information for debugging,
 		// and for comparing paths
 		private double cost;
 
-		public BlindRobotNode(Coordinate curr, double c) {
-			candidates = new HashSet<>();
-			current = new Coordinate(curr);
+		public BlindRobotNode(double c) {
+			allCoord = new HashSet<>();
 			cost = c;
 
-			// initiate the candidates
-			// if it is at startnode, where previous = null
+			// initiate the allCoord
+			// if it is at start node, where previous = null
 			for (int x = 0; x < maze.width; x++) {
 				for (int y = 0; y < maze.height; y++) {
 					if (maze.getInt(x, y) == 0) {
-						// System.out.println(x + "," + y);
-						candidates.add(new Coordinate(x, y));
+						Coordinate newNode = new Coordinate(x, y);
+						allCoord.add(newNode);
 					}
 				}
 			}
+			newCenDev();
 		}
 
-		public BlindRobotNode(Coordinate curr, BlindRobotNode prevNode,
-				boolean noWall, double c) {
+		public BlindRobotNode(Coordinate dxdy, double c) {
 			// initiate the positions
-			candidates = new HashSet<>();
-			current = new Coordinate(curr);
-			previous = new Coordinate(prevNode.current);
+			allCoord = new HashSet<>();
 			cost = c;
-
-			// if now is one of the searching node, compute derection first
-			int dx = current.x - previous.x, dy = current.y - previous.y;
-			for (Coordinate cd : prevNode.candidates) {
-				// if it comes from in wall node, or if the action matches
-				// we add this candidate
-				if (maze.isLegal(cd.x + dx, cd.y + dy) == noWall) {
-					Coordinate tmp = new Coordinate(cd.x + dx, cd.y + dy);
-					candidates.add(tmp);
+			// move all the node in the belief set to direction dxdy
+			for (Coordinate bs : allCoord) {
+				if (maze.isLegal((int)(bs.x + dxdy.x), (int)(bs.y + dxdy.y))) {
+					allCoord.add(new Coordinate(bs.x + dxdy.x, bs.y + dxdy.y));
+				} else {
+					// if not legal, simply not moving
+					allCoord.add(new Coordinate(bs.x, bs.y));
 				}
 			}
-
+			newCenDev();
 		}
 
-		public boolean inCandidates(Coordinate cd) {
-			return candidates.contains(cd);
+		// dev = E(x^2) - (Ex)^2
+		private void newCenDev() {
+			center = new Coordinate(0, 0);
+			sDeviation = new Coordinate(0, 0);
+			for (Coordinate cd : allCoord) {
+				center.x += cd.x;
+				center.y += cd.y;
+				sDeviation.x += Math.pow(cd.x, 2);
+				sDeviation.y += Math.pow(cd.y, 2);
+			}
+			center.x /= allCoord.size();
+			center.y /= allCoord.size();
+			sDeviation.x = Math.pow(sDeviation.x - center.x * center.x, 0.5);
+			sDeviation.y = Math.pow(sDeviation.y - center.y * center.y, 0.5);
 		}
 
-		public int getX() {
-			return current.x;
+		public boolean inallCoord(Coordinate cd) {
+			return allCoord.contains(cd);
 		}
 
-		public int getY() {
-			return current.y;
-		}
+		/*
+		 * public int getX() { return current.x; }
+		 * 
+		 * public int getY() { return current.y; }
+		 */
 
 		public ArrayList<SearchNode> getSuccessors() {
-
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
-
 			for (int[] action : actions) {
-				Coordinate next = new Coordinate(current.x + action[0],
-						current.y + action[1]);
-				SearchNode succ;
-				if (maze.isLegal(next.x, next.y)) {
-					succ = new BlindRobotNode(next, this, true, getCost() + 1.0);
-				} else {
-					succ = new BlindRobotNode(current, this, true, getCost());
-				}
-				successors.add(succ);
+				Coordinate dxdy = new Coordinate(action[0], action[1]);
+				successors.add(new BlindRobotNode(dxdy, getCost() + 1.0));
 			}
-
 			return successors;
+		}
 
+		public int hashCoord(int x, int y) {
+			return x + 1000 * y;
 		}
 
 		@Override
 		public boolean goalTest() {
-			// System.out.println("candidates.size(): " + candidates.size()
+			// System.out.println("allCoord.size(): " + allCoord.size()
 			// + ". At " + getX() + "," + getY());
-			return candidates.size() == 1 && ( true || current == coordGoal);
+			return allCoord.size() == 1 && center == coordGoal;
 		}
 
 		// an equality test is required so that visited sets in searches
 		// can check for containment of states
 		@Override
 		public boolean equals(Object other) {
-			return candidates == ((BlindRobotNode) other).candidates
-					&& current == ((BlindRobotNode) other).current;
+			return allCoord == ((BlindRobotNode) other).allCoord;
 		}
 
 		@Override
 		public int hashCode() {
-			return 1000000
-					* (10000 * candidates.size() + current.x * 1000 + current.y)
-					+ candidates.size();
+			return (int) (((center.x * 100 + center.y) + (sDeviation.x * 100 + sDeviation.y) * 100) * 10.);
 		}
 
 		@Override
 		public String toString() {
-			return new String("Maze state " + current.x + ", " + current.y
+			return new String("Maze state " + center.x + ", " + center.y
 					+ " " + " depth " + getCost());
 		}
 
@@ -171,11 +185,10 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		@Override
 		public double heuristic() {
 			// manhattan distance metric for simple maze with one agent:
-//			double dx = coordGoal.x - current.y;
-//			double dy = coordGoal.y - current.x;
-//			return Math.abs(dx) + Math.abs(dy);
-			return candidates.size() - 1;
-
+			double dx = coordGoal.x - center.x;
+			double dy = coordGoal.y - center.y;
+			return Math.abs(dx) + Math.abs(dy) + sDeviation.x + sDeviation.y;
+			// return allCoord.size() - 1;
 		}
 
 		@Override

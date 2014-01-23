@@ -57,7 +57,8 @@ public class BlindRobotDriverV2 extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
-		BlindRobotProblemV2 mazeProblem = new BlindRobotProblemV2(maze, 0, 0, 2, 2);
+		BlindRobotProblemV2 mazeProblem = new BlindRobotProblemV2(maze, 0, 0,
+				2, 2);
 
 		List<SearchNode> astarPath = mazeProblem.astarSearch();
 		animationPathList.add(new AnimationPath(mazeView, astarPath));
@@ -133,7 +134,7 @@ public class BlindRobotDriverV2 extends Application {
 			candidates = new ArrayList<circlePlusCoord>();
 			for (Coordinate cd : firstNode.candidates) {
 				candidates.add(new circlePlusCoord(mazeView.addCandidate(cd.x,
-						cd.y), cd) );
+						cd.y), cd));
 			}
 			piece = mazeView.addPiece(firstNode.getX(), firstNode.getY());
 			lastX = firstNode.getX();
@@ -153,14 +154,14 @@ public class BlindRobotDriverV2 extends Application {
 				for (circlePlusCoord cd : candidates) {
 					if (!mazeNode.inCandidates(cd.cd)) {
 						cd.cir.setVisible(false);
-					}
-					else
+					} else
 						cd.cir.setVisible(true);
 				}
 				int dx = mazeNode.getX() - lastX;
 				int dy = mazeNode.getY() - lastY;
 				// System.out.println("animating " + dx + " " + dy);
-				//mazeView.footPrint(lastX, lastY, piece, (dx + 2) * 10 + dy + 2);
+				// mazeView.footPrint(lastX, lastY, piece, (dx + 2) * 10 + dy +
+				// 2);
 				animateMove(piece, dx, dy);
 				lastX = mazeNode.getX();
 				lastY = mazeNode.getY();
