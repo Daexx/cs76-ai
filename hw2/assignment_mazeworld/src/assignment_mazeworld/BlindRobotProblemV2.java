@@ -76,7 +76,7 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		maze = m;
 		coordStart = new Coordinate(sx, sy);
 		coordGoal = new Coordinate(gx, gy);
-		startNode = new BlindRobotNode(coordStart, 0);
+		startNode = new BlindRobotNode(0);
 	}
 
 	// node class used by searches. Searches themselves are implemented

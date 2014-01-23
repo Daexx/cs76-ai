@@ -58,7 +58,7 @@ public class BlindRobotDriverV2 extends Application {
 	private void runSearches() {
 
 		BlindRobotProblemV2 mazeProblem = new BlindRobotProblemV2(maze, 0, 0,
-				2, 2);
+				1, 1);
 
 		List<SearchNode> astarPath = mazeProblem.astarSearch();
 		animationPathList.add(new AnimationPath(mazeView, astarPath));
