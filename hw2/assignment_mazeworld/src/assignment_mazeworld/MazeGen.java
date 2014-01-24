@@ -8,7 +8,7 @@ public class MazeGen {
 		String filename = "simple.maz";
 		PrintWriter writer = new PrintWriter(filename, "UTF-8");
 		
-		int h = 7, w = 7;
+		int h = 9, w = 9;
 		
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {

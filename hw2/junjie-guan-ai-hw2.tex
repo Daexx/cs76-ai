@@ -225,9 +225,9 @@ However, this is not enough for the states. We still one parameter, which the tu
 
 
 \subsection{Discussions}
-ith $n\times n$ size of maze and $k$ robots， the upper bound of this problem, meaning to neglect the legal problem, is $n^k$. Because each robot has $n$ possible position.
+ith $n\times n$ size of maze and $k$ robots， the upper bound of this problem, meaning to neglect the legal problem, is $n^{2k}$. Because each robot has $n$ possible position.
 
-If number of wall square is $w$, then the number of collisions would be total state minus legal states, $(n-w)^k - C_{n-w}^k$.
+If number of wall square is $w$, then the number of collisions would be total state minus legal states, $(n^2-w)^k - C_{n^2-w}^k$. 
 
 As for $100\times100$, with a few walls and several robot discussion. States number grows exponentially with $k$, and bfs tends to search all the state starting from start node. I think this problem still depends on whether the goal is close to the starting point.
 
@@ -562,7 +562,7 @@ $$c_{x,y} = \sum^{k-1}_{i=0}[x_i,y_i]/k$$
 $$d_{x,y} = ||\sqrt{ c_{x^2,y^2} - (c_{x,y})^2}||$$
 
 Then, the heuristic function would be:
-$$h = manhattan(c_{x,y}, g_{x,y}) + d_{x,y}$$
+$$h =\textbf{max}(manhattan(c_{x,y}, g_{x,y}), d_{x,y})$$
 
 How do I prove that the heuristic function is consistent? First, it apparently satisfy $h(G)=0$, because at that point, all robot will stay at one point, which makes $ d_{x,y} = 0$. Since the point is the goal, which makes, $manhattan(c_{x,y})=0$. As for $h(N) \leq c(N,P)+h(P) $, it is similar to the way that I used to prove monotonic previously. First let's assume an extreme case where there is an empty $N \times N$ maze, and the goal is at the top-right. I do a little math on it, it seems that if $N > 1 or N < -0.4$, the $cost$ is always larger than $h$. It is obvious always satisfied. (Since I must say I am not a mathematician, I'm not sure if I do it right, feel free to discuss with me if you doubt it).
 
@@ -572,44 +572,58 @@ If we take it as k-robot problem, where $k$ equals to number of cell. Then upper
 \subsection{Code implementation}
 
 \subsubsection{getSuccessors}
-
-\textbf{Constructors}
-I use two different construcors, one is for problem initialization; another is for getting successors during searching. For the first one, basically it just adding robots at every possible position. \textbf{line 14} is a very important methods, and I will talk about that latter.
+Basic idea of \textbf{getSuccessors} is to move all robots with one action simultaneously. If there is obstacle for a robot, simply not moves. Note that at  \textbf{line 14}, the cost is the amount of robots that moves.
 \begin{lstlisting}[numbers=left]
-public BlindRobotNode() {
-  allCoord = new HashSet<>();
-  cost = 0;
-  // initiate the allCoord
-  // if it is at start node, where previous = null
-  for (int x = 0; x < maze.width; x++) {
-    for (int y = 0; y < maze.height; y++) {
-      if (maze.getInt(x, y) == 0) {
-        Coordinate newNode = new Coordinate(x, y);
-        allCoord.add(newNode);
+public ArrayList<SearchNode> getSuccessors() {
+  ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
+  for (int[] action : actions) {
+    HashSet<Coordinate> newCoords = new HashSet<>();
+    // move all the node in the belief set to direction dxdy
+    Coordinate dxdy = new Coordinate(action[0], action[1]);
+    for (Coordinate xy : this.allCoord) {
+      if (maze.isLegal(xy.x + dxdy.x, xy.y + dxdy.y)) {
+        newCoords.add(new Coordinate(xy.x + dxdy.x, xy.y
+            + dxdy.y));
+      } else {
+        // if not legal, simply not moving
+        newCoords.add(new Coordinate(xy.x, xy.y));
       }
     }
+    successors.add(new BlindRobotNode(newCoords, getCost() + 1.0
+        * newCoords.size()));
   }
-  newCenDev();
+  return successors;
 }
 \end{lstlisting}
-The second constructor is also simple, it basically give instructions to robot to move. It there is obstacle, the very robot just stay still.
+
+
+\subsubsection{Constructors}
+The constructor is fairly simple. Note that, \textbf{line 14} is a very important methods, which is used to calculate the average cetner and deviation of all the coordinates. Some one might ask me why don't I compute the average and deviation while adding each new coordinate in the \textbf{getSuccessors}, so that everything can be done in one loop.  I got two reaons here. One is the time complexity is the same. The second is I want to keep the code simple, clean and modular. It is not just more easy to read and maintain, but also benifitial to the computing in the low level, since CPU don't have to access different address frequently.
 \begin{lstlisting}[numbers=left]
-public BlindRobotNode(Coordinate dxdy, BlindRobotNode prev, double c) {
+public BlindRobotNode(HashSet<Coordinate> coords, double c) {
   // initiate the positions
-  allCoord = new HashSet<>();
+  allCoord = coords;
   cost = c;
-  // move all the node in the belief set to direction dxdy
-  for (Coordinate xy : prev.allCoord) {
-    if (maze.isLegal((int) (xy.x + dxdy.x), (int) (xy.y + dxdy.y))) {
-      allCoord.add(new Coordinate(xy.x + dxdy.x, xy.y + dxdy.y));
-    } else {
-      // if not legal, simply not moving
-      allCoord.add(new Coordinate(xy.x, xy.y));
-    }
-  }
   newCenDev();
 }
+
+// dev = E(x^2) - (Ex)^2
+private void newCenDev() {
+  center = new Coordinate(0, 0);
+  sDeviation = new Coordinate(0, 0);
+  for (Coordinate xy : allCoord) {
+    center.x += xy.x;
+    center.y += xy.y;
+    sDeviation.x += Math.pow(xy.x, 2);
+    sDeviation.y += Math.pow(xy.y, 2);
+  }
+  center.x /= allCoord.size();
+  center.y /= allCoord.size();
+  sDeviation.x = Math.pow(sDeviation.x - center.x * center.x, 0.5);
+  sDeviation.y = Math.pow(sDeviation.y - center.y * center.y, 0.5);
+}
 \end{lstlisting}
+
 
 \subsubsection{newCenDev}
 
@@ -634,17 +648,7 @@ private void newCenDev() {
 
 \subsubsection{Other methods}
 
-\textbf{getSuccessors} turns out to be fairly simple. I just need to move towards 4 directions. 
-\begin{lstlisting}[numbers=left]
-public ArrayList<SearchNode> getSuccessors() {
-  ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
-  for (int[] action : actions) {
-    Coordinate dxdy = new Coordinate(action[0], action[1]);
-    successors.add(new BlindRobotNode(dxdy, this, getCost() + 1.0));
-  }
-  return successors;
-}
-\end{lstlisting}
+
 
 The \textbf{heuristic} method.
 \begin{lstlisting}[numbers=left]
@@ -665,45 +669,6 @@ public double heuristic() {
 
 
 
-
-
-\subsection{Output demonstration}
-
-Output of blind robot in 3x3. (Figure \ref{b-2}):
-\begin{lstlisting}[numbers=left]
-A*:  
-  Nodes explored during search:  15
-  Maximum space usage during search 100
-  path length: 7
-\end{lstlisting}
-
-\begin{figure*}[!t]
-\normalsize
-\centering
-\subfigure[start]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-1.JPG}}
-\subfigure[step 2]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-2.JPG}}
-\subfigure[step 3]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-3.JPG}}
-\subfigure[step 4]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-4.JPG}}
-\subfigure[step 5]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-5.JPG}}
-\subfigure[step 6]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-6.JPG}}
-\subfigure[end]{
-\label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-7.JPG}}
-\caption{Demo of blind robot in 3x3}
-\label{b-2} %% label for entire figure
-\end{figure*}
 
 \subsection{Output demonstration}
 
@@ -766,24 +731,54 @@ A*:
 \subfigure[step 6]{
 \label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-6.JPG}}
-\subfigure[end]{
+\subfigure[step 7]{
 \label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-7.JPG}}
-\caption{Demo of blind robot in 7x7}
-\label{b-2} %% label for entire figure
+\subfigure[step 7]{
+\label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-8.JPG}}
-\caption{Demo of blind robot in 7x7}
-\label{b-2} %% label for entire figure
+\subfigure[step 7]{
+\label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-9.JPG}}
-\caption{Demo of blind robot in 7x7}
-\label{b-2} %% label for entire figure
+\subfigure[step 7]{
+\label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-10.JPG}}
-\caption{Demo of blind robot in 7x7}
-\label{b-2} %% label for entire figure
+\subfigure[step 11]{
+\label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-11.JPG}}
-\caption{Demo of blind robot in 7x7}
-\label{b-2} %% label for entire figure
+\subfigure[step 12]{
+\label{b-2-0} %% label for first subfigure
 \includegraphics[width=0.206\textwidth]{b-2-12.JPG}}
+\subfigure[step 13]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-13.JPG}}
+\subfigure[step 14]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-14.JPG}}
+\subfigure[step 15]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-15.JPG}}
+\subfigure[step 16]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-16.JPG}}
+\subfigure[step 17]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-17.JPG}}
+\subfigure[step 18]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-18.JPG}}
+\subfigure[step 19]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-19.JPG}}
+\subfigure[step 20]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-20.JPG}}
+\subfigure[step 21]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-21.JPG}}
+\subfigure[step 22]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.206\textwidth]{b-2-22.JPG}}
 \caption{Demo of blind robot in 7x7}
 \label{b-2} %% label for entire figure
 \end{figure*}

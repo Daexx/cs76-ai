@@ -149,17 +149,6 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 		}
 
 		public ArrayList<SearchNode> getSuccessors() {
-			// PrintWriter writer;
-			// try {
-			// writer = new PrintWriter(new FileOutputStream(new File(
-			// "debug.log"), true));
-			// writer.println("---------------------------------------");
-			// writer.close();
-			// } catch (FileNotFoundException e) {
-			// // TODO Auto-generated catch block
-			// e.printStackTrace();
-			// }
-
 			DecimalFormat df = new DecimalFormat("0.0");
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for (int[] action : actions) {
@@ -174,27 +163,10 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 						// if not legal, simply not moving
 						newCoords.add(new Coordinate(xy.x, xy.y));
 					}
-					// System.out.println(xy + "+" + dxdy + "=" + newCoords);
 				}
 
-				// new java.util.Scanner(System.in).nextLine();
-				SearchNode succ = new BlindRobotNode(newCoords, getCost() + 1.0
-						* newCoords.size());
-				successors.add(succ);
-
-				// try {
-				// writer = new PrintWriter(new FileOutputStream(new File(
-				// "debug.log"), true));
-				// writer.println("avg: " + this.center + " dev: "
-				// + this.sDeviation + " set: " + this.allCoord
-				// + " pty: " + df.format(priority()) + " cost: "
-				// + getCost() + " " + " dir: " + dxdy + " new set: "
-				// + newCoords + " new pty:" + df.format(succ.priority()));
-				// writer.close();
-				// } catch (FileNotFoundException e) {
-				// // TODO Auto-generated catch block
-				// e.printStackTrace();
-				// }
+				successors.add(new BlindRobotNode(newCoords, getCost() + 1.0
+						* newCoords.size()));
 			}
 			return successors;
 		}
@@ -238,9 +210,10 @@ public class BlindRobotProblemV2 extends InformedSearchProblem {
 			// manhattan distance metric for simple maze with one agent:
 			double dx = coordGoal.x - center.x;
 			double dy = coordGoal.y - center.y;
-//			return Math.max((Math.abs(dx) + Math.abs(dy)) ,
-//					allCoord.size());
-			return Math.max((Math.abs(dx) + Math.abs(dy)) ,
+			// return Math.max((Math.abs(dx) + Math.abs(dy)) ,
+			// allCoord.size()*allCoord.size());
+			// return 0.;
+			return Math.max((Math.abs(dx) + Math.abs(dy)),
 					(sDeviation.x + sDeviation.y));
 			// return allCoord.size() - 1;
 		}
