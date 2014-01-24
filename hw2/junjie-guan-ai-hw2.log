@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  23 JAN 2014 20:24
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  23 JAN 2014 23:27
 entering extended mode
 **junjie-guan-ai-hw2.tex
 (D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.tex
@@ -409,6 +409,18 @@ LaTeX Warning: Label `b-1-0' multiply defined.
 LaTeX Warning: Label `sub@b-1-0' multiply defined.
 
 
+LaTeX Warning: Label `b-1-0' multiply defined.
+
+
+LaTeX Warning: Label `sub@b-1-0' multiply defined.
+
+
+LaTeX Warning: Label `b-2-0' multiply defined.
+
+
+LaTeX Warning: Label `sub@b-2-0' multiply defined.
+
+
 LaTeX Warning: Label `b-2-0' multiply defined.
 
 
@@ -686,75 +698,85 @@ File: b-1-6.JPG Graphic file (type QTm)
 <use  "b-1-6.JPG" >
 File: b-1-7.JPG Graphic file (type QTm)
  <use  "b-1-7.JPG" >
+File: b-3-1.JPG Graphic file (type QTm)
+ <use  "b-3-1.JPG" >
+File: b-2-1.JPG Graphic file (type QTm)
+
+<use  "b-2-1.JPG" >
 File: b-2-2.JPG Graphic file (type QTm)
  <use  "b-2-2.JPG" >
 File: b-2-3.JPG Graphic file (type QTm)
-
-<use  "b-2-3.JPG" >
+ <use  "b-2-3.JPG" >
 File: b-2-4.JPG Graphic file (type QTm)
- <use  "b-2-4.JPG" >
+
+<use  "b-2-4.JPG" >
 File: b-2-5.JPG Graphic file (type QTm)
  <use  "b-2-5.JPG" >
 File: b-2-6.JPG Graphic file (type QTm)
-
-<use  "b-2-6.JPG" >
+ <use  "b-2-6.JPG" >
 File: b-2-7.JPG Graphic file (type QTm)
- <use  "b-2-7.JPG" >
+
+<use  "b-2-7.JPG" >
 File: b-2-8.JPG Graphic file (type QTm)
  <use  "b-2-8.JPG" >
 File: b-2-9.JPG Graphic file (type QTm)
-
-<use  "b-2-9.JPG" >
+ <use  "b-2-9.JPG" >
 File: b-2-10.JPG Graphic file (type QTm)
- <use  "b-2-10.JPG" >
+
+<use  "b-2-10.JPG" >
 File: b-2-11.JPG Graphic file (type QTm)
  <use  "b-2-11.JPG" >
 File: b-2-12.JPG Graphic file (type QTm)
-
-<use  "b-2-12.JPG" >
+ <use  "b-2-12.JPG" >
 File: b-2-13.JPG Graphic file (type QTm)
- <use  "b-2-13.JPG" >
+
+<use  "b-2-13.JPG" >
 File: b-2-14.JPG Graphic file (type QTm)
  <use  "b-2-14.JPG" >
 File: b-2-15.JPG Graphic file (type QTm)
-
-<use  "b-2-15.JPG" >
+ <use  "b-2-15.JPG" >
 File: b-2-16.JPG Graphic file (type QTm)
- <use  "b-2-16.JPG" >
+
+<use  "b-2-16.JPG" >
 File: b-2-17.JPG Graphic file (type QTm)
  <use  "b-2-17.JPG" >
 File: b-2-18.JPG Graphic file (type QTm)
-
-<use  "b-2-18.JPG" >
+ <use  "b-2-18.JPG" >
 File: b-2-19.JPG Graphic file (type QTm)
- <use  "b-2-19.JPG" >
+
+<use  "b-2-19.JPG" >
 File: b-2-20.JPG Graphic file (type QTm)
  <use  "b-2-20.JPG" >
 File: b-2-21.JPG Graphic file (type QTm)
-
-<use  "b-2-21.JPG" >
+ <use  "b-2-21.JPG" >
 File: b-2-22.JPG Graphic file (type QTm)
- <use  "b-2-22.JPG" >
 
-LaTeX Warning: Float too large for page by 173.87245pt on input line 784.
+<use  "b-2-22.JPG" >
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 818.
+ [16] [17]
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 801.
-[16] [17] [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 801.
+LaTeX Warning: Text page 18 contains only floats.
+
+
+Overfull \vbox (4.85591pt too high) has occurred while \output is active []
+
+
+[18]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 818.
  (D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 801.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 801.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 818.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 818.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 801.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 818.
  ) 
 Here is how much of TeX's memory you used:
- 10335 strings out of 429025
- 140704 string characters out of 3167800
+ 10341 strings out of 429025
+ 140753 string characters out of 3167800
  262293 words of memory out of 3000000
- 13495 multiletter control sequences out of 15000+200000
+ 13499 multiletter control sequences out of 15000+200000
  10684 words of font info for 39 fonts, out of 3000000 for 9000
  912 hyphenation exceptions out of 8191
  30i,8n,45p,741b,1745s stack positions out of 5000i,500n,10000p,200000b,50000s

@@ -58,7 +58,7 @@ public class BlindRobotDriverV2 extends Application {
 	// assumes maze and mazeView instance variables are already available
 	private void runSearches() {
 
-		BlindRobotProblemV2 mazeProblem = new BlindRobotProblemV2(maze, 0, 0);
+		BlindRobotProblemV2 mazeProblem = new BlindRobotProblemV2(maze, 3, 5);
 
 		List<SearchNode> astarPath = mazeProblem.astarSearch();
 		animationPathList.add(new AnimationPath(mazeView, astarPath));

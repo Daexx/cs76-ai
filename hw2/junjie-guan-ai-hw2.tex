@@ -452,28 +452,28 @@ Maximum space usage during search 184020
 \centering
 \subfigure[start]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-0.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-0.JPG}}
 \subfigure[step 1]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-1.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-1.JPG}}
 \subfigure[step 2]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-2.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-2.JPG}}
 \subfigure[step 3]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-3.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-3.JPG}}
 \subfigure[step 4]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-4.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-4.JPG}}
 \subfigure[step 5]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-5.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-5.JPG}}
 \subfigure[step 6]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-6.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-6.JPG}}
 \subfigure[end]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-2-7.JPG}}
+\includegraphics[width=0.18\textwidth]{m-2-7.JPG}}
 \caption{Demo of reodering robot in narrow corridor}
 \label{m-2} %% label for entire figure
 \end{figure*}
@@ -490,13 +490,13 @@ Maximum space usage during search 184020
 \centering
 \subfigure[start]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-3-0.JPG}}
+\includegraphics[width=0.18\textwidth]{m-3-0.JPG}}
 \subfigure[step 1]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-3-1.JPG}}
+\includegraphics[width=0.18\textwidth]{m-3-1.JPG}}
 \subfigure[end]{
 \label{m-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{m-3-2.JPG}}
+\includegraphics[width=0.18\textwidth]{m-3-2.JPG}}
 \caption{Demo of cross road conflict}
 \label{m-3} %% label for entire figure
 \end{figure*}
@@ -567,7 +567,19 @@ $$h =\textbf{max}(manhattan(c_{x,y}, g_{x,y}), d_{x,y})$$
 How do I prove that the heuristic function is consistent? First, it apparently satisfy $h(G)=0$, because at that point, all robot will stay at one point, which makes $ d_{x,y} = 0$. Since the point is the goal, which makes, $manhattan(c_{x,y})=0$. As for $h(N) \leq c(N,P)+h(P) $, it is similar to the way that I used to prove monotonic previously. First let's assume an extreme case where there is an empty $N \times N$ maze, and the goal is at the top-right. I do a little math on it, it seems that if $N > 1 or N < -0.4$, the $cost$ is always larger than $h$. It is obvious always satisfied. (Since I must say I am not a mathematician, I'm not sure if I do it right, feel free to discuss with me if you doubt it).
 
 \subsection{Discussions Polynomial-time blind robot planning}
-If we take it as k-robot problem, where $k$ equals to number of cell. Then upper bound of the sates should be $(n-w)^k$. However, 
+If we take it as k-robot problem (without collission issue), where $k$ equals to number of cell. Then upper bound of the sates should be $(N)^k$, where N is the free space in maze. Because each of the $k$ robots can occur in any location.
+
+\if
+Let's think in antoher way to compute the upper bound of the state space. Assuming the maze is empty, and every robot has its own position at beginning. In k-robot problem, every robot have 4 possible action. So the initial state has 4^k successors. However, in blind robot problem, all the robot move simultaneously with the same action, so there are actually only 4 successors in this problem. Thus the space does not grow exponentially with $k$.
+\fi
+
+Assuming the spaces in maze can be desribed by a connected graph. Though the upper bound of space is huge, one big difference from k-robot problem is, the belief state is decreasing, because the robots is merging togethor.  
+
+The problem now is too prove that, if there are 2 robots and moving them simultaneously, can we merge them in polynomial time? If so, We can always pick 2 robot from the $k$ robots, and keep merging the whole states until there is only one left (Actually sometime we merge more than 2 robots at a time).
+
+We can try take actions that trying to shrink their Manhattan distance to 0. How? We can plan a path from A to B, and simply move A to $<x_{B}^{ t = 0}, y_{B}^{ t = 0}>$. Although when A arrive $<x_{B}^{ t = 0}, y_{B}^{ t = 0}>$, B is very likely not there any more, but the Manhattan distance must less or equal than before. The worse case is equal, where B move and A does. But since the map is finite, the Manhattan distance will eventually shorten til 0. It is obvious in a empty maze, wihle a little tricky in a normal maze.
+
+Because Manhattan distance is shrinking at each approaching, the possible state should not be $N^2$ (N is total empty square number, 2 means there are nodes here), but actually less than $N$.
 
 \subsection{Code implementation}
 
@@ -599,6 +611,8 @@ public ArrayList<SearchNode> getSuccessors() {
 
 \subsubsection{Constructors}
 The constructor is fairly simple. Note that, \textbf{line 14} is a very important methods, which is used to calculate the average cetner and deviation of all the coordinates. Some one might ask me why don't I compute the average and deviation while adding each new coordinate in the \textbf{getSuccessors}, so that everything can be done in one loop.  I got two reaons here. One is the time complexity is the same. The second is I want to keep the code simple, clean and modular. It is not just more easy to read and maintain, but also benifitial to the computing in the low level, since CPU don't have to access different address frequently.
+
+Noted that the number of existing coordinate is decreasing, since some robots may merge together.
 \begin{lstlisting}[numbers=left]
 public BlindRobotNode(HashSet<Coordinate> coords, double c) {
   // initiate the positions
@@ -624,28 +638,6 @@ private void newCenDev() {
 }
 \end{lstlisting}
 
-
-\subsubsection{newCenDev}
-
-\textbf{newCenDev} creates the states, calculates the center and the deviation, for all the existing coordinate. Noted that the number of existing coordinate is decreasing, since some robots may merge together.
-\begin{lstlisting}[numbers=left]
-// dev = E(x^2) - (Ex)^2
-private void newCenDev() {
-  center = new Coordinate(0, 0);
-  sDeviation = new Coordinate(0, 0);
-  for (Coordinate xy : allCoord) {
-    center.x += xy.x;
-    center.y += xy.y;
-    sDeviation.x += Math.pow(xy.x, 2);
-    sDeviation.y += Math.pow(xy.y, 2);
-  }
-  center.x /= allCoord.size();
-  center.y /= allCoord.size();
-  sDeviation.x = Math.pow(sDeviation.x - center.x * center.x, 0.5);
-  sDeviation.y = Math.pow(sDeviation.y - center.y * center.y, 0.5);
-}
-\end{lstlisting}
-
 \subsubsection{Other methods}
 
 
@@ -654,10 +646,10 @@ The \textbf{heuristic} method.
 \begin{lstlisting}[numbers=left]
 @Override
 public double heuristic() {
-  // manhattan distance metric for simple maze with one agent:
   double dx = coordGoal.x - center.x;
   double dy = coordGoal.y - center.y;
-  return Math.abs(dx) + Math.abs(dy) + sDeviation.x + sDeviation.y;
+  return Math.max((Math.abs(dx) + Math.abs(dy)),
+      (sDeviation.x + sDeviation.y));
 }
 \end{lstlisting}
 
@@ -672,7 +664,7 @@ public double heuristic() {
 
 \subsection{Output demonstration}
 
-Output of blind robot in 3x3. (Figure \ref{b-2}):
+Output of blind robot in 3x3, with the goal at (1,1). (Figure \ref{b-1}):
 \begin{lstlisting}[numbers=left]
 A*:  
   Nodes explored during search:  15
@@ -680,12 +672,20 @@ A*:
   path length: 7
 \end{lstlisting}
 
-Output of blind robot in 7x7. (Figure \ref{b-2}):
+Output of blind robot in 7x7, with the goal at (3,5). (Figure \ref{b-2}):
 \begin{lstlisting}[numbers=left]
-A*:  
-  Nodes explored during search:  15
-  Maximum space usage during search 100
-  path length: 7
+A*: 
+  Nodes explored during search:  88981
+  Maximum space usage during search 622862
+  path length: 20
+\end{lstlisting}
+
+Output of blind robot in 8x8, with the goal at (0, 0). (Figure \ref{b-3}):
+\begin{lstlisting}[numbers=left]
+A*: 
+  Nodes explored during search:  133773
+  Maximum space usage during search 936406
+  path length: 23
 \end{lstlisting}
 
 \begin{figure*}[!t]
@@ -693,22 +693,22 @@ A*:
 \centering
 \subfigure[start]{
 \label{b-1-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-1-2.JPG}}
+\includegraphics[width=0.18\textwidth]{b-1-2.JPG}}
 \subfigure[step 3]{
 \label{b-1-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-1-3.JPG}}
+\includegraphics[width=0.18\textwidth]{b-1-3.JPG}}
 \subfigure[step 4]{
 \label{b-1-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-1-4.JPG}}
+\includegraphics[width=0.18\textwidth]{b-1-4.JPG}}
 \subfigure[step 5]{
 \label{b-1-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-1-5.JPG}}
+\includegraphics[width=0.18\textwidth]{b-1-5.JPG}}
 \subfigure[step 6]{
 \label{b-1-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-1-6.JPG}}
+\includegraphics[width=0.18\textwidth]{b-1-6.JPG}}
 \subfigure[end]{
 \label{b-1-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-1-7.JPG}}
+\includegraphics[width=0.18\textwidth]{b-1-7.JPG}}
 \caption{Demo of blind robot in 3x3}
 \label{b-1} %% label for entire figure
 \end{figure*}
@@ -716,69 +716,82 @@ A*:
 \begin{figure*}[!t]
 \normalsize
 \centering
+\subfigure[end]{
+\label{b-1-0} %% label for first subfigure
+\includegraphics[width=0.309\textwidth]{b-3-1.JPG}}
+\caption{Demo of blind robot in 8x8, this time I'm not showing all the snap shot, just want to tell the readers what kind of maze it is.}
+\label{b-3} %% label for entire figure
+\end{figure*}
+
+\begin{figure*}[!t]
+\normalsize
+\centering
 \subfigure[start]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-2.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-1.JPG}}
+\subfigure[step 2]{
+\label{b-2-0} %% label for first subfigure
+\includegraphics[width=0.18\textwidth]{b-2-2.JPG}}
 \subfigure[step 3]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-3.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-3.JPG}}
 \subfigure[step 4]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-4.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-4.JPG}}
 \subfigure[step 5]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-5.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-5.JPG}}
 \subfigure[step 6]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-6.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-6.JPG}}
 \subfigure[step 7]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-7.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-7.JPG}}
 \subfigure[step 7]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-8.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-8.JPG}}
 \subfigure[step 7]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-9.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-9.JPG}}
 \subfigure[step 7]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-10.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-10.JPG}}
 \subfigure[step 11]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-11.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-11.JPG}}
 \subfigure[step 12]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-12.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-12.JPG}}
 \subfigure[step 13]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-13.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-13.JPG}}
 \subfigure[step 14]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-14.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-14.JPG}}
 \subfigure[step 15]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-15.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-15.JPG}}
 \subfigure[step 16]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-16.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-16.JPG}}
 \subfigure[step 17]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-17.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-17.JPG}}
 \subfigure[step 18]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-18.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-18.JPG}}
 \subfigure[step 19]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-19.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-19.JPG}}
 \subfigure[step 20]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-20.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-20.JPG}}
 \subfigure[step 21]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-21.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-21.JPG}}
 \subfigure[step 22]{
 \label{b-2-0} %% label for first subfigure
-\includegraphics[width=0.206\textwidth]{b-2-22.JPG}}
+\includegraphics[width=0.18\textwidth]{b-2-22.JPG}}
 \caption{Demo of blind robot in 7x7}
 \label{b-2} %% label for entire figure
 \end{figure*}
@@ -788,7 +801,11 @@ A*:
 
 
 
+\section{Previous work}
 
+For the multirobot problem, one biggest obstacle here is that the state space grow exponentially with the number of robots. 
+
+\section{Appendix}
 
 
 

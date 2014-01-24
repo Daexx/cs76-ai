@@ -16,9 +16,10 @@
 \contentsline {section}{\numberline {4}Blind robot planning}{14}{section.4}
 \contentsline {subsection}{\numberline {4.1}Problem definition and states}{14}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Discussions Polynomial-time blind robot planning}{14}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}Code implementation}{14}{subsection.4.3}
-\contentsline {subsubsection}{\numberline {4.3.1}getSuccessors}{14}{subsubsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3}Code implementation}{15}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}getSuccessors}{15}{subsubsection.4.3.1}
 \contentsline {subsubsection}{\numberline {4.3.2}Constructors}{15}{subsubsection.4.3.2}
-\contentsline {subsubsection}{\numberline {4.3.3}newCenDev}{16}{subsubsection.4.3.3}
-\contentsline {subsubsection}{\numberline {4.3.4}Other methods}{16}{subsubsection.4.3.4}
+\contentsline {subsubsection}{\numberline {4.3.3}Other methods}{16}{subsubsection.4.3.3}
 \contentsline {subsection}{\numberline {4.4}Output demonstration}{16}{subsection.4.4}
+\contentsline {section}{\numberline {5}Previous work}{16}{section.5}
+\contentsline {section}{\numberline {6}Appendix}{17}{section.6}
