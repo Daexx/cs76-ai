@@ -557,12 +557,12 @@ x_{k-1} & y_{k-1}
 
 The key of the problem is to design a consistent heuristic funciton. Which satisfy the formula in previous section. My intuition is approaching the goal while shrinking the range of robot positions. I think calculating the average and standard deviation of all the coordinates is a reasonable approach. The average describe the center of the group, the deviation describes the convergence. 
 
-So, the state of this problem is as following, noted that $[x_i,y_i]$ is a $1\times 2$ matrix :
-$$c_{x,y} = \sum^{k-1}_{i=0}[x_i,y_i]/k$$
-$$d_{x,y} = ||\sqrt{ c_{x^2,y^2} - (c_{x,y})^2}||$$
+So, the state of this problem is as following, noted that $[x_i,y_i]$ and \textbf{c} are $1\times 2$ matrixs :
+$$\textbf{c}_{x,y} = \sum^{k-1}_{i=0}[x_i,y_i]/k$$
+$$d_{x,y} = ||\sqrt{ \textbf{c}_{x^2,y^2} - (\textbf{c}_{x,y})^2}||$$
 
 Then, the heuristic function would be:
-$$h =\textbf{max}(manhattan(c_{x,y}, g_{x,y}), d_{x,y})$$
+$$h =\textbf{max}(manhattan(\textbf{c}_{x,y}, g_{x,y}), d_{x,y})$$
 
 How do I prove that the heuristic function is consistent? First, it apparently satisfy $h(G)=0$, because at that point, all robot will stay at one point, which makes $ d_{x,y} = 0$. Since the point is the goal, which makes, $manhattan(c_{x,y})=0$. As for $h(N) \leq c(N,P)+h(P) $, it is similar to the way that I used to prove monotonic previously. First let's assume an extreme case where there is an empty $N \times N$ maze, and the goal is at the top-right. I do a little math on it, it seems that if $N > 1 or N < -0.4$, the $cost$ is always larger than $h$. It is obvious always satisfied. (Since I must say I am not a mathematician, I'm not sure if I do it right, feel free to discuss with me if you doubt it).
 
@@ -803,9 +803,71 @@ A*:
 
 \section{Previous work}
 
-For the multirobot problem, one biggest obstacle here is that the state space grow exponentially with the number of robots. 
+For the k-robot problem, one biggest obstacle here is that the state space grow exponentially with the number of robots, which is $N^k$. This article put forward a very efficient method to find the optimal solution quick against the huge states space \footnote{Standley, T. 2010. Finding optimal solutions to cooperative pathfinding problems. In The Twenty-Fourth AAAI Conference on Artificial Intelligence (AAAI’10), 173–178.}.  The philosophy here is, they first A* to plan the shortest path individually. Then they resolve the conflict that occurs in in the $k$ paths. If it cannot be resovled, they merge them in to one group and solve this path as m-robot problem individually. Notice that $m \leq k$. 
+
+In order to face the real time demand, such as gaming system, they further design this method, by incorporating the idea of iterative deepening. While increasing the grouping number from one to some large number, they keep record  of groups with lower bound, which is quite helpful in the latter iteration.
 
 \section{Appendix}
+This is the auxiliary class I used to simpilify my codes.
+\begin{lstlisting}[numbers=left]
+public class Coordinate {
+  public Double x;
+  public Double y;
+
+  void add2center(Coordinate other, int newN) {
+    x = (x * (newN - 1) + other.x) / newN;
+    y = (y * (newN - 1) + other.y) / newN;
+  }
+
+  Coordinate(int a, int b) {
+    x = (double) a;
+    y = (double) b;
+  }
+
+  Coordinate(double a, double b) {
+    x = a;
+    y = b;
+  }
+
+  Coordinate(Coordinate other) {
+    x = other.x;
+    y = other.y;
+  }
+
+  public int getX() {
+    return x.intValue();
+  }
+
+  public int getY() {
+    return y.intValue();
+  }
+
+  private boolean equalWithCast(Object other) {
+    return Math.abs((x - ((Coordinate) other).x)) < 0.01
+        && (Math.abs(y - ((Coordinate) other).y) < 0.01);
+  }
+
+  private boolean isZero() {
+    return (x < 0.01) && (y < 0.01);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return hashCode() == ((Coordinate) other).hashCode();
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) (x + 1000 * y);
+  }
+
+  @Override
+  public String toString() {
+    DecimalFormat df = new DecimalFormat("0.0");
+    return "(" + df.format(x) + "," + df.format(y) + ")";
+  }
+}
+\end{lstlisting}
 
 
 

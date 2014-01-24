@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  23 JAN 2014 23:27
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  23 JAN 2014 23:49
 entering extended mode
 **junjie-guan-ai-hw2.tex
 (D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.tex
@@ -752,7 +752,8 @@ File: b-2-21.JPG Graphic file (type QTm)
 File: b-2-22.JPG Graphic file (type QTm)
 
 <use  "b-2-22.JPG" >
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 818.
+Missing character: There is no ’ in font cmr8!
+Missing character: There is no – in font cmr8!
  [16] [17]
 
 LaTeX Warning: Text page 18 contains only floats.
@@ -761,24 +762,26 @@ LaTeX Warning: Text page 18 contains only floats.
 Overfull \vbox (4.85591pt too high) has occurred while \output is active []
 
 
-[18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 818.
+[18] [19]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 880.
+ [20]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 880.
  (D:\Github\cs76-ai\hw2\junjie-guan-ai-hw2.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 818.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 818.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 880.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 880.
 
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 818.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 880.
  ) 
 Here is how much of TeX's memory you used:
- 10341 strings out of 429025
- 140753 string characters out of 3167800
- 262293 words of memory out of 3000000
- 13499 multiletter control sequences out of 15000+200000
+ 10359 strings out of 429025
+ 140954 string characters out of 3167800
+ 263293 words of memory out of 3000000
+ 13517 multiletter control sequences out of 15000+200000
  10684 words of font info for 39 fonts, out of 3000000 for 9000
  912 hyphenation exceptions out of 8191
- 30i,8n,45p,741b,1745s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,8n,45p,749b,1745s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on junjie-guan-ai-hw2.pdf (18 pages).
+Output written on junjie-guan-ai-hw2.pdf (20 pages).
