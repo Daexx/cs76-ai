@@ -10,6 +10,7 @@ public class World {
 
 	// Obstacles in the world
 	protected ArrayList<Poly> obstacles;
+	protected Poly wall;
 	protected int window_width;
 	protected int window_height;
 	
@@ -58,6 +59,10 @@ public class World {
 	// Add an obstacle;
 	public void addObstacle(Poly p) {
 		obstacles.add(p);
+	}
+	
+	public void addWall(Poly p) {
+		wall = p;
 	}
 
 	// Check if two polygon is in collision;
@@ -110,6 +115,16 @@ public class World {
 				if (result > TOL) {
 					return true;
 				}
+			}
+		}
+		
+		for (int j = 1; j <= p.getLinks(); j++) {
+			link_i = p.getLinkBox(j);
+			for(int i = 0; i < link_i.length / 2; i++){
+				if(link_i[i][0] < 0 || link_i[i][0] > window_width)
+					return true;
+				if(link_i[i][1] < 0 || link_i[i][1] > window_height)
+					return true;
 			}
 		}
 		

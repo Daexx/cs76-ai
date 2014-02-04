@@ -135,12 +135,21 @@ public class ArmRobot {
 	
 	@Override
 	public boolean equals(Object other) {
-		return Arrays.equals(config, ((ArmRobot) other).config);
+		System.out.println(toString() + " ==? " + ((ArmRobot) other).toString());
+		for(int i = 0; i < config.length; i++) {
+			if(Math.abs(config[i] - ((ArmRobot) other).config[i]) / config[i] > 0.1)
+				return false;
+		}
+		return true;
 	}
 
 	@Override
 	public String toString() {
-		return new String("(" + config[0] + ", " + config[1] + ")");
+		String s = new String("(" + config[0] + ", " + config[1] + ")");
+		for (int i = 1; i <= links; i++) {
+			s += (", " + config[2*i + 1]);
+		}
+		return s;
 	}
 	
 	@Override

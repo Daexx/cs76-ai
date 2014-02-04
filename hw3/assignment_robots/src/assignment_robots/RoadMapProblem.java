@@ -22,7 +22,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		startNode = new RoadMapNode(startArm, 0.);
 		getSampling(density);
 		getConnected();
-
+		System.out.println("initiation complete");
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -46,7 +46,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		while(density > 0) {
 			Double [] rConfig = getRandCfg(startArm.links, map);
 			ArmRobot toBeAdded = new ArmRobot(rConfig);
-			if(true || !map.armCollision(toBeAdded)) {
+			if(!map.armCollision(toBeAdded)) {
 				samplings.add(toBeAdded);
 				//System.out.println(toBeAdded);
 				density--;
@@ -54,7 +54,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		}
 		samplings.add(startArm);
 		samplings.add(goalArm);
-		System.out.println("startArm" + startArm);
+		System.out.println("Sampling startArm" + startArm);
 	}
 	
 	private Double[] getRandCfg(int num, World map) {
@@ -118,6 +118,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		}
 		
 		public ArrayList<SearchNode> getSuccessors() {
+			//System.out.println("getSuccessors");
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for(AdjacentCfg adj : roadmap.get(arm)) {
 				successors.add(new RoadMapNode(adj.ar, adj.dis + cost));
@@ -145,7 +146,9 @@ public class RoadMapProblem extends InformedSearchProblem {
 		public boolean goalTest() {
 			// TODO Auto-generated method stub
 			//System.out.println("arm: " + arm);
-			return goalArm == arm;
+			//System.out.println(arm + " ==? " + goalArm);
+			ArmLocalPlanner ap = new ArmLocalPlanner();
+			return ap.moveInParallel(arm.config, goalArm.config) < 1;
 		}
 
 		@Override
