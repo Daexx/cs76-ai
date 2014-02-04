@@ -10,7 +10,7 @@ public class World {
 
 	// Obstacles in the world
 	protected ArrayList<Poly> obstacles;
-	protected Poly wall;
+	public Poly wall;
 	protected int window_width;
 	protected int window_height;
 	
@@ -120,7 +120,7 @@ public class World {
 		
 		for (int j = 1; j <= p.getLinks(); j++) {
 			link_i = p.getLinkBox(j);
-			for(int i = 0; i < link_i.length / 2; i++){
+			for(int i = 0; i < link_i.length; i++){
 				if(link_i[i][0] < 0 || link_i[i][0] > window_width)
 					return true;
 				if(link_i[i][1] < 0 || link_i[i][1] > window_height)

@@ -53,7 +53,7 @@ public class MazeView extends Group {
 				if(maze.getInt(c, r) == -1) {
 					square.setFill(Color.LIGHTGRAY);
 				} else {
-					square.setFill(Color.rgb(colorGrey, colorGrey,colorGrey));
+					square.setFill(Color.rgb(colorGrey, colorGrey, colorGrey));
 				}
 				
 

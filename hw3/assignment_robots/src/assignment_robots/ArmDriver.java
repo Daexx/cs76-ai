@@ -1,8 +1,12 @@
 package assignment_robots;
 
+import java.io.File;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 import javafx.application.Application;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.Scene;
 import javafx.scene.shape.Polygon;
 import javafx.scene.Group;
@@ -24,8 +28,9 @@ public class ArmDriver extends Application {
 	}
 
 	// plot a ArmRobot;
-	public void plotArmRobot(Group g, ArmRobot arm, Double[] config) {
-		arm.set(config);
+	public void plotArmRobot(Group g, Double[] config) {
+		ArmRobot arm = new ArmRobot(config);
+		System.out.println("plot arm" + arm);
 		double[][] current;
 		Double[] to_add;
 		Polygon p;
@@ -49,6 +54,33 @@ public class ArmDriver extends Application {
 
 	}
 	
+	// plot a ArmRobot;
+	public void plotArmRobotPath(Group g, Double[] config, int length, int idx) {
+		ArmRobot arm = new ArmRobot(config);
+		System.out.println("plot arm" + arm);
+		double[][] current;
+		Double[] to_add;
+		Polygon p;
+		for (int i = 1; i <= arm.getLinks(); i++) {
+			current = arm.getLinkBox(i);
+
+			to_add = new Double[2 * current.length];
+			for (int j = 0; j < current.length; j++) {
+				// System.out.println("plotArmRobot: " + current[j][0] + ", " +
+				// current[j][1]);
+				to_add[2 * j] = current[j][0];
+				// to_add[2*j+1] = current[j][1];
+				to_add[2 * j + 1] = window_height - current[j][1];
+			}
+			p = new Polygon();
+			p.getPoints().addAll(to_add);
+			p.setStroke(Color.RED);
+			p.setFill(Color.rgb(255 - 255 * idx / length, 50, 50));
+			g.getChildren().add(p);
+		}
+
+	}
+
 	public void plotArmRobotSample(Group g, ArmRobot arm, Double[] config) {
 		arm.set(config);
 		double[][] current;
@@ -67,7 +99,7 @@ public class ArmDriver extends Application {
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
-			p.setStroke(Color.rgb(200, 200, 200));
+			p.setStroke(Color.rgb(190, 190, 190));
 			p.setFill(Color.WHITE);
 			g.getChildren().add(p);
 		}
@@ -79,6 +111,21 @@ public class ArmDriver extends Application {
 		double[][] current;
 		Double[] to_add;
 		Polygon p;
+
+		// plot the walls
+		current = w.wall.get();
+		to_add = new Double[2 * current.length];
+		for (int j = 0; j < current.length; j++) {
+			to_add[2 * j] = current[j][0];
+			// to_add[2*j+1] = current[j][1];
+			to_add[2 * j + 1] = window_height - current[j][1];
+		}
+		p = new Polygon();
+		p.getPoints().addAll(to_add);
+		p.setStroke(Color.GRAY);
+		p.setFill(Color.WHITE);
+		g.getChildren().add(p);
+
 		for (int i = 0; i < len; i++) {
 			current = w.getObstacle(i);
 			to_add = new Double[2 * current.length];
@@ -114,10 +161,14 @@ public class ArmDriver extends Application {
 
 		// creating polygon as obstacles;
 
+		double bg[][] = { { 0, 0 }, { 0, window_height },
+				{ window_width, window_height }, { window_width, 0 }, { 0, 0 } };
+		Poly bgc = new Poly(bg);
+
 		double a[][] = { { 10, 400 }, { 150, 300 }, { 100, 210 } };
 		Poly obstacle1 = new Poly(a);
 
-		double b[][] = { { 350, 30 }, { 300, 200 }, { 430, 125 } };
+		double b[][] = { { 350, 30 }, { 300, 120 }, { 430, 125 } };
 
 		Poly obstacle2 = new Poly(b);
 
@@ -126,24 +177,25 @@ public class ArmDriver extends Application {
 
 		double wa[][] = { { 0, 0 }, { 0, window_height },
 				{ window_width, window_height }, { window_width, 0 }, { 0, 0 },
-				{-100, -100},{window_width + 100, - 100}, { window_width + 100, window_height  + 100},
-				{ -100, window_height  + 100},{ -100,  - 100}};
+				{ -100, -100 }, { window_width + 100, -100 },
+				{ window_width + 100, window_height + 100 },
+				{ -100, window_height + 100 }, { -100, -100 } };
 		Poly wall = new Poly(wa);
 
 		// Declaring a world;
 		World w = new World(window_width, window_height);
 		// Add obstacles to the world;
-		w.addObstacle(obstacle1);
-		w.addObstacle(obstacle2);
-		w.addObstacle(obstacle3);
-		w.addWall(wall);
+		// w.addObstacle(obstacle1);
+		/*		w.addObstacle(obstacle2);
+				w.addObstacle(obstacle3);*/
+		w.addWall(bgc);
 
 		plotWorld(g, w);
 
 		ArmRobot arm = new ArmRobot(2);
 
 		Double[] config1 = { 10., 20., 80., Math.PI / 4, 80., Math.PI / 4 };
-		Double[] config2 = { 300., 300., 80., .1, 80., .2 };
+		Double[] config2 = { 425., 50., 80., .1, 80., .2 };
 
 		/*		Double[] config1 = {500, 300, 80, Math.PI/4, 80, Math.PI/4};
 				Double[] config2 = {450, 250, 80, .1, 80, .2};*/
@@ -159,28 +211,42 @@ public class ArmDriver extends Application {
 
 		// plot robot arm
 
-		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 50, 10);
-		List<SearchNode> solutionPath = rmp.astarSearch();
+		List<SearchNode> solutionPath = null;
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 100, 10);
+		solutionPath = rmp.astarSearch();
+		
+		// System.out.println("size: " + rmp.samplings.size());
+		for (ArmRobot ar : rmp.samplings) {
+			// System.out.println(ar);
+			plotArmRobotSample(g, ar, ar.config);
+		}
+		
 		if (solutionPath == null)
 			System.out.println("try to debug!!");
 		else {
 			System.out.println("path lenght: " + solutionPath.size());
+			int i = 0;
 			for (SearchNode sn : solutionPath) {
 				RoadMapNode thissn = (RoadMapNode) sn;
-				plotArmRobot(g, thissn.arm, thissn.arm.config);
+				System.out.println("path: " + thissn.arm);
+				plotArmRobotPath(g, thissn.arm.config, solutionPath.size(), i++);
 			}
 		}
-		//System.out.println("size: " + rmp.samplings.size());
-		for (ArmRobot ar : rmp.samplings) {
-			//System.out.println(ar);
-			plotArmRobotSample(g, ar, ar.config);
-		}
 
-		plotArmRobot(g, arm, config2);
-		plotArmRobot(g, arm, config1);
+
+		plotArmRobot(g, config2);
+		plotArmRobot(g, config1);
 
 		scene.setRoot(g);
 		primaryStage.show();
+
+		try {
+			ImageIO.write(
+					SwingFXUtils.fromFXImage(g.snapshot(null, null), null),
+					"png", new File("1-1.png"));
+		} catch (Exception s) {
+
+		}
 	}
 
 	public static void main(String[] args) {

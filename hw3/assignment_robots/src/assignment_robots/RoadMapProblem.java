@@ -54,7 +54,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		}
 		samplings.add(startArm);
 		samplings.add(goalArm);
-		System.out.println("Sampling startArm" + startArm);
+		//System.out.println("Sampling startArm" + startArm);
 	}
 	
 	private Double[] getRandCfg(int num, World map) {
@@ -97,9 +97,9 @@ public class RoadMapProblem extends InformedSearchProblem {
 			}
 		}
 
-			for(AdjacentCfg adj : roadmap.get(startArm)) {
+/*			for(AdjacentCfg adj : roadmap.get(startArm)) {
 				System.out.println(adj.ar);
-			}
+			}*/
 
 	}
 	
