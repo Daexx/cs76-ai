@@ -30,7 +30,7 @@ public class ArmDriver extends Application {
 	// plot a ArmRobot;
 	public void plotArmRobot(Group g, Double[] config) {
 		ArmRobot arm = new ArmRobot(config);
-		System.out.println("plot arm" + arm);
+		//System.out.println("plot arm" + arm);
 		double[][] current;
 		Double[] to_add;
 		Polygon p;
@@ -57,7 +57,7 @@ public class ArmDriver extends Application {
 	// plot a ArmRobot;
 	public void plotArmRobotPath(Group g, Double[] config, int length, int idx) {
 		ArmRobot arm = new ArmRobot(config);
-		System.out.println("plot arm" + arm);
+		//System.out.println("plot arm" + arm);
 		double[][] current;
 		Double[] to_add;
 		Polygon p;
@@ -74,8 +74,8 @@ public class ArmDriver extends Application {
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
-			p.setStroke(Color.RED);
-			p.setFill(Color.rgb(255 - 255 * idx / length, 50, 50));
+			p.setStroke(Color.WHITE);
+			p.setFill(Color.rgb(255 - 255 * idx / length, 255 - 255 * idx / length, 125));
 			g.getChildren().add(p);
 		}
 
@@ -99,7 +99,7 @@ public class ArmDriver extends Application {
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
-			p.setStroke(Color.rgb(190, 190, 190));
+			p.setStroke(Color.rgb(200, 200, 200));
 			p.setFill(Color.WHITE);
 			g.getChildren().add(p);
 		}
@@ -212,7 +212,7 @@ public class ArmDriver extends Application {
 		// plot robot arm
 
 		List<SearchNode> solutionPath = null;
-		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 100, 10);
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 200, 10);
 		solutionPath = rmp.astarSearch();
 		
 		// System.out.println("size: " + rmp.samplings.size());
@@ -228,14 +228,14 @@ public class ArmDriver extends Application {
 			int i = 0;
 			for (SearchNode sn : solutionPath) {
 				RoadMapNode thissn = (RoadMapNode) sn;
-				System.out.println("path: " + thissn.arm);
+				//System.out.println("path: " + thissn.arm);
 				plotArmRobotPath(g, thissn.arm.config, solutionPath.size(), i++);
 			}
 		}
 
 
-		plotArmRobot(g, config2);
-		plotArmRobot(g, config1);
+/*		plotArmRobot(g, config2);
+		plotArmRobot(g, config1);*/
 
 		scene.setRoot(g);
 		primaryStage.show();
