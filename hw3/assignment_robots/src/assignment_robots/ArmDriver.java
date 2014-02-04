@@ -31,7 +31,7 @@ public class ArmDriver extends Application {
 			
 			to_add = new Double[2*current.length];
 			for (int j = 0; j < current.length; j++) {
-				System.out.println("plotArmRobot: " + current[j][0] + ", " + current[j][1]);
+				//System.out.println("plotArmRobot: " + current[j][0] + ", " + current[j][1]);
 				to_add[2*j] = current[j][0];
 				//to_add[2*j+1] = current[j][1];
 				to_add[2*j+1] = window_height - current[j][1];
@@ -120,9 +120,6 @@ public class ArmDriver extends Application {
 		double time = ap.moveInParallel(config1, config2);
 		System.out.println("time: " + time);
 		
-		boolean result;
-		result = w.armCollisionPath(arm, config1, config2);
-		System.out.println("result: " + result);
 		// plot robot arm
 		
 		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 10, 15);
@@ -133,8 +130,6 @@ public class ArmDriver extends Application {
 		
 	    scene.setRoot(g);
 	    primaryStage.show();
-		
-
 	}
 	
 	

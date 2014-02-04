@@ -97,7 +97,7 @@ public class CarDriver extends Application {
 		Poly obstacle5 = new Poly(e);
 		
 		// Declaring a world; 
-		World w = new World();
+		World w = new World(window_width, window_height);
 		// Add obstacles to the world;
 		w.addObstacle(obstacle1);
 		w.addObstacle(obstacle2);
@@ -107,15 +107,17 @@ public class CarDriver extends Application {
 			
 		plotWorld(g, w);
 		
-		CarRobot car = new CarRobot();
+		CarRobot car = new CarRobot(new CarState(270, 15, 0));
+		CarRobot car2 = new CarRobot(new CarState(250, 90, 0));
 		
-		CarState state1 = new CarState(270, 15, 0);
-	    // Set CarState;
-		car.set(state1);
+//		boolean collided = w.carCollisionPath(car, state1, 0, 1.2);
+//	    System.out.println(collided);
+//		plotCarRobot(g, car, state1);
 		
-		boolean collided = w.carCollisionPath(car, state1, 0, 1.2);
-	    System.out.println(collided);
-		plotCarRobot(g, car, state1);
+		RapidlyExpTree rrt = new RapidlyExpTree(w, car.getCarState(), car2.getCarState(), 15000);
+		rrt.astarSearch();
+		plotCarRobot(g, car, car.getCarState());
+		plotCarRobot(g, car2, car2.getCarState());
 		
 	    scene.setRoot(g);
 	    primaryStage.show();

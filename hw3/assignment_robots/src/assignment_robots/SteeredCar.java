@@ -50,8 +50,8 @@ class SteeredCar {
 			g.set(center[0] + Math.cos(angle), center[1] + Math.sin(angle), angle-Math.PI/2);
 
 		}
-		if(g.s[3] <= 0 || g.s[3] >= 2 * Math.PI)
-			g.s[3] = (g.s[3] + 2 * Math.PI) % (2 * Math.PI);
+		if(g.s[2] <= 0 || g.s[2] >= 2 * Math.PI)
+			g.s[2] = (g.s[2] + 100 * Math.PI) % (2 * Math.PI);
 		return g;
 
 	}

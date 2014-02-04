@@ -109,7 +109,7 @@ public class ArmRobot {
 		ang = (ang + config[2*i+1]) % (2*Math.PI);
 		x = xp + config[2*i] * Math.cos(ang);
 		y = yp + config[2*i] * Math.sin(ang);
-		System.out.println("getLinkBox: " + config[2*i] + ", " + i);
+		//System.out.println("getLinkBox: " + config[2*i] + ", " + i);
 		
 		rect[0][0] = xp + width*Math.cos(ang + Math.PI / 2);
 		rect[0][1] = yp + width*Math.sin(ang + Math.PI / 2);

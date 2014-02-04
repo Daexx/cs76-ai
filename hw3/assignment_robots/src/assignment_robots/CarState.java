@@ -23,6 +23,7 @@ public class CarState {
 	}
 	
 	public CarState(double[] cfg) {
+		s = new double[3];
 		s[0] = cfg[0];
 		s[1] = cfg[1];
 		s[2] = cfg[2];

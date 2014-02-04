@@ -63,7 +63,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		// randomize the start position
 		cfg[0] = rd.nextDouble() * map.getW();
 		cfg[1] = rd.nextDouble() * map.getH();
-		cfg[2] = (rd.nextDouble() - 0.5) * 1000 % 6 * Math.PI / 3;
+		cfg[2] = (rd.nextInt(1000)) % 6 * Math.PI / 3;
 		return new CarState(cfg);
 	}
 
@@ -73,6 +73,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 			SteeredCar sc = new SteeredCar();
 			CarRobot newRandCar = new CarRobot(getRandCfg(map)), nearest = null, newCarRobot = new CarRobot(), newNearest = null;
 			if (!map.carCollision(newRandCar)) {
+				//System.out.println("newRandCar: " + newRandCar);
 				for (CarRobot cr : connected) {
 					double dis = newRandCar.getDistance(cr);
 					if (minDis > dis) {
@@ -82,8 +83,9 @@ public class RapidlyExpTree extends InformedSearchProblem {
 				}
 
 				minDis = Double.MAX_VALUE;
-				for (int i = 0; i < 5; i++) {
-					newCarRobot.set(sc.move(nearest.getCarState(), 0, 1));
+				for (int i = 0; i <= 5; i++) {
+					newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1));
+					//System.out.println("newCarRobot: " + newCarRobot);
 					if (!map.carCollision(newCarRobot)) {
 						double dis = newCarRobot.getDistance(newRandCar);
 						if (minDis > dis) {
@@ -95,13 +97,16 @@ public class RapidlyExpTree extends InformedSearchProblem {
 			}
 
 			if (newNearest != null) {
+				density--;
+				//System.out.println(newNearest);
 				connected.add(newNearest);
 				roadmap.get(nearest).add(new AdjacentCfg(newNearest, 1));
 				roadmap.put(newNearest, new HashSet<AdjacentCfg>());
-				if(newNearest.getDistance(goalCar) < 1){
+				if(newNearest.getDistance(goalCar) < 100){
 					connected.add(goalCar);
 					roadmap.get(newNearest).add(new AdjacentCfg(goalCar, 1));
 					roadmap.put(goalCar, new HashSet<AdjacentCfg>());
+					break;
 				}
 			}
 		}
