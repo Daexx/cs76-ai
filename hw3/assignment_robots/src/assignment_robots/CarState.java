@@ -12,6 +12,19 @@ public class CarState {
 		s[1] = 0;
 		s[2] = 0;
 	}
+	
+	public CarState (CarState cs) {
+		s = new double[3];
+		s[0] = cs.getX();
+		s[1] = cs.getY();
+		s[2] = cs.getTheta();
+	}
+	
+	public CarState(double[] cfg) {
+		s[0] = cfg[0];
+		s[1] = cfg[1];
+		s[2] = cfg[2];
+	}
 
 	public CarState (double x, double y, double theta) {
 		s = new double[3];
@@ -24,7 +37,6 @@ public class CarState {
 		s[0] = x;
 		s[1] = y;
 		s[2] = theta;
-		
 	}
 
 	public double getX() {

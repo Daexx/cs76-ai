@@ -11,8 +11,12 @@ public class CarRobot {
 
 	
 	public CarRobot () {
-		
+
 		s = new CarState(0, 0, 0);
+	}
+	
+	public CarRobot (CarState cfg) {
+		s = new CarState(cfg);
 	}
 
 	// set the current configuration of the robot;
@@ -75,4 +79,9 @@ public class CarRobot {
 		return path;
 	}
 
+	public double getDistance(CarRobot cr) {
+		double angleDif = Math.abs(s.getTheta() - cr.getCarState().getTheta());
+		angleDif = angleDif >= Math.PI ? 2 * Math.PI - angleDif : angleDif;
+		return Math.pow(s.getX()-cr.getCarState().getX(), 2) + Math.pow(s.getY()-cr.getCarState().getY(), 2) + 100 * angleDif;
+	}
 }

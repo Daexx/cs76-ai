@@ -10,9 +10,11 @@ public class ArmLocalPlanner {
 	// two configurations must be valid configurations for the arm; 
 	public double moveInParallel(double[] config1, double[] config2) {
 		if (config1.length != config2.length) {
+			System.out.println("moveInParallel err");
 			System.exit(1);
 		}
 		if (config1.length % 2 != 0) {
+			System.out.println("moveInParallel err");
 			System.exit(1);
 		}
 		
@@ -22,7 +24,6 @@ public class ArmLocalPlanner {
 		for (int i = 0; i < (config1.length/2); i++) {
 			if (i == 0) {
 				d = Math.sqrt(Math.pow(config1[0]-config2[0], 2)+Math.pow(config1[1]-config2[1], 2));
-				
 			}
 			else {
 				d = Math.abs(config1[2*i+1]-config2[2*i+1]);
@@ -30,10 +31,7 @@ public class ArmLocalPlanner {
 			if (d > maxt) {
 				maxt = d;
 			}
-			
 		}
-		
-		
 		return maxt;
 	}
 	

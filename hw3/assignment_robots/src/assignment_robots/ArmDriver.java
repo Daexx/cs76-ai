@@ -94,13 +94,11 @@ public class ArmDriver extends Application {
 
 		Poly obstacle2 = new Poly(b);
 		
-
-		
 		double c[][] = {{110, 220}, {250, 380}, {320, 220}};
 		Poly obstacle3 = new Poly(c);
 		
 		// Declaring a world; 
-		World w = new World();
+		World w = new World(window_width, window_height);
 		// Add obstacles to the world;
 		w.addObstacle(obstacle1);
 		w.addObstacle(obstacle2);
@@ -122,12 +120,13 @@ public class ArmDriver extends Application {
 		double time = ap.moveInParallel(config1, config2);
 		System.out.println("time: " + time);
 		
-		arm.set(config2);
-		
 		boolean result;
 		result = w.armCollisionPath(arm, config1, config2);
 		System.out.println("result: " + result);
 		// plot robot arm
+		
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 10, 15);
+		rmp.astarSearch();
 		
 		plotArmRobot(g, arm, config2);
 		plotArmRobot(g, arm, config1);    

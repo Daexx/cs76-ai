@@ -10,6 +10,8 @@ public class World {
 
 	// Obstacles in the world
 	protected ArrayList<Poly> obstacles;
+	protected int window_width;
+	protected int window_height;
 	
 
 	private static double TOL = 0.00001;
@@ -17,7 +19,20 @@ public class World {
 	// Initialize the world;
 	public World() {
 		obstacles = new ArrayList<Poly>();
-		
+	}
+	
+	public World(int ww, int wh) {
+		obstacles = new ArrayList<Poly>();
+		window_width = ww;
+		window_height = wh;
+	}
+	
+	public Double getW() {
+		return (double) window_width;
+	}
+	
+	public Double getH() {
+		return (double) window_height;
 	}
 	
 	// return the list of polygon obstacles;

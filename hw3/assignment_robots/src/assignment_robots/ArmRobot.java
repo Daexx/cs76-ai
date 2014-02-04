@@ -1,5 +1,7 @@
 package assignment_robots;
 
+import java.util.Arrays;
+
 // This is the class of the generalized arm robot; 
 // Each arm have a moving base, and k links;
 // each link has a length, and an angle relative to previous link;
@@ -26,6 +28,17 @@ public class ArmRobot {
 		int i = 0;
 		for ( i = 0; i < config.length; i++) {
 			config[i] = 0;
+		}
+		width = 10;
+	}
+	
+	public ArmRobot(double[] cfg) {
+		links = (cfg.length - 2) / 2;
+		config = new double[cfg.length];
+		config[0] = cfg[0];
+		config[1] = cfg[1];
+		for (int i = 1; i <= links; i++) {
+			setLink(i, cfg[2*i], cfg[2*i+1]);
 		}
 		width = 10;
 	}
@@ -112,5 +125,14 @@ public class ArmRobot {
 		
 		return rect;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return Arrays.equals(config, ((ArmRobot) other).config);
+	}
 
+	@Override
+	public String toString() {
+		return new String("(" + config[0] + ", " + config[1] + ")");
+	}
 }
