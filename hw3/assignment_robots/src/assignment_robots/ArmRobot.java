@@ -135,7 +135,7 @@ public class ArmRobot {
 	
 	@Override
 	public boolean equals(Object other) {
-		System.out.println(toString() + " ==? " + ((ArmRobot) other).toString());
+		//System.out.println(toString() + " ==? " + ((ArmRobot) other).toString());
 		for(int i = 0; i < config.length; i++) {
 			if(Math.abs(config[i] - ((ArmRobot) other).config[i]) / config[i] > 0.1)
 				return false;

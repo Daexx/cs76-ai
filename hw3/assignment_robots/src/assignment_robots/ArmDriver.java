@@ -67,7 +67,7 @@ public class ArmDriver extends Application {
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
-			p.setStroke(Color.GRAY);
+			p.setStroke(Color.rgb(200, 200, 200));
 			p.setFill(Color.WHITE);
 			g.getChildren().add(p);
 		}
@@ -143,7 +143,7 @@ public class ArmDriver extends Application {
 		ArmRobot arm = new ArmRobot(2);
 
 		Double[] config1 = { 10., 20., 80., Math.PI / 4, 80., Math.PI / 4 };
-		Double[] config2 = { 100., 50., 80., .1, 80., .2 };
+		Double[] config2 = { 300., 300., 80., .1, 80., .2 };
 
 		/*		Double[] config1 = {500, 300, 80, Math.PI/4, 80, Math.PI/4};
 				Double[] config2 = {450, 250, 80, .1, 80, .2};*/
@@ -164,14 +164,15 @@ public class ArmDriver extends Application {
 		if (solutionPath == null)
 			System.out.println("try to debug!!");
 		else {
+			System.out.println("path lenght: " + solutionPath.size());
 			for (SearchNode sn : solutionPath) {
 				RoadMapNode thissn = (RoadMapNode) sn;
 				plotArmRobot(g, thissn.arm, thissn.arm.config);
 			}
 		}
-		System.out.println("size: " + rmp.samplings.size());
+		//System.out.println("size: " + rmp.samplings.size());
 		for (ArmRobot ar : rmp.samplings) {
-			System.out.println(ar);
+			//System.out.println(ar);
 			plotArmRobotSample(g, ar, ar.config);
 		}
 
