@@ -31,7 +31,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		public double dis;
 		
 		AdjacentCfg(ArmRobot a, double d){
-			ar = a;
+			ar = new ArmRobot(a.config);
 			dis = d;
 		}
 		
@@ -46,8 +46,9 @@ public class RoadMapProblem extends InformedSearchProblem {
 		while(density > 0) {
 			double [] rConfig = getRandCfg(startArm.links, map);
 			ArmRobot toBeAdded = new ArmRobot(rConfig);
-			if(!map.armCollision(toBeAdded)) {
+			if(true || !map.armCollision(toBeAdded)) {
 				samplings.add(toBeAdded);
+				//System.out.println(toBeAdded);
 				density--;
 			}
 		}
@@ -61,6 +62,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		// randomize the start position
 		cfg[0] = rd.nextDouble() * map.getW();
 		cfg[1] = rd.nextDouble() * map.getH();
+		//System.out.println(cfg[0]/map.getW() + "," + cfg[1]/map.getH());
 		for (int i = 1; i <= num; i++) {
 			// the length of each arm remains the same
 			cfg[2 * i] = startArm.config[2 * i];
@@ -78,8 +80,8 @@ public class RoadMapProblem extends InformedSearchProblem {
 			roadmap.put(ar, new PriorityQueue<AdjacentCfg>());
 		
 		for(ArmRobot ar : samplings) {
+			int base_conn = roadmap.get(ar).size();
 			for(ArmRobot arOther : samplings) {
-				int base_conn = roadmap.get(ar).size();
 				if(ar != arOther) {
 					double dis = ap.moveInParallel(ar.config, arOther.config);
 					if(!map.armCollisionPath(ar, ar.config, arOther.config)) {
@@ -87,11 +89,16 @@ public class RoadMapProblem extends InformedSearchProblem {
 						tmpq.add(new AdjacentCfg(arOther, dis));
 						if(tmpq.size() > k_neighbour + base_conn)
 							tmpq.poll();
-						roadmap.get(arOther).add(new AdjacentCfg(ar, dis));
+						//roadmap.get(arOther).add(new AdjacentCfg(ar, dis));
 					}
 				}
 			}
 		}
+
+			for(AdjacentCfg adj : roadmap.get(startArm)) {
+				System.out.println(adj.ar);
+			}
+
 	}
 	
 	
@@ -99,12 +106,12 @@ public class RoadMapProblem extends InformedSearchProblem {
 	
 	
 	public class RoadMapNode implements SearchNode {
-		private ArmRobot arm;
+		public ArmRobot arm;
 		private double cost;
 		
 		// construct the connected graph
 		public RoadMapNode(ArmRobot inAr, double c) {
-			arm = inAr;
+			arm = new ArmRobot(inAr.config);
 			cost = c;
 		}
 		
@@ -135,6 +142,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 		@Override
 		public boolean goalTest() {
 			// TODO Auto-generated method stub
+			//System.out.println("arm: " + arm);
 			return goalArm == arm;
 		}
 

@@ -1,11 +1,15 @@
 package assignment_robots;
 
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.shape.Polygon;
 import javafx.scene.Group;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import assignment_robots.SearchProblem.SearchNode;
+import assignment_robots.RoadMapProblem.RoadMapNode;
 
 public class ArmDriver extends Application {
 	// default window size
@@ -100,9 +104,9 @@ public class ArmDriver extends Application {
 		// Declaring a world; 
 		World w = new World(window_width, window_height);
 		// Add obstacles to the world;
-		w.addObstacle(obstacle1);
-		w.addObstacle(obstacle2);
-		w.addObstacle(obstacle3);
+//		w.addObstacle(obstacle1);
+//		w.addObstacle(obstacle2);
+//		w.addObstacle(obstacle3);
 		
 		plotWorld(g, w);
 		
@@ -110,6 +114,9 @@ public class ArmDriver extends Application {
 		
 		double[] config1 = {10, 20, 80, Math.PI/4, 80, Math.PI/4};
 		double[] config2 = {100, 50, 80, .1, 80, .2};
+		
+/*		double[] config1 = {500, 300, 80, Math.PI/4, 80, Math.PI/4};
+		double[] config2 = {450, 250, 80, .1, 80, .2};*/
 		
 		arm.set(config2);
 		
@@ -122,11 +129,24 @@ public class ArmDriver extends Application {
 		
 		// plot robot arm
 		
-		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 10, 15);
-		rmp.astarSearch();
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 100, 15);
+		List<SearchNode> solutionPath = rmp.astarSearch();
+		if(solutionPath == null)
+			System.out.println("try to debug!!");
+		else {
+			for(SearchNode sn : solutionPath) {
+				RoadMapNode thissn = (RoadMapNode) sn;
+				plotArmRobot(g, thissn.arm, thissn.arm.config);
+			}
+		}
+		System.out.println("size: " + rmp.samplings.size());
+		for(ArmRobot ar : rmp.samplings) {
+			System.out.println(ar);
+			plotArmRobot(g, ar, ar.config);
+		}
 		
 		plotArmRobot(g, arm, config2);
-		plotArmRobot(g, arm, config1);    
+		plotArmRobot(g, arm, config1);
 		
 	    scene.setRoot(g);
 	    primaryStage.show();

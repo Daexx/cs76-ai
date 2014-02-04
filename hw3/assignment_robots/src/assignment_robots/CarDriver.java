@@ -1,6 +1,9 @@
 package assignment_robots;
 
 
+import java.util.List;
+
+import assignment_robots.SearchProblem.SearchNode;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.shape.Polygon;
@@ -115,7 +118,12 @@ public class CarDriver extends Application {
 //		plotCarRobot(g, car, state1);
 		
 		RapidlyExpTree rrt = new RapidlyExpTree(w, car.getCarState(), car2.getCarState(), 15000);
-		rrt.astarSearch();
+		List<SearchNode> solutionPath = rrt.astarSearch();
+		if(solutionPath == null)
+			System.out.println("try to debug!!");
+		else {
+			System.out.println("done!!");
+		}
 		plotCarRobot(g, car, car.getCarState());
 		plotCarRobot(g, car2, car2.getCarState());
 		
