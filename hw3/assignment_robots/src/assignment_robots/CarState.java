@@ -1,10 +1,12 @@
 package assignment_robots;
 
+import java.util.Arrays;
+
 // this class declares the configuration of a car robot;
 // standard set and get function;
 
 public class CarState {
-	protected double[] s;
+	public double[] s;
 
 	public CarState () {
 		s = new double[3];
@@ -53,5 +55,10 @@ public class CarState {
 
 	public double[] get() {
 		return s;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return Arrays.equals(s, ((CarState) other).s);
 	}
 }

@@ -7,51 +7,56 @@ import assignment_robots.SearchProblem.SearchNode;
 import assignment_robots.InformedSearchProblem;
 
 public class RapidlyExpTree extends InformedSearchProblem {
-	
+
 	CarRobot startCar, goalCar;
 	HashSet<CarRobot> connected = new HashSet<>(); // world sampling
-	HashMap<CarRobot, AdjacentCfg> roadmap = new HashMap<>(); // roadmap, a graph
+	HashMap<CarRobot, HashSet<AdjacentCfg>> roadmap = new HashMap<>(); // roadmap,
+																	// a
+	// graph
 	World map;
-	
-	public RapidlyExpTree(World m, CarState config1, CarState config2, int density) {
+
+	public RapidlyExpTree(World m, CarState config1, CarState config2,
+			int density) {
 		map = m;
 		startCar = new CarRobot(config1);
 		goalCar = new CarRobot(config2);
 		startNode = new RRTnode(startCar, 0);
+		roadmap.put(startCar, new HashSet<AdjacentCfg>());
+		connected.add(startCar);
 		growTree2Goal(density);
 
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public class AdjacentCfg implements Comparable<AdjacentCfg> {
 		public CarRobot ar;
 		public double dis;
-		
-		AdjacentCfg(CarRobot a, double d){
+
+		AdjacentCfg(CarRobot a, double d) {
 			ar = a;
 			dis = d;
 		}
-		
+
 		@Override
-		public int compareTo(AdjacentCfg other)  {
+		public int compareTo(AdjacentCfg other) {
 			// sorted from large to small
 			return (int) Math.signum(other.dis - dis);
 		}
 	}
-	
-/*	public void getSampling(int density) {
-		while(density > 0) {
-			double [] rConfig = getRandCfg(startCar.links, map);
-			CarRobot toBeAdded = new CarRobot(rConfig);
-			if(!map.armCollision(toBeAdded)) {
-				samplings.add(toBeAdded);
-				density--;
+
+	/*	public void getSampling(int density) {
+			while(density > 0) {
+				double [] rConfig = getRandCfg(startCar.links, map);
+				CarRobot toBeAdded = new CarRobot(rConfig);
+				if(!map.armCollision(toBeAdded)) {
+					samplings.add(toBeAdded);
+					density--;
+				}
 			}
-		}
-		samplings.add(startCar);
-		samplings.add(goalCar);
-	}*/
-	
+			samplings.add(startCar);
+			samplings.add(goalCar);
+		}*/
+
 	private CarState getRandCfg(World map) {
 		Random rd = new Random();
 		double[] cfg = new double[3];
@@ -61,83 +66,76 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		cfg[2] = (rd.nextDouble() - 0.5) * 1000 % 6 * Math.PI / 3;
 		return new CarState(cfg);
 	}
-	
+
 	public void growTree2Goal(int density) {
-		while(density > 0) {
+		while (density > 0) {
 			Double minDis = Double.MAX_VALUE;
-			CarRobot toBeAdded = new CarRobot(getRandCfg(map)), nearest;
-			if(!map.carCollision(toBeAdded)) {
-				for(CarRobot cr : connected) {
-					double dis = toBeAdded.getDistance(cr);
-					if(minDis > dis) {
+			SteeredCar sc = new SteeredCar();
+			CarRobot newRandCar = new CarRobot(getRandCfg(map)), nearest = null, newCarRobot = new CarRobot(), newNearest = null;
+			if (!map.carCollision(newRandCar)) {
+				for (CarRobot cr : connected) {
+					double dis = newRandCar.getDistance(cr);
+					if (minDis > dis) {
 						minDis = dis;
 						nearest = cr;
 					}
 				}
-				for(CarRobot cr : connected) {
-					double dis = toBeAdded.getDistance(cr);
-					if(minDis > dis) {
-						minDis = dis;
-						nearest = cr;
+
+				minDis = Double.MAX_VALUE;
+				for (int i = 0; i < 5; i++) {
+					newCarRobot.set(sc.move(nearest.getCarState(), 0, 1));
+					if (!map.carCollision(newCarRobot)) {
+						double dis = newCarRobot.getDistance(newRandCar);
+						if (minDis > dis) {
+							minDis = dis;
+							newNearest = newCarRobot;
+						}
 					}
 				}
 			}
-		}
-		
-		// initiate the connecting with start arm
-		ArmLocalPlanner ap = new ArmLocalPlanner();
-		PriorityQueue<AdjacentCfg> tmpq;
-		for(CarRobot ar : samplings) 
-			roadmap.put(ar, null);
-		
-		for(CarRobot ar : samplings) {
-			for(CarRobot arOther : samplings) {
-				int base_conn = roadmap.get(ar).size();
-				if(ar != arOther) {
-					double dis = ap.moveInParallel(ar.config, arOther.config);
-					if(!map.armCollisionPath(ar, ar.config, arOther.config)) {
-						tmpq = roadmap.get(ar);
-						tmpq.add(new AdjacentCfg(arOther, dis));
-						if(tmpq.size() > k_neighbour + base_conn)
-							tmpq.poll();
-						roadmap.get(arOther).add(new AdjacentCfg(ar, dis));
-					}
+
+			if (newNearest != null) {
+				connected.add(newNearest);
+				roadmap.get(nearest).add(new AdjacentCfg(newNearest, 1));
+				roadmap.put(newNearest, new HashSet<AdjacentCfg>());
+				if(newNearest.getDistance(goalCar) < 1){
+					connected.add(goalCar);
+					roadmap.get(newNearest).add(new AdjacentCfg(goalCar, 1));
+					roadmap.put(goalCar, new HashSet<AdjacentCfg>());
 				}
 			}
 		}
 	}
-	
-	
-	///////////////////////////////////////////////////////////////////////
-	
-	
+
+	// /////////////////////////////////////////////////////////////////////
+
 	public class RRTnode implements SearchNode {
-		private CarRobot arm;
+		private CarRobot car;
 		private double cost;
-		
+
 		// construct the connected graph
 		public RRTnode(CarRobot inAr, double c) {
-			arm = inAr;
+			car = inAr;
 			cost = c;
 		}
-		
+
 		public ArrayList<SearchNode> getSuccessors() {
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
-			for(AdjacentCfg adj : roadmap.get(arm)) {
+			for (AdjacentCfg adj : roadmap.get(car)) {
 				successors.add(new RRTnode(adj.ar, adj.dis + cost));
 			}
 			return successors;
 		}
-		
+
 		// override functions
 		@Override
 		public boolean equals(Object other) {
-			return arm == ((RRTnode) other).arm;
+			return car == ((RRTnode) other).car;
 		}
 
 		@Override
 		public String toString() {
-			return arm.toString();
+			return car.toString();
 		}
 
 		@Override
@@ -148,7 +146,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		@Override
 		public boolean goalTest() {
 			// TODO Auto-generated method stub
-			return goalCar == arm;
+			return goalCar == car;
 		}
 
 		@Override
@@ -160,8 +158,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		@Override
 		public double heuristic() {
 			// TODO Auto-generated method stub
-			ArmLocalPlanner ap = new ArmLocalPlanner();
-			return ap.moveInParallel(arm.config, goalCar.config);
+			return car.getDistance(goalCar);
 		}
 
 		@Override

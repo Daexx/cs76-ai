@@ -1,5 +1,7 @@
 package assignment_robots;
 
+import assignment_robots.RapidlyExpTree.RRTnode;
+
 // This class declares the class of a steered car;
 // Each car has a state, representing its current configuration; 
 // Each car has a initial configuration, set to be at origin with angle 0;
@@ -83,5 +85,15 @@ public class CarRobot {
 		double angleDif = Math.abs(s.getTheta() - cr.getCarState().getTheta());
 		angleDif = angleDif >= Math.PI ? 2 * Math.PI - angleDif : angleDif;
 		return Math.pow(s.getX()-cr.getCarState().getX(), 2) + Math.pow(s.getY()-cr.getCarState().getY(), 2) + 100 * angleDif;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		return s == ((CarRobot) other).getCarState();
+	}
+	
+	@Override
+	public String toString() {
+		return new String("(" + s.s[0] + ", " + s.s[1] + ", " + s.s[2] + ")");
 	}
 }
