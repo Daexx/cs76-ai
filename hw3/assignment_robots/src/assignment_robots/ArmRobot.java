@@ -146,9 +146,9 @@ public class ArmRobot {
 	@Override
 	public String toString() {
 		String s = new String("(" + config[0] + ", " + config[1] + ")");
-		for (int i = 1; i <= links; i++) {
-			s += (", " + config[2*i + 1]);
-		}
+//		for (int i = 1; i <= links; i++) {
+//			s += (", " + config[2*i + 1]);
+//		}
 		return s;
 	}
 	

@@ -17,8 +17,8 @@ import assignment_robots.RoadMapProblem.RoadMapNode;
 
 public class ArmDriver extends Application {
 	// default window size
-	protected int window_width = 600;
-	protected int window_height = 400;
+	protected int winw = 600;
+	protected int winh = 400;
 
 	public void addPolygon(Group g, Double[] points) {
 		Polygon p = new Polygon();
@@ -43,7 +43,7 @@ public class ArmDriver extends Application {
 				// current[j][1]);
 				to_add[2 * j] = current[j][0];
 				// to_add[2*j+1] = current[j][1];
-				to_add[2 * j + 1] = window_height - current[j][1];
+				to_add[2 * j + 1] = winh - current[j][1];
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
@@ -70,7 +70,7 @@ public class ArmDriver extends Application {
 				// current[j][1]);
 				to_add[2 * j] = current[j][0];
 				// to_add[2*j+1] = current[j][1];
-				to_add[2 * j + 1] = window_height - current[j][1];
+				to_add[2 * j + 1] = winh - current[j][1];
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
@@ -95,7 +95,7 @@ public class ArmDriver extends Application {
 				// current[j][1]);
 				to_add[2 * j] = current[j][0];
 				// to_add[2*j+1] = current[j][1];
-				to_add[2 * j + 1] = window_height - current[j][1];
+				to_add[2 * j + 1] = winh - current[j][1];
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
@@ -118,7 +118,7 @@ public class ArmDriver extends Application {
 		for (int j = 0; j < current.length; j++) {
 			to_add[2 * j] = current[j][0];
 			// to_add[2*j+1] = current[j][1];
-			to_add[2 * j + 1] = window_height - current[j][1];
+			to_add[2 * j + 1] = winh - current[j][1];
 		}
 		p = new Polygon();
 		p.getPoints().addAll(to_add);
@@ -132,7 +132,7 @@ public class ArmDriver extends Application {
 			for (int j = 0; j < current.length; j++) {
 				to_add[2 * j] = current[j][0];
 				// to_add[2*j+1] = current[j][1];
-				to_add[2 * j + 1] = window_height - current[j][1];
+				to_add[2 * j + 1] = winh - current[j][1];
 			}
 			p = new Polygon();
 			p.getPoints().addAll(to_add);
@@ -151,7 +151,7 @@ public class ArmDriver extends Application {
 		primaryStage.setTitle("CS 76 2D world");
 
 		Group root = new Group();
-		Scene scene = new Scene(root, window_width, window_height);
+		Scene scene = new Scene(root, winw, winh);
 
 		primaryStage.setScene(scene);
 
@@ -161,33 +161,40 @@ public class ArmDriver extends Application {
 
 		// creating polygon as obstacles;
 
-		double bg[][] = { { 0, 0 }, { 0, window_height },
-				{ window_width, window_height }, { window_width, 0 }, { 0, 0 } };
+		double bg[][] = { { 0, 0 }, { 0, winh },
+				{ winw, winh }, { winw, 0 }, { 0, 0 } };
 		Poly bgc = new Poly(bg);
 
-		double a[][] = { { 10, 400 }, { 150, 300 }, { 100, 210 } };
+		double al = .04, bet = 0.75, basey = 0.;
+		double a[][] = { { winw/2 - al * winw, basey },
+				{ winw/2 - al * winw, bet * winh + basey},
+				{ winw/2 + al * winw, bet * winh + basey },
+				{ winw/2 + al * winw, basey} };
 		Poly obstacle1 = new Poly(a);
 
-		double b[][] = { { 350, 30 }, { 300, 120 }, { 430, 125 } };
-
+		al = .35; bet = 0.1; basey = 0.65 * winh;
+		double b[][] = { { winw/2 - al * winw, basey },
+				{ winw/2 - al * winw, bet * winh + basey},
+				{ winw/2 + al * winw, bet * winh + basey },
+				{ winw/2 + al * winw, basey} };
 		Poly obstacle2 = new Poly(b);
 
 		double c[][] = { { 110, 220 }, { 250, 380 }, { 320, 220 } };
 		Poly obstacle3 = new Poly(c);
 
-		double wa[][] = { { 0, 0 }, { 0, window_height },
-				{ window_width, window_height }, { window_width, 0 }, { 0, 0 },
-				{ -100, -100 }, { window_width + 100, -100 },
-				{ window_width + 100, window_height + 100 },
-				{ -100, window_height + 100 }, { -100, -100 } };
+		double wa[][] = { { 0, 0 }, { 0, winh },
+				{ winw, winh }, { winw, 0 }, { 0, 0 },
+				{ -100, -100 }, { winw + 100, -100 },
+				{ winw + 100, winh + 100 },
+				{ -100, winh + 100 }, { -100, -100 } };
 		Poly wall = new Poly(wa);
 
 		// Declaring a world;
-		World w = new World(window_width, window_height);
+		World w = new World(winw, winh);
 		// Add obstacles to the world;
-		// w.addObstacle(obstacle1);
-		/*		w.addObstacle(obstacle2);
-				w.addObstacle(obstacle3);*/
+		w.addObstacle(obstacle1);
+//				w.addObstacle(obstacle2);
+//				w.addObstacle(obstacle3);
 		w.addWall(bgc);
 
 		plotWorld(g, w);
@@ -212,7 +219,7 @@ public class ArmDriver extends Application {
 		// plot robot arm
 
 		List<SearchNode> solutionPath = null;
-		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 200, 10);
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 200, 15);
 		solutionPath = rmp.astarSearch();
 		
 		// System.out.println("size: " + rmp.samplings.size());
@@ -234,8 +241,8 @@ public class ArmDriver extends Application {
 		}
 
 
-/*		plotArmRobot(g, config2);
-		plotArmRobot(g, config1);*/
+//		plotArmRobot(g, config2);
+//		plotArmRobot(g, config1);
 
 		scene.setRoot(g);
 		primaryStage.show();
@@ -243,7 +250,7 @@ public class ArmDriver extends Application {
 		try {
 			ImageIO.write(
 					SwingFXUtils.fromFXImage(g.snapshot(null, null), null),
-					"png", new File("1-1.png"));
+					"png", new File("1-2.png"));
 		} catch (Exception s) {
 
 		}
