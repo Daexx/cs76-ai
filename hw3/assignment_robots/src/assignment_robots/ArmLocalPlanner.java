@@ -8,7 +8,7 @@ public class ArmLocalPlanner {
 
 	// Get the time to move from configuration 1 to configuration 2;
 	// two configurations must be valid configurations for the arm; 
-	public double moveInParallel(double[] config1, double[] config2) {
+	public double moveInParallel(Double[] config1, Double[] config2) {
 		if (config1.length != config2.length) {
 			System.out.println("moveInParallel err");
 			System.exit(1);
@@ -40,7 +40,7 @@ public class ArmLocalPlanner {
 	// path[i] is the velocity of component config[i];
 	// basically, given certain time duration: step, path[i]*step 
 	// is the movement of component config[i] during step;
-	public double[] getPath (double[] config1, double[] config2) {
+	public double[] getPath (Double[] config1, Double[] config2) {
 		double time = moveInParallel(config1, config2);
 		double[] path = new double[config1.length];
 		

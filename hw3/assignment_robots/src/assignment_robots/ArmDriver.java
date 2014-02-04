@@ -24,7 +24,7 @@ public class ArmDriver extends Application {
 	}
 	
 	// plot a ArmRobot;
-	public void plotArmRobot(Group g, ArmRobot arm, double[] config) {
+	public void plotArmRobot(Group g, ArmRobot arm, Double[] config) {
 		arm.set(config);
 		double[][] current;
 		Double[] to_add;
@@ -112,11 +112,11 @@ public class ArmDriver extends Application {
 		
 		ArmRobot arm = new ArmRobot(2);
 		
-		double[] config1 = {10, 20, 80, Math.PI/4, 80, Math.PI/4};
-		double[] config2 = {100, 50, 80, .1, 80, .2};
+		Double[] config1 = {10., 20., 80., Math.PI/4, 80., Math.PI/4};
+		Double[] config2 = {100., 50., 80., .1, 80., .2};
 		
-/*		double[] config1 = {500, 300, 80, Math.PI/4, 80, Math.PI/4};
-		double[] config2 = {450, 250, 80, .1, 80, .2};*/
+/*		Double[] config1 = {500, 300, 80, Math.PI/4, 80, Math.PI/4};
+		Double[] config2 = {450, 250, 80, .1, 80, .2};*/
 		
 		arm.set(config2);
 		
@@ -124,12 +124,12 @@ public class ArmDriver extends Application {
 		ArmLocalPlanner ap = new ArmLocalPlanner();
 		
 		// get the time to move from config1 to config2;
-		double time = ap.moveInParallel(config1, config2);
+		Double time = ap.moveInParallel(config1, config2);
 		System.out.println("time: " + time);
 		
 		// plot robot arm
 		
-		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 100, 15);
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 10, 15);
 		List<SearchNode> solutionPath = rmp.astarSearch();
 		if(solutionPath == null)
 			System.out.println("try to debug!!");

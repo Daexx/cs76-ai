@@ -119,9 +119,10 @@ public class World {
 	// Check if a robot arm path between two configurations collides with any 
 	// obstacle;
 	// main collision detection you should call for PRM;
-	public boolean armCollisionPath(ArmRobot p, double[] config1, double[] config2) {
+	public boolean armCollisionPath(ArmRobot p, Double[] config1, Double[] config2) {
 		
 		double[] config = new double[config1.length];
+		ArmRobot pp = new ArmRobot(p.config);
 		
 		ArmLocalPlanner ap = new ArmLocalPlanner();
 		double time = ap.moveInParallel(config1, config2);
@@ -136,8 +137,8 @@ public class World {
 			for (int i = 0; i < config1.length; i++) {
 				config[i] = config[i] + path[i] * step;
 			}
-			p.set(config);
-			result = armCollision(p);
+			pp.set(config);
+			result = armCollision(pp);
 			if (result) {
 				return true;
 			}
