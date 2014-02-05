@@ -19,5 +19,8 @@
 \contentsline {section}{\numberline {4}Extension: bidirectional search}{12}{section.4}
 \contentsline {subsection}{\numberline {4.1}Basic Idea}{12}{subsection.4.1}
 \contentsline {subsection}{\numberline {4.2}Code implementation}{12}{subsection.4.2}
-\contentsline {subsubsection}{\numberline {4.2.1}biGrowTree2Goal2Goal}{12}{subsubsection.4.2.1}
-\contentsline {section}{\numberline {5}Previous Work}{12}{section.5}
+\contentsline {subsubsection}{\numberline {4.2.1}biGrowTree2Goal}{12}{subsubsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2}getSuccessors}{13}{subsubsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.3}heuristic}{14}{subsubsection.4.2.3}
+\contentsline {subsection}{\numberline {4.3}Output demonstration}{14}{subsection.4.3}
+\contentsline {section}{\numberline {5}Previous work}{17}{section.5}

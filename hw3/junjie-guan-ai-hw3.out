@@ -19,5 +19,8 @@
 \BOOKMARK [1][-]{section.4}{Extension:\040bidirectional\040search}{}% 19
 \BOOKMARK [2][-]{subsection.4.1}{Basic\040Idea}{section.4}% 20
 \BOOKMARK [2][-]{subsection.4.2}{Code\040implementation}{section.4}% 21
-\BOOKMARK [3][-]{subsubsection.4.2.1}{biGrowTree2Goal2Goal}{subsection.4.2}% 22
-\BOOKMARK [1][-]{section.5}{Previous\040Work}{}% 23
+\BOOKMARK [3][-]{subsubsection.4.2.1}{biGrowTree2Goal}{subsection.4.2}% 22
+\BOOKMARK [3][-]{subsubsection.4.2.2}{getSuccessors}{subsection.4.2}% 23
+\BOOKMARK [3][-]{subsubsection.4.2.3}{heuristic}{subsection.4.2}% 24
+\BOOKMARK [2][-]{subsection.4.3}{Output\040demonstration}{section.4}% 25
+\BOOKMARK [1][-]{section.5}{Previous\040work}{}% 26

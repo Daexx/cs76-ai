@@ -122,13 +122,14 @@ public class Bi_RRT extends InformedSearchProblem {
 		}
 	}
 	
-	boolean growTheOther(boolean tree, CarRobot target) {
+	private boolean growTheOther(boolean tree, CarRobot target) {
 		HashSet<CarRobot> connected = tree ? connectedA : connectedB;
 		CarRobot nearest = findNearestInTree(target, tree);
 		CarRobot newAdded = expandTree(target, nearest);
 		if (!isContains(connected, newAdded)) {
 			addNewNode2Tree(newAdded, nearest, tree);
 			// terminate the iteration if reaching the goal
+			isConnected(newAdded, target, tree);
 			if (newAdded.getDistance(target) < 20) {
 				if(tree) {
 					bridgeAside = newAdded;

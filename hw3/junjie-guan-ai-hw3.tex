@@ -403,7 +403,7 @@ Figure \ref{2-1}-\ref{2-3} presents 3 examples of the testing case, with increas
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.827\textwidth]{2-3.png}
-\caption{test with corridor. The movement becomes more tricky and complex. The tree size recorded for this time is 9096, and the number of other testing should be fluctuating around it. I specify the tree size for newAddedrison in my latter work, which will be mentioned soon}
+\caption{test with corridor. The movement becomes more tricky and complex. The tree size recorded for this time is 11352, and the number of other testing should be fluctuating around it. I specify the tree size for newAddedrison in my latter work, which will be mentioned soon}
 \label{2-3}
 \end{figure*}
 
@@ -424,7 +424,7 @@ Implementing the code is a little tricky. For example we should be careful about
 
 In my case I implement tree using singly-linked way. So when building RRT I build a tree with each parent points to its chilren nodes. But in this double tree problem, we might want to implement the goal tree in a reverse way. Of course, you can use doubly-linked style tree and free of considering those issue, but it takes you approximately twice as much as memory to store the tree.
 
-\subsubsection{biGrowTree2Goal2Goal}
+\subsubsection{biGrowTree2Goal}
 
 
 \textbf{biGrowTree2Goal} is similar to \textbf{growTree2Goal}. The difference is after adding a new node to current expanding tree, we should guide the other tree to expand towards the new node we just added (line 17). And after trying to add new node to both of the tree, we should also keep balance of this two spanning tree, and try to use new random node to expand a smaller tree (line 22).
@@ -458,40 +458,138 @@ public void biGrowTree2Goal() {
 
 
 
-\textbf{biGrowTree2Goal} is similar to \textbf{growTree2Goal}. The difference is after adding a new node to current expanding tree, we should guide the other tree to expand towards the new node we just added (line 17). And after trying to add new node to both of the tree, we should also keep balance of this two spanning tree, and try to use new random node to expand a smaller tree (line 22).
+\textbf{growTheOther} is a method for tree to expand based on the newly added noded in the other tree. And it is also the place to determine whether these two tree are ready to connected to each other (line 8-20).
 
 \begin{lstlisting}[numbers=left]
-public void biGrowTree2Goal() {
-  boolean tree = TreeA;
-  while (num4grow > 0) {
-    // generate new random car
-    CarRobot newRandCar = new CarRobot(getRandCfg(map));
-    // initiate current tree set
-    HashSet<CarRobot> connected = tree ? connectedA : connectedB,
-                theOther = tree ? connectedB : connectedA;
-    // if the car is valid
-    if (!map.carCollision(newRandCar)) {
-      CarRobot nearest = findNearestInTree(newRandCar, tree);
-      CarRobot newAdded = expandTree(newRandCar, nearest);
-      if (!isContains(connected, newAdded)) {
-        addNewNode2Tree(newAdded, nearest, tree);
-        num4grow--;
-        // terminate the iteration if two tree connected
-        if (growTheOther(!tree, newAdded)) break;
+boolean growTheOther(boolean tree, CarRobot target) {
+  HashSet<CarRobot> connected = tree ? connectedA : connectedB;
+  CarRobot nearest = findNearestInTree(target, tree);
+  CarRobot newAdded = expandTree(target, nearest);
+  if (!isContains(connected, newAdded)) {
+    addNewNode2Tree(newAdded, nearest, tree);
+    // terminate the iteration if reaching the goal
+    if (newAdded.getDistance(target) < 20) {
+      if(tree) {
+        bridgeAside = newAdded;
+        bridgeBside = target;
       }
+      else {
+        bridgeAside = target;
+        bridgeBside = newAdded;
+        RRTreeB.put(newAdded, new HashSet<AdjacentCfg>());
+        RRTreeB.get(newAdded).add(new AdjacentCfg(nearest, 1));
+      }
+      return true;
     }
-    // swap if current tree size exceeds the other
-    //System.out.println(tree);
-    if(connected.size() > theOther.size()) tree = !tree;
+    num4grow--;
+  }
+  return false;
+}
+\end{lstlisting}
+
+\textbf{addNewNode2Tree} is a little tricky since two tree is contructed in a opposite way. See the difference between line 7-8 and line 11-12.
+
+\begin{lstlisting}[numbers=left]
+private void addNewNode2Tree(CarRobot newNode, CarRobot parentNode,
+   boolean tree) {
+  HashSet<CarRobot> connected = tree ? connectedA : connectedB;
+  HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = tree ? RRTreeA : RRTreeB;
+  connected.add(newNode);
+  if(tree) {
+    // in treeA, parent points to its children, 1 to n
+    RRTree.get(parentNode).add(new AdjacentCfg(newNode, 1));
+    RRTree.put(newNode, new HashSet<AdjacentCfg>());
+  }else {
+    // in treeB, the child points to their parent, 1 to 1
+    RRTree.put(newNode, new HashSet<AdjacentCfg>());
+    RRTree.get(newNode).add(new AdjacentCfg(parentNode, 1));
   }
 }
 \end{lstlisting}
+
+The rest of the methods are pretty much similar, with additional tree controling using a parameter.
+
+
+\subsubsection{getSuccessors}
+
+
+\textbf{getSuccessors} is a little more complicated than before, because it acts differently in Tree A and Tree B.
+
+\begin{lstlisting}[numbers=left]
+public ArrayList<SearchNode> getSuccessors() {
+  HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = tree ? RRTreeA : RRTreeB;
+  ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
+  // no brdige, no way
+  if(bridgeAside == null) return successors;
+  for (AdjacentCfg adj : RRTree.get(car)) {
+    if(tree && bridgeAside.getDistance(adj.ar) < 20) {
+      successors.clear();
+      successors.add(new BiRRTnode(bridgeBside, cost, !tree));
+      return successors;
+    }else {
+      successors.add(new BiRRTnode(adj.ar, adj.dis + cost, tree));
+    }
+  }
+  return successors;
+}
+\end{lstlisting}
+
+
+\subsubsection{heuristic}
+
+
+\textbf{heuristic} is interesting here. Since the moment you enter Tree B, there will be only one way that leads you to the goal, which is the root of tree B. In a way you already find the goal, and there is no point to keep searching on any other node.
+
+So after entering tree B, I simply set the heuristic to $-cost$, so that I can make sure the prioty is 0, and it always will be the first in the prioty queue of A* searching.
+
+\begin{lstlisting}[numbers=left]
+@Override
+public double heuristic() {
+  // if in the treeB, we should simply go straight to the goal
+  // so I set priority as high as possible
+  if(tree)
+    return car.getDistance(goalCar);
+  else
+    return -cost;
+}
+\end{lstlisting}
+
+
+\subsection{Output demonstration}
+Figure \ref{2-1}-\ref{2-3} presents 3 examples of the testing case, with increasing sampling difficulty. From the last two case we can observe that, the tree on left part is much more complicate. This is because the left part has keep randomly generating the tree when one of the branch trying to explore through the corridor. I think using a bidirectional spaning can cut the expense of exploring corridor to half.
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.827\textwidth]{3-0.png}
+\caption{test in empty space}
+\label{3-0}
+\end{figure*}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.827\textwidth]{3-1.png}
+\caption{test with an obstacle.}
+\label{3-1}
+\end{figure*}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.827\textwidth]{3-2.png}
+\caption{test with corridor. Though the tree looks crowded here. But actually the total size of these two tree is $2370\times2$. Comparing to figure \ref{2-3} which is 11352, it uses only around half of the nodes. What's more, the searching is even more efficient, since A* stop exploring all the other nodes as soon as it reach the conjunction node of these two tree.}
+\label{3-2}
+\end{figure*}
+
+
 
 
 
 
 \clearpage
-\section{Previous Work}
+\section{Previous work}
+
+RRT-connect \footnote{Kuffner Jr, James J., and Steven M. LaValle. "RRT-connect: An efficient approach to single-query path planning." Robotics and Automation, 2000. Proceedings. ICRA'00. IEEE International Conference on. Vol. 2. IEEE, 2000.} is a very interesting research work. Regarding to the issue of building RRT in high-dimensional configuration space, they propose a way to build the RRT from source and goal simultaneously. Some advantages including free of tunning parameters, flexible in solving many difficult problem in realworld.
+
+RRT-connect \footnote{Boor, Valérie, Mark H. Overmars, and A. Frank van der Stappen. "The gaussian sampling strategy for probabilistic roadmap planners." Robotics and Automation, 1999. Proceedings. 1999 IEEE International Conference on. Vol. 2. IEEE, 1999.} is also very interesting. In my course I use simple uniform distribution to generate the random node. In this paper, the author proposes to use Gaussian sampling strategy. As I mentioned in my disccussion of sampling method, uniform distirbution totally neglect the high density needs of configuration around the obstacles. While using Gaussian distribution, we can actually focus more around the obstacles instead of the free space. The experiment results shows the efficiency of this algorithm.
 
 
 
