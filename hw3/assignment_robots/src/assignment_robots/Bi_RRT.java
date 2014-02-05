@@ -15,7 +15,7 @@ public class Bi_RRT extends InformedSearchProblem {
 			connectedB = new HashSet<>(); // world sampling
 	HashMap<CarRobot, HashSet<AdjacentCfg>> RRTreeA = new HashMap<>(),
 			RRTreeB = new HashMap<>(); // RRTree,
-	HashMap<CarRobot, AdjacentCfg> TreeA2TreeB = new HashMap<>();
+	CarRobot bridgeAside, bridgeBside;
 	World map;
 	int num4grow;
 
@@ -28,7 +28,7 @@ public class Bi_RRT extends InformedSearchProblem {
 		RRTreeA.put(startCar, new HashSet<AdjacentCfg>());
 		RRTreeB.put(goalCar, new HashSet<AdjacentCfg>());
 		connectedA.add(startCar);
-		connectedB.add(startCar);
+		connectedB.add(goalCar);
 		biGrowTree2Goal();
 
 		// TODO Auto-generated constructor stub
@@ -130,10 +130,16 @@ public class Bi_RRT extends InformedSearchProblem {
 			addNewNode2Tree(newAdded, nearest, tree);
 			// terminate the iteration if reaching the goal
 			if (newAdded.getDistance(target) < 20) {
-				if(tree)
-					TreeA2TreeB.put(newAdded, new AdjacentCfg(target, 1));
-				else
-					TreeA2TreeB.put(target, new AdjacentCfg(newAdded, 1));
+				if(tree) {
+					bridgeAside = newAdded;
+					bridgeBside = target;
+				}
+				else {
+					bridgeAside = target;
+					bridgeBside = newAdded;
+					RRTreeB.put(newAdded, new HashSet<AdjacentCfg>());
+					RRTreeB.get(newAdded).add(new AdjacentCfg(nearest, 1));
+				}
 				return true;
 			}
 			num4grow--;
@@ -183,9 +189,10 @@ public class Bi_RRT extends InformedSearchProblem {
 			HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = tree ? RRTreeA : RRTreeB;
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for (AdjacentCfg adj : RRTree.get(car)) {
-				if(TreeA2TreeB.containsKey(adj)) {
+				if(tree && bridgeAside.getDistance(adj.ar) < 20) {
+					System.out.println("going to B");
 					successors.clear();
-					successors.add(new BiRRTnode(adj.ar, adj.dis + cost, !tree));
+					successors.add(new BiRRTnode(bridgeBside, cost, !tree));
 					return successors;
 				}else {
 					successors.add(new BiRRTnode(adj.ar, adj.dis + cost, tree));
