@@ -10,3 +10,8 @@
 \contentsline {subsubsection}{\numberline {2.3.5}boundary detect}{4}{subsubsection.2.3.5}
 \contentsline {subsection}{\numberline {2.4}Output demonstration}{5}{subsection.2.4}
 \contentsline {section}{\numberline {3}Rapidly Exploring Random Tree}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Basic Idea}{8}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Code implementation}{8}{subsection.3.2}
+\contentsline {subsubsection}{\numberline {3.2.1}growTree2Goal}{8}{subsubsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2}findNearestInTree}{8}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.3}expandTree}{9}{subsubsection.3.2.3}

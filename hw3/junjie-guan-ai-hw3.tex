@@ -252,13 +252,93 @@ Figure \ref{startendrmp} demostrates the start and and end configuration of my t
 \clearpage
 \section{Rapidly Exploring Random Tree}
 \subsection{Basic Idea}
-The basic idea of RRT is to grow a tree from the start, to fill up the infinite or over complex space. 
+The basic idea of RRT is to grow a tree from the start, to fill up the infinite or over complex space. The most simple and intuitive way is to randomly generate legal configuration, and grow the tree towards the configuration. 
+
+
+
+
+
+\subsection{Code implementation}
+
+
+\subsubsection{growTree2Goal}
+
+\textbf{growTree2Goal} keeps interatively expanding the tree until one of the node close to the goal. (I think the code is already quite self-explanatory, no further introduction is needed) 
+
+\begin{lstlisting}[numbers=left]
+public void growTree2Goal(int num4grow) {
+  while (num4grow > 0) {
+    // generate new random car
+    CarRobot newRandCar = new CarRobot(getRandCfg(map));
+    // if the car is valid
+    if (!map.carCollision(newRandCar)) {
+      CarRobot nearest = findNearestInTree(newRandCar);
+      CarRobot newNearest = expandTree(newRandCar, nearest);
+      addNewNode2Tree(newNearest, nearest);
+      // terminate the iteration if reaching the goal
+      if (newNearest.getDistance(goalCar) < 20) {
+        addNewNode2Tree(goalCar, newNearest);
+        break;
+      }
+      num4grow--;
+    }
+  }
+}
+\end{lstlisting}
 
 
 
 
 
 
+\subsubsection{findNearestInTree}
+
+\textbf{findNearestInTree} finds the vertex that is nearest to the new randomly generated node.
+
+\begin{lstlisting}[numbers=left]
+private CarRobot findNearestInTree(CarRobot newRandCar) {
+  Double minDis = Double.MAX_VALUE;
+  CarRobot nearest = null;
+  for (CarRobot cr : connected) {
+    double dis = newRandCar.getDistance(cr);
+    if (minDis > dis) {
+      minDis = dis;
+      nearest = cr;
+    }
+  }
+  return nearest;
+}
+\end{lstlisting}
+
+
+
+
+\subsubsection{expandTree}
+
+\textbf{expandTree} trys to expand to 6 different directions, and return the expansion that is nearest to the randomly generated node.
+
+\begin{lstlisting}[numbers=left]
+private CarRobot expandTree(CarRobot newRandCar, CarRobot nearest) {
+  // initiate the auxiliary object
+  Double minDis = Double.MAX_VALUE;
+  SteeredCar sc = new SteeredCar();
+  CarRobot newNearest = null, newCarRobot = new CarRobot();
+  // try to expand to 6 different directions
+  for (int i = 0; i <= 5; i++) {
+    newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1.));
+    // System.out.println("newCarRobot: " + newCarRobot);
+    if (!map.carCollision(newCarRobot)) {
+      double dis = newCarRobot.getDistance(newRandCar);
+      if (minDis > dis) {
+        minDis = dis;
+        newNearest = newCarRobot;
+      }
+    }
+  }
+  return newNearest;
+}
+
+\end{lstlisting}
 
 
 

@@ -11,7 +11,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 	CarRobot startCar, goalCar;
 	HashSet<CarRobot> connected = new HashSet<>(); // world sampling
 	HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = new HashMap<>(); // RRTree,
-																	// a
+																		// a
 	// graph
 	World map;
 
@@ -67,49 +67,60 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		return new CarState(cfg);
 	}
 
-	public void growTree2Goal(int density) {
-		while (density > 0) {
-			Double minDis = Double.MAX_VALUE;
-			SteeredCar sc = new SteeredCar();
-			CarRobot newRandCar = new CarRobot(getRandCfg(map)), nearest = null, newCarRobot = new CarRobot(), newNearest = null;
-			if (!map.carCollision(newRandCar)) {
-				//System.out.println("newRandCar: " + newRandCar);
-				for (CarRobot cr : connected) {
-					double dis = newRandCar.getDistance(cr);
-					if (minDis > dis) {
-						minDis = dis;
-						nearest = cr;
-					}
-				}
+	private CarRobot findNearestInTree(CarRobot newRandCar) {
+		Double minDis = Double.MAX_VALUE;
+		CarRobot nearest = null;
+		for (CarRobot cr : connected) {
+			double dis = newRandCar.getDistance(cr);
+			if (minDis > dis) {
+				minDis = dis;
+				nearest = cr;
+			}
+		}
+		return nearest;
+	}
 
-				minDis = Double.MAX_VALUE;
-				for (int i = 0; i <= 5; i++) {
-					newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1.));
-					//System.out.println("newCarRobot: " + newCarRobot);
-					if (!map.carCollision(newCarRobot)) {
-						double dis = newCarRobot.getDistance(newRandCar);
-						if (minDis > dis) {
-							minDis = dis;
-							newNearest = newCarRobot;
-						}
-					}else {
-						//System.out.println("collision!!");
-					}
+	private CarRobot expandTree(CarRobot newRandCar, CarRobot nearest) {
+		// initiate the auxiliary object
+		Double minDis = Double.MAX_VALUE;
+		SteeredCar sc = new SteeredCar();
+		CarRobot newNearest = null, newCarRobot = new CarRobot();
+		// try to expand to 6 different directions
+		for (int i = 0; i <= 5; i++) {
+			newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1.));
+			// System.out.println("newCarRobot: " + newCarRobot);
+			if (!map.carCollision(newCarRobot)) {
+				double dis = newCarRobot.getDistance(newRandCar);
+				if (minDis > dis) {
+					minDis = dis;
+					newNearest = newCarRobot;
 				}
 			}
+		}
+		return newNearest;
+	}
 
-			if (newNearest != null) {
-				density--;
-				//System.out.println(newNearest);
-				connected.add(newNearest);
-				RRTree.get(nearest).add(new AdjacentCfg(newNearest, 1));
-				RRTree.put(newNearest, new HashSet<AdjacentCfg>());
-				if(newNearest.getDistance(goalCar) < 20){
-					connected.add(goalCar);
-					RRTree.get(newNearest).add(new AdjacentCfg(goalCar, 1));
-					RRTree.put(goalCar, new HashSet<AdjacentCfg>());
+	private void addNewNode2Tree(CarRobot newNode, CarRobot parentNode) {
+		connected.add(newNode);
+		RRTree.get(parentNode).add(new AdjacentCfg(newNode, 1));
+		RRTree.put(newNode, new HashSet<AdjacentCfg>());
+	}
+
+	public void growTree2Goal(int num4grow) {
+		while (num4grow > 0) {
+			// generate new random car
+			CarRobot newRandCar = new CarRobot(getRandCfg(map));
+			// if the car is valid
+			if (!map.carCollision(newRandCar)) {
+				CarRobot nearest = findNearestInTree(newRandCar);
+				CarRobot newNearest = expandTree(newRandCar, nearest);
+				addNewNode2Tree(newNearest, nearest);
+				// terminate the iteration if reaching the goal
+				if (newNearest.getDistance(goalCar) < 20) {
+					addNewNode2Tree(goalCar, newNearest);
 					break;
 				}
+				num4grow--;
 			}
 		}
 	}
