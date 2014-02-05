@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  4 FEB 2014 23:54
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  5 FEB 2014 03:22
 entering extended mode
 **junjie-guan-ai-hw3.tex
 (D:\Github\cs76-ai\hw3\junjie-guan-ai-hw3.tex
@@ -399,14 +399,11 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 [5] [6] [7] [8
 
-]
+] [9]
 File: 2-1.png Graphic file (type QTm)
  <use  "2-1.png" >
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
 File: 2-2.png Graphic file (type QTm)
-<use  "2-2.png" >
+ <use  "2-2.png" >
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -415,21 +412,28 @@ File: 2-3.png Graphic file (type QTm)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 410.
-[9] [10] [11]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 410.
+[10] [11]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 464.
+ [12
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 464.
  (D:\Github\cs76-ai\hw3\junjie-guan-ai-hw3.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 410.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 410.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 410.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 464.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 464.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 464.
  ) 
 Here is how much of TeX's memory you used:
- 10208 strings out of 429025
- 139507 string characters out of 3167800
+ 10226 strings out of 429025
+ 139725 string characters out of 3167800
  264293 words of memory out of 3000000
- 13417 multiletter control sequences out of 15000+200000
+ 13435 multiletter control sequences out of 15000+200000
  9551 words of font info for 35 fonts, out of 3000000 for 9000
  912 hyphenation exceptions out of 8191
  30i,7n,45p,480b,1688s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on junjie-guan-ai-hw3.pdf (11 pages).
+Output written on junjie-guan-ai-hw3.pdf (12 pages).

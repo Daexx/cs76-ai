@@ -90,11 +90,15 @@ public class BiCarDrive extends Application {
 		Polygon p = new Polygon();
 		p.getPoints().addAll(to_add);
 		
-		p.setStroke(Color.WHITE);
-		if(tree)
+		
+		if(tree) {
 			p.setFill(Color.rgb(255, 255, 125));
-		else
+			p.setStroke(Color.rgb(0, 0, 125));
+		}
+		else {
 			p.setFill(Color.rgb(0, 0, 125));
+			p.setStroke(Color.rgb(255, 255, 125));
+		}
 		g.getChildren().add(p);
 	}
 		
@@ -180,7 +184,7 @@ public class BiCarDrive extends Application {
 		World w = new World(winw, winh);
 		// Add obstacles to the world;
 		w.addObstacle(obstacle1);
-//		w.addObstacle(obstacle2);
+		w.addObstacle(obstacle2);
 //		w.addObstacle(obstacle3);
 		w.addWall(bgc);
 //		w.addObstacle(obstacle4);
@@ -234,7 +238,7 @@ public class BiCarDrive extends Application {
 		try {
 			ImageIO.write(
 					SwingFXUtils.fromFXImage(g.snapshot(null, null), null),
-					"png", new File("2-3.png"));
+					"png", new File("3-1.png"));
 		} catch (Exception s) {
 
 		}

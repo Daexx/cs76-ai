@@ -252,7 +252,7 @@ Figure \ref{startendrmp} demostrates the start and and end configuration of my t
 \clearpage
 \section{Rapidly Exploring Random Tree}
 \subsection{Basic Idea}
-The basic idea of RRT is to grow a tree from the start, to fill up the infinite or over complex space. The most simple and intuitive way is to randomly generate legal configuration, and grow the tree towards the configuration. 
+The basic idea of RRT is to grow a tree from the start, to fill up the infinite or over complex space. The most simple and intuitive way is to randomly generate legal configuration, and grow the tree towards the configuration. By the way, the heuristic here is simply the distance from current configuration to goal configuration.
 
 
 
@@ -359,6 +359,21 @@ public ArrayList<SearchNode> getSuccessors() {
 \end{lstlisting}
 
 
+\subsubsection{getDistance}
+
+\textbf{getDistance} computes the distance between two configuration. I use a function similar to Euler distance while also considering the angle, using a parameter to tune the effect of angle. What's more, we need to be very careful when implementing the difference of two angle., as line 2-3 show.
+
+\begin{lstlisting}[numbers=left]
+public double getDistance(CarRobot cr) {
+  double angleDif = Math.abs(s.getTheta() - cr.getCarState().getTheta());
+  angleDif = angleDif >= Math.PI ? 2 * Math.PI - angleDif : angleDif;
+  return Math.pow(
+      Math.pow(s.getX() - cr.getCarState().getX(), 2)
+          + Math.pow(s.getY() - cr.getCarState().getY(), 2) + 100
+          * angleDif, 0.5);
+}
+\end{lstlisting}
+
 
 
 
@@ -388,7 +403,7 @@ Figure \ref{2-1}-\ref{2-3} presents 3 examples of the testing case, with increas
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.827\textwidth]{2-3.png}
-\caption{test with corridor. The movement becomes more tricky and complex}
+\caption{test with corridor. The movement becomes more tricky and complex. The tree size recorded for this time is 9096, and the number of other testing should be fluctuating around it. I specify the tree size for newAddedrison in my latter work, which will be mentioned soon}
 \label{2-3}
 \end{figure*}
 
@@ -397,15 +412,87 @@ Figure \ref{2-1}-\ref{2-3} presents 3 examples of the testing case, with increas
 
 
 
-\subsection{Extension: bidirectional search}
+
+\clearpage
+\section{Extension: bidirectional search}
+\subsection{Basic Idea}
+The essense of of bidiretional search is constructing the searching tree from both start and goal vertex, so that the total tree size can be reduced at least 50\%. Also it is benefit to some situation when there is a bug trap preventing searching from source to goal or goal to source. In short it is very powerful.
+
+\subsection{Code implementation}
+
+Implementing the code is a little tricky. For example we should be careful about how to connect this two tree together when they meet. Also, we should care about the tree structure of these two trees. 
+
+In my case I implement tree using singly-linked way. So when building RRT I build a tree with each parent points to its chilren nodes. But in this double tree problem, we might want to implement the goal tree in a reverse way. Of course, you can use doubly-linked style tree and free of considering those issue, but it takes you approximately twice as much as memory to store the tree.
+
+\subsubsection{biGrowTree2Goal2Goal}
+
+
+\textbf{biGrowTree2Goal} is similar to \textbf{growTree2Goal}. The difference is after adding a new node to current expanding tree, we should guide the other tree to expand towards the new node we just added (line 17). And after trying to add new node to both of the tree, we should also keep balance of this two spanning tree, and try to use new random node to expand a smaller tree (line 22).
+
+\begin{lstlisting}[numbers=left]
+public void biGrowTree2Goal() {
+  boolean tree = TreeA;
+  while (num4grow > 0) {
+    // generate new random car
+    CarRobot newRandCar = new CarRobot(getRandCfg(map));
+    // initiate current tree set
+    HashSet<CarRobot> connected = tree ? connectedA : connectedB,
+                theOther = tree ? connectedB : connectedA;
+    // if the car is valid
+    if (!map.carCollision(newRandCar)) {
+      CarRobot nearest = findNearestInTree(newRandCar, tree);
+      CarRobot newAdded = expandTree(newRandCar, nearest);
+      if (!isContains(connected, newAdded)) {
+        addNewNode2Tree(newAdded, nearest, tree);
+        num4grow--;
+        // terminate the iteration if two tree connected
+        if (growTheOther(!tree, newAdded)) break;
+      }
+    }
+    // swap if current tree size exceeds the other
+    //System.out.println(tree);
+    if(connected.size() > theOther.size()) tree = !tree;
+  }
+}
+\end{lstlisting}
+
+
+
+\textbf{biGrowTree2Goal} is similar to \textbf{growTree2Goal}. The difference is after adding a new node to current expanding tree, we should guide the other tree to expand towards the new node we just added (line 17). And after trying to add new node to both of the tree, we should also keep balance of this two spanning tree, and try to use new random node to expand a smaller tree (line 22).
+
+\begin{lstlisting}[numbers=left]
+public void biGrowTree2Goal() {
+  boolean tree = TreeA;
+  while (num4grow > 0) {
+    // generate new random car
+    CarRobot newRandCar = new CarRobot(getRandCfg(map));
+    // initiate current tree set
+    HashSet<CarRobot> connected = tree ? connectedA : connectedB,
+                theOther = tree ? connectedB : connectedA;
+    // if the car is valid
+    if (!map.carCollision(newRandCar)) {
+      CarRobot nearest = findNearestInTree(newRandCar, tree);
+      CarRobot newAdded = expandTree(newRandCar, nearest);
+      if (!isContains(connected, newAdded)) {
+        addNewNode2Tree(newAdded, nearest, tree);
+        num4grow--;
+        // terminate the iteration if two tree connected
+        if (growTheOther(!tree, newAdded)) break;
+      }
+    }
+    // swap if current tree size exceeds the other
+    //System.out.println(tree);
+    if(connected.size() > theOther.size()) tree = !tree;
+  }
+}
+\end{lstlisting}
 
 
 
 
-
-
-
+\clearpage
 \section{Previous Work}
+
 
 
 
