@@ -75,7 +75,7 @@ public class BiCarDrive extends Application {
 	}
 	
 	// plot a car robot
-	public void plotCarRobot(Group g, CarState s) {
+	public void plotCarRobot(Group g, CarState s, boolean tree) {
 		//System.out.println(car);
 		//System.out.println(s);
 		CarRobot car = new CarRobot(s);
@@ -90,8 +90,11 @@ public class BiCarDrive extends Application {
 		Polygon p = new Polygon();
 		p.getPoints().addAll(to_add);
 		
-		p.setStroke(Color.RED);
-		p.setFill(Color.PINK);
+		p.setStroke(Color.WHITE);
+		if(tree)
+			p.setFill(Color.rgb(255, 255, 125));
+		else
+			p.setFill(Color.rgb(0, 0, 125));
 		g.getChildren().add(p);
 	}
 		
@@ -177,7 +180,7 @@ public class BiCarDrive extends Application {
 		World w = new World(winw, winh);
 		// Add obstacles to the world;
 		w.addObstacle(obstacle1);
-		w.addObstacle(obstacle2);
+//		w.addObstacle(obstacle2);
 //		w.addObstacle(obstacle3);
 		w.addWall(bgc);
 //		w.addObstacle(obstacle4);
@@ -222,8 +225,8 @@ public class BiCarDrive extends Application {
 				plotCarRobotPath(g, thissn.car.getCarState(), solutionPath.size(), i++);
 			}
 		}
-		plotCarRobot(g, car.getCarState());
-		plotCarRobot(g, car2.getCarState());
+		plotCarRobot(g, car.getCarState(), rrt.TreeA);
+		plotCarRobot(g, car2.getCarState(), rrt.TreeB);
 		
 	    scene.setRoot(g);
 	    primaryStage.show();

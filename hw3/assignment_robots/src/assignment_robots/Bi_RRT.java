@@ -126,7 +126,7 @@ public class Bi_RRT extends InformedSearchProblem {
 		HashSet<CarRobot> connected = tree ? connectedA : connectedB;
 		CarRobot nearest = findNearestInTree(target, tree);
 		CarRobot newAdded = expandTree(target, nearest);
-		if (!connected.contains(newAdded)) {
+		if (!isContains(connected, newAdded)) {
 			addNewNode2Tree(newAdded, nearest, tree);
 			// terminate the iteration if reaching the goal
 			if (newAdded.getDistance(target) < 20) {
@@ -146,6 +146,14 @@ public class Bi_RRT extends InformedSearchProblem {
 		}
 		return false;
 	}
+	
+	private boolean isContains(HashSet<CarRobot> connected, CarRobot car) {
+		for(CarRobot cr : connected) {
+			if(car.getDistance(cr) < 1)
+				return true;
+		}
+		return false;
+	}
 
 	public void biGrowTree2Goal() {
 		boolean tree = TreeA;
@@ -154,12 +162,12 @@ public class Bi_RRT extends InformedSearchProblem {
 			CarRobot newRandCar = new CarRobot(getRandCfg(map));
 			// initiate current tree set
 			HashSet<CarRobot> connected = tree ? connectedA : connectedB,
-									theOther = tree ? connectedA : connectedB;
+									theOther = tree ? connectedB : connectedA;
 			// if the car is valid
 			if (!map.carCollision(newRandCar)) {
 				CarRobot nearest = findNearestInTree(newRandCar, tree);
 				CarRobot newAdded = expandTree(newRandCar, nearest);
-				if (!connected.contains(newAdded)) {
+				if (!isContains(connected, newAdded)) {
 					addNewNode2Tree(newAdded, nearest, tree);
 					num4grow--;
 					// terminate the iteration if two tree connected
@@ -167,6 +175,7 @@ public class Bi_RRT extends InformedSearchProblem {
 				}
 			}
 			// swap if current tree size exceeds the other
+			//System.out.println(tree);
 			if(connected.size() > theOther.size()) tree = !tree;
 		}
 	}

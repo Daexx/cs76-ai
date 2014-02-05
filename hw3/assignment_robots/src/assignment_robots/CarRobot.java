@@ -93,7 +93,7 @@ public class CarRobot {
 
 	@Override
 	public boolean equals(Object other) {
-		return s == ((CarRobot) other).getCarState();
+		return getDistance((CarRobot) other) < 20;
 	}
 
 	@Override
