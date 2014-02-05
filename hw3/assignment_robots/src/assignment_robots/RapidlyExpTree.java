@@ -10,7 +10,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 
 	CarRobot startCar, goalCar;
 	HashSet<CarRobot> connected = new HashSet<>(); // world sampling
-	HashMap<CarRobot, HashSet<AdjacentCfg>> roadmap = new HashMap<>(); // roadmap,
+	HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = new HashMap<>(); // RRTree,
 																	// a
 	// graph
 	World map;
@@ -21,7 +21,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		startCar = new CarRobot(config1);
 		goalCar = new CarRobot(config2);
 		startNode = new RRTnode(startCar, 0);
-		roadmap.put(startCar, new HashSet<AdjacentCfg>());
+		RRTree.put(startCar, new HashSet<AdjacentCfg>());
 		connected.add(startCar);
 		growTree2Goal(density);
 
@@ -84,7 +84,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 
 				minDis = Double.MAX_VALUE;
 				for (int i = 0; i <= 5; i++) {
-					newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1));
+					newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1.));
 					//System.out.println("newCarRobot: " + newCarRobot);
 					if (!map.carCollision(newCarRobot)) {
 						double dis = newCarRobot.getDistance(newRandCar);
@@ -92,6 +92,8 @@ public class RapidlyExpTree extends InformedSearchProblem {
 							minDis = dis;
 							newNearest = newCarRobot;
 						}
+					}else {
+						//System.out.println("collision!!");
 					}
 				}
 			}
@@ -100,12 +102,12 @@ public class RapidlyExpTree extends InformedSearchProblem {
 				density--;
 				//System.out.println(newNearest);
 				connected.add(newNearest);
-				roadmap.get(nearest).add(new AdjacentCfg(newNearest, 1));
-				roadmap.put(newNearest, new HashSet<AdjacentCfg>());
-				if(newNearest.getDistance(goalCar) < 100){
+				RRTree.get(nearest).add(new AdjacentCfg(newNearest, 1));
+				RRTree.put(newNearest, new HashSet<AdjacentCfg>());
+				if(newNearest.getDistance(goalCar) < 20){
 					connected.add(goalCar);
-					roadmap.get(newNearest).add(new AdjacentCfg(goalCar, 1));
-					roadmap.put(goalCar, new HashSet<AdjacentCfg>());
+					RRTree.get(newNearest).add(new AdjacentCfg(goalCar, 1));
+					RRTree.put(goalCar, new HashSet<AdjacentCfg>());
 					break;
 				}
 			}
@@ -115,7 +117,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 	// /////////////////////////////////////////////////////////////////////
 
 	public class RRTnode implements SearchNode {
-		private CarRobot car;
+		public CarRobot car;
 		private double cost;
 
 		// construct the connected graph
@@ -126,7 +128,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 
 		public ArrayList<SearchNode> getSuccessors() {
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
-			for (AdjacentCfg adj : roadmap.get(car)) {
+			for (AdjacentCfg adj : RRTree.get(car)) {
 				successors.add(new RRTnode(adj.ar, adj.dis + cost));
 			}
 			return successors;

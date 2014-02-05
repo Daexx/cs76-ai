@@ -101,6 +101,15 @@ public class World {
 			}
 		}
 		
+		double[][] car = p.get();
+		for (int i = 0; i < car.length; i++) {
+			//System.out.println(i);
+			if(car[i][0] < 0 || car[i][0] > window_width)
+				return true;
+			if(car[i][1] < 0 || car[i][1] > window_height)
+				return true;
+		}
+		
 		return false;
 	}
 	
