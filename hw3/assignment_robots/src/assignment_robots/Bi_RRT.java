@@ -6,24 +6,30 @@ import assignment_robots.RoadMapProblem.AdjacentCfg;
 import assignment_robots.SearchProblem.SearchNode;
 import assignment_robots.InformedSearchProblem;
 
-public class RapidlyExpTree extends InformedSearchProblem {
+public class Bi_RRT extends InformedSearchProblem {
+	
+	static boolean TreeA = true, TreeB = false;
 
 	CarRobot startCar, goalCar;
-	HashSet<CarRobot> connected = new HashSet<>(); // world sampling
-	HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = new HashMap<>(); // RRTree,
-																		// a
-	// graph
+	HashSet<CarRobot> connectedA = new HashSet<>(),
+			connectedB = new HashSet<>(); // world sampling
+	HashMap<CarRobot, HashSet<AdjacentCfg>> RRTreeA = new HashMap<>(),
+			RRTreeB = new HashMap<>(); // RRTree,
+	HashMap<CarRobot, AdjacentCfg> TreeA2TreeB = new HashMap<>();
 	World map;
+	int num4grow;
 
-	public RapidlyExpTree(World m, CarState config1, CarState config2,
-			int density) {
+	public Bi_RRT(World m, CarState config1, CarState config2, int density) {
 		map = m;
+		num4grow = density;
 		startCar = new CarRobot(config1);
 		goalCar = new CarRobot(config2);
-		startNode = new RRTnode(startCar, 0);
-		RRTree.put(startCar, new HashSet<AdjacentCfg>());
-		connected.add(startCar);
-		growTree2Goal(density);
+		startNode = new BiRRTnode(startCar, 0, TreeA);
+		RRTreeA.put(startCar, new HashSet<AdjacentCfg>());
+		RRTreeB.put(goalCar, new HashSet<AdjacentCfg>());
+		connectedA.add(startCar);
+		connectedB.add(startCar);
+		biGrowTree2Goal();
 
 		// TODO Auto-generated constructor stub
 	}
@@ -67,7 +73,8 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		return new CarState(cfg);
 	}
 
-	private CarRobot findNearestInTree(CarRobot newRandCar) {
+	private CarRobot findNearestInTree(CarRobot newRandCar, boolean tree) {
+		HashSet<CarRobot> connected = tree == TreeA ? connectedA : connectedB;
 		Double minDis = Double.MAX_VALUE;
 		CarRobot nearest = null;
 		for (CarRobot cr : connected) {
@@ -100,49 +107,89 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		return newAdded;
 	}
 
-	private void addNewNode2Tree(CarRobot newNode, CarRobot parentNode) {
+	private void addNewNode2Tree(CarRobot newNode, CarRobot parentNode, boolean tree) {
+		HashSet<CarRobot> connected = tree ? connectedA : connectedB;
+		HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = tree ? RRTreeA : RRTreeB;
 		connected.add(newNode);
-		RRTree.get(parentNode).add(new AdjacentCfg(newNode, 1));
-		RRTree.put(newNode, new HashSet<AdjacentCfg>());
+		if(tree) {
+			// in treeA, parent points to its children, 1 to n
+			RRTree.get(parentNode).add(new AdjacentCfg(newNode, 1));
+			RRTree.put(newNode, new HashSet<AdjacentCfg>());
+		}else {
+			// in treeB, the child points to their parent, 1 to 1
+			RRTree.put(newNode, new HashSet<AdjacentCfg>());
+			RRTree.get(newNode).add(new AdjacentCfg(parentNode, 1));
+		}
+	}
+	
+	boolean growTheOther(boolean tree, CarRobot target) {
+		HashSet<CarRobot> connected = tree ? connectedA : connectedB;
+		CarRobot nearest = findNearestInTree(target, tree);
+		CarRobot newAdded = expandTree(target, nearest);
+		if (!connected.contains(newAdded)) {
+			addNewNode2Tree(newAdded, nearest, tree);
+			// terminate the iteration if reaching the goal
+			if (newAdded.getDistance(target) < 20) {
+				if(tree)
+					TreeA2TreeB.put(newAdded, new AdjacentCfg(target, 1));
+				else
+					TreeA2TreeB.put(target, new AdjacentCfg(newAdded, 1));
+				return true;
+			}
+			num4grow--;
+		}
+		return false;
 	}
 
-	public void growTree2Goal(int num4grow) {
+	public void biGrowTree2Goal() {
+		boolean tree = TreeA;
 		while (num4grow > 0) {
 			// generate new random car
 			CarRobot newRandCar = new CarRobot(getRandCfg(map));
+			// initiate current tree set
+			HashSet<CarRobot> connected = tree ? connectedA : connectedB,
+									theOther = tree ? connectedA : connectedB;
 			// if the car is valid
 			if (!map.carCollision(newRandCar)) {
-				CarRobot nearest = findNearestInTree(newRandCar);
+				CarRobot nearest = findNearestInTree(newRandCar, tree);
 				CarRobot newAdded = expandTree(newRandCar, nearest);
-				if(!connected.contains(newAdded)) {
-					addNewNode2Tree(newAdded, nearest);
-					// terminate the iteration if reaching the goal
-					if (newAdded.getDistance(goalCar) < 20) {
-						addNewNode2Tree(goalCar, newAdded);
-						break;
-					}
+				if (!connected.contains(newAdded)) {
+					addNewNode2Tree(newAdded, nearest, tree);
 					num4grow--;
+					// terminate the iteration if two tree connected
+					if (growTheOther(!tree, newAdded)) break;
 				}
 			}
+			// swap if current tree size exceeds the other
+			if(connected.size() > theOther.size()) tree = !tree;
 		}
 	}
 
 	// /////////////////////////////////////////////////////////////////////
 
-	public class RRTnode implements SearchNode {
+	public class BiRRTnode implements SearchNode {
 		public CarRobot car;
 		private double cost;
+		private boolean tree;
 
 		// construct the connected graph
-		public RRTnode(CarRobot inAr, double c) {
+		public BiRRTnode(CarRobot inAr, double c, boolean t) {
 			car = inAr;
 			cost = c;
+			tree = t;
 		}
 
 		public ArrayList<SearchNode> getSuccessors() {
+			HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = tree ? RRTreeA : RRTreeB;
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
 			for (AdjacentCfg adj : RRTree.get(car)) {
-				successors.add(new RRTnode(adj.ar, adj.dis + cost));
+				if(TreeA2TreeB.containsKey(adj)) {
+					successors.clear();
+					successors.add(new BiRRTnode(adj.ar, adj.dis + cost, !tree));
+					return successors;
+				}else {
+					successors.add(new BiRRTnode(adj.ar, adj.dis + cost, tree));
+				}
 			}
 			return successors;
 		}
@@ -150,7 +197,7 @@ public class RapidlyExpTree extends InformedSearchProblem {
 		// override functions
 		@Override
 		public boolean equals(Object other) {
-			return car == ((RRTnode) other).car;
+			return car == ((BiRRTnode) other).car;
 		}
 
 		@Override
@@ -177,8 +224,12 @@ public class RapidlyExpTree extends InformedSearchProblem {
 
 		@Override
 		public double heuristic() {
-			// TODO Auto-generated method stub
-			return car.getDistance(goalCar);
+			// if in the treeB, we should simply go straight to the goal
+			// so I set priority as high as possible
+			if(tree)
+				return car.getDistance(goalCar);
+			else
+				return -cost;
 		}
 
 		@Override

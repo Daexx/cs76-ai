@@ -273,14 +273,16 @@ public void growTree2Goal(int num4grow) {
     // if the car is valid
     if (!map.carCollision(newRandCar)) {
       CarRobot nearest = findNearestInTree(newRandCar);
-      CarRobot newNearest = expandTree(newRandCar, nearest);
-      addNewNode2Tree(newNearest, nearest);
-      // terminate the iteration if reaching the goal
-      if (newNearest.getDistance(goalCar) < 20) {
-        addNewNode2Tree(goalCar, newNearest);
-        break;
+      CarRobot newAdded = expandTree(newRandCar, nearest);
+      if(!connected.contains(newAdded)) {
+        addNewNode2Tree(newAdded, nearest);
+        // terminate the iteration if reaching the goal
+        if (newAdded.getDistance(goalCar) < 20) {
+          addNewNode2Tree(goalCar, newAdded);
+          break;
+        }
+        num4grow--;
       }
-      num4grow--;
     }
   }
 }
@@ -310,7 +312,7 @@ private CarRobot expandTree(CarRobot newRandCar, CarRobot nearest) {
   // initiate the auxiliary object
   Double minDis = Double.MAX_VALUE;
   SteeredCar sc = new SteeredCar();
-  CarRobot newNearest = null, newCarRobot = new CarRobot();
+  CarRobot newAdded = null, newCarRobot = new CarRobot();
   // try to expand to 6 different directions
   for (int i = 0; i <= 5; i++) {
     newCarRobot = new CarRobot(sc.move(nearest.getCarState(), i, 1.));
@@ -319,11 +321,11 @@ private CarRobot expandTree(CarRobot newRandCar, CarRobot nearest) {
       double dis = newCarRobot.getDistance(newRandCar);
       if (minDis > dis) {
         minDis = dis;
-        newNearest = newCarRobot;
+        newAdded = newCarRobot;
       }
     }
   }
-  return newNearest;
+  return newAdded;
 }
 
 \end{lstlisting}

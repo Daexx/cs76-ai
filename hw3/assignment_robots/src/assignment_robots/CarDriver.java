@@ -189,11 +189,24 @@ public class CarDriver extends Application {
 //	    System.out.println(collided);
 //		plotCarRobot(g, car, state1);
 		
-		RapidlyExpTree rrt = new RapidlyExpTree(w, car.getCarState(), car2.getCarState(), 15000);
+//		RapidlyExpTree rrt = new RapidlyExpTree(w, car.getCarState(), car2.getCarState(), 15000);
+		Bi_RRT rrt = new Bi_RRT(w, car.getCarState(), car2.getCarState(), 15000);
 		List<SearchNode> solutionPath = null;
 		solutionPath = rrt.astarSearch();
 		
-		for (Iterator<CarRobot> carit = rrt.RRTree.keySet().iterator(); carit.hasNext();) {
+//		for (Iterator<CarRobot> carit = rrt.RRTree.keySet().iterator(); carit.hasNext();) {
+//			// System.out.println(ar);
+//			CarRobot cr = carit.next();
+//			plotCarRobotTree(g, cr.getCarState());
+//		}
+		
+		for (Iterator<CarRobot> carit = rrt.RRTreeA.keySet().iterator(); carit.hasNext();) {
+			// System.out.println(ar);
+			CarRobot cr = carit.next();
+			plotCarRobotTree(g, cr.getCarState());
+		}
+		
+		for (Iterator<CarRobot> carit = rrt.RRTreeB.keySet().iterator(); carit.hasNext();) {
 			// System.out.println(ar);
 			CarRobot cr = carit.next();
 			plotCarRobotTree(g, cr.getCarState());
@@ -205,7 +218,8 @@ public class CarDriver extends Application {
 			System.out.println("path length: " + solutionPath.size());
 			int i = 0;
 			for (SearchNode sn : solutionPath) {
-				RRTnode thissn = (RRTnode) sn;
+//				RRTnode thissn = (RRTnode) sn;
+				BiRRTnode thissn = (BiRRTnode) sn;
 				//System.out.println("path: " + thissn.arm);
 				plotCarRobotPath(g, thissn.car.getCarState(), solutionPath.size(), i++);
 			}
