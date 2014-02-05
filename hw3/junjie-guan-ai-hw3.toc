@@ -13,5 +13,7 @@
 \contentsline {subsection}{\numberline {3.1}Basic Idea}{8}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Code implementation}{8}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {3.2.1}growTree2Goal}{8}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}findNearestInTree}{8}{subsubsection.3.2.2}
-\contentsline {subsubsection}{\numberline {3.2.3}expandTree}{9}{subsubsection.3.2.3}
+\contentsline {subsubsection}{\numberline {3.2.2}getSuccessors}{9}{subsubsection.3.2.2}
+\contentsline {subsection}{\numberline {3.3}Output demonstration}{9}{subsection.3.3}
+\contentsline {subsection}{\numberline {3.4}Extension: bidirectional search}{9}{subsection.3.4}
+\contentsline {section}{\numberline {4}Previous Work}{9}{section.4}

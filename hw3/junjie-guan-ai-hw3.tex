@@ -226,21 +226,21 @@ Figure \ref{startendrmp} demostrates the start and and end configuration of my t
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.827\textwidth]{1-0.png}
-\caption{start and end of testing}
+\caption{test in empty space}
 \label{1-0}
 \end{figure*}
 
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.827\textwidth]{1-1.png}
-\caption{start and end of testing}
+\caption{test with an obstacle.}
 \label{1-1}
 \end{figure*}
 
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.827\textwidth]{1-2.png}
-\caption{start and end of testing}
+\caption{test with corridor. The movement becomes more tricky and complex}
 \label{1-2}
 \end{figure*}
 
@@ -286,13 +286,6 @@ public void growTree2Goal(int num4grow) {
 }
 \end{lstlisting}
 
-
-
-
-
-
-\subsubsection{findNearestInTree}
-
 \textbf{findNearestInTree} finds the vertex that is nearest to the new randomly generated node.
 
 \begin{lstlisting}[numbers=left]
@@ -309,11 +302,6 @@ private CarRobot findNearestInTree(CarRobot newRandCar) {
   return nearest;
 }
 \end{lstlisting}
-
-
-
-
-\subsubsection{expandTree}
 
 \textbf{expandTree} trys to expand to 6 different directions, and return the expansion that is nearest to the randomly generated node.
 
@@ -340,6 +328,82 @@ private CarRobot expandTree(CarRobot newRandCar, CarRobot nearest) {
 
 \end{lstlisting}
 
+\textbf{addNewNode2Tree} trys to expand to 6 different directions, and return the expansion that is nearest to the randomly generated node.
+
+\begin{lstlisting}[numbers=left]
+private void addNewNode2Tree(CarRobot newNode, CarRobot parentNode) {
+  connected.add(newNode);
+  RRTree.get(parentNode).add(new AdjacentCfg(newNode, 1));
+  RRTree.put(newNode, new HashSet<AdjacentCfg>());
+}
+\end{lstlisting}
+
+
+
+
+
+\subsubsection{getSuccessors}
+
+\textbf{getSuccessors} is pretty simple. Simply return the children nodes in the exploring tree.
+
+\begin{lstlisting}[numbers=left]
+public ArrayList<SearchNode> getSuccessors() {
+  ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
+  for (AdjacentCfg adj : RRTree.get(car)) {
+    successors.add(new RRTnode(adj.ar, adj.dis + cost));
+  }
+  return successors;
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Output demonstration}
+Figure \ref{2-1}-\ref{2-3} presents 3 examples of the testing case, with increasing sampling difficulty. From the last two case we can observe that, the tree on left part is much more complicate. This is because the left part has keep randomly generating the tree when one of the branch trying to explore through the corridor. I think using a bidirectional spaning can cut the expense of exploring corridor to half.
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.827\textwidth]{2-1.png}
+\caption{test in empty space}
+\label{2-1}
+\end{figure*}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.827\textwidth]{2-2.png}
+\caption{test with an obstacle.}
+\label{2-2}
+\end{figure*}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.827\textwidth]{2-3.png}
+\caption{test with corridor. The movement becomes more tricky and complex}
+\label{2-3}
+\end{figure*}
+
+
+
+
+
+
+\subsection{Extension: bidirectional search}
+
+
+
+
+
+
+
+\section{Previous Work}
 
 
 
