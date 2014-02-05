@@ -165,14 +165,14 @@ public class ArmDriver extends Application {
 				{ winw, winh }, { winw, 0 }, { 0, 0 } };
 		Poly bgc = new Poly(bg);
 
-		double al = .04, bet = 0.75, basey = 0.;
+		double al = .04, bet = 0.85, basey = 0.;
 		double a[][] = { { winw/2 - al * winw, basey },
 				{ winw/2 - al * winw, bet * winh + basey},
 				{ winw/2 + al * winw, bet * winh + basey },
 				{ winw/2 + al * winw, basey} };
 		Poly obstacle1 = new Poly(a);
 
-		al = .35; bet = 0.1; basey = 0.65 * winh;
+		al = .35; bet = 0.1; basey = 0.75 * winh;
 		double b[][] = { { winw/2 - al * winw, basey },
 				{ winw/2 - al * winw, bet * winh + basey},
 				{ winw/2 + al * winw, bet * winh + basey },
@@ -193,7 +193,7 @@ public class ArmDriver extends Application {
 		World w = new World(winw, winh);
 		// Add obstacles to the world;
 		w.addObstacle(obstacle1);
-//				w.addObstacle(obstacle2);
+				w.addObstacle(obstacle2);
 //				w.addObstacle(obstacle3);
 		w.addWall(bgc);
 
@@ -219,7 +219,7 @@ public class ArmDriver extends Application {
 		// plot robot arm
 
 		List<SearchNode> solutionPath = null;
-		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 200, 15);
+		RoadMapProblem rmp = new RoadMapProblem(w, config1, config2, 1000, 10);
 		solutionPath = rmp.astarSearch();
 		
 		// System.out.println("size: " + rmp.samplings.size());
@@ -250,7 +250,7 @@ public class ArmDriver extends Application {
 		try {
 			ImageIO.write(
 					SwingFXUtils.fromFXImage(g.snapshot(null, null), null),
-					"png", new File("1-2.png"));
+					"png", new File("1-4.png"));
 		} catch (Exception s) {
 
 		}

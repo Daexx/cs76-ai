@@ -145,7 +145,7 @@ public class RoadMapProblem extends InformedSearchProblem {
 //			}
 			while(roadmap.get(arm).size() != 0) {
 				AdjacentCfg adj = roadmap.get(arm).poll();
-				System.out.println(adj);
+				//System.out.println(adj);
 				successors.add(new RoadMapNode(adj.ar, adj.dis + cost));
 			}
 			return successors;
