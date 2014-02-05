@@ -15,7 +15,7 @@ public class Bi_RRT extends InformedSearchProblem {
 			connectedB = new HashSet<>(); // world sampling
 	HashMap<CarRobot, HashSet<AdjacentCfg>> RRTreeA = new HashMap<>(),
 			RRTreeB = new HashMap<>(); // RRTree,
-	CarRobot bridgeAside, bridgeBside;
+	CarRobot bridgeAside = null, bridgeBside = null;
 	World map;
 	int num4grow;
 
@@ -188,6 +188,8 @@ public class Bi_RRT extends InformedSearchProblem {
 		public ArrayList<SearchNode> getSuccessors() {
 			HashMap<CarRobot, HashSet<AdjacentCfg>> RRTree = tree ? RRTreeA : RRTreeB;
 			ArrayList<SearchNode> successors = new ArrayList<SearchNode>();
+			// no brdige, no way
+			if(bridgeAside == null) return successors;
 			for (AdjacentCfg adj : RRTree.get(car)) {
 				if(tree && bridgeAside.getDistance(adj.ar) < 20) {
 					System.out.println("going to B");

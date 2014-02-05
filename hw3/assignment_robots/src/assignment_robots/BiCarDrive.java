@@ -176,8 +176,8 @@ public class BiCarDrive extends Application {
 		// Declaring a world; 
 		World w = new World(winw, winh);
 		// Add obstacles to the world;
-//		w.addObstacle(obstacle1);
-//		w.addObstacle(obstacle2);
+		w.addObstacle(obstacle1);
+		w.addObstacle(obstacle2);
 //		w.addObstacle(obstacle3);
 		w.addWall(bgc);
 //		w.addObstacle(obstacle4);
