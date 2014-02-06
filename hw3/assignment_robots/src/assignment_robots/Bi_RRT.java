@@ -129,7 +129,6 @@ public class Bi_RRT extends InformedSearchProblem {
 		if (!isContains(connected, newAdded)) {
 			addNewNode2Tree(newAdded, nearest, tree);
 			// terminate the iteration if reaching the goal
-			isConnected(newAdded, target, tree);
 			if (newAdded.getDistance(target) < 20) {
 				if(tree) {
 					bridgeAside = newAdded;
