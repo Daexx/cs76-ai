@@ -72,8 +72,10 @@
       <file leaf-file-name="AIMoveTask.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/AIMoveTask.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="1" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="448">
-              <folding />
+            <state line="23" column="1" selection-start="379" selection-end="379" vertical-scroll-proportion="-14.153846" vertical-offset="0" max-vertical-offset="480">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -92,7 +94,7 @@
       <file leaf-file-name="ChessAI.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ChessAI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="4" column="17" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="208">
+            <state line="5" column="17" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="208">
               <folding />
             </state>
           </provider>
@@ -101,11 +103,22 @@
       <file leaf-file-name="ChessClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="0" selection-start="671" selection-end="671" vertical-scroll-proportion="-3.0769231" vertical-offset="0" max-vertical-offset="3408">
+            <state line="123" column="35" selection-start="3651" selection-end="3651" vertical-scroll-proportion="42.03846" vertical-offset="2789" max-vertical-offset="3440">
               <folding>
                 <element signature="e#1764#1857#0" expanded="true" />
                 <element signature="e#1852#1853#0" expanded="true" />
+                <element signature="e#4604#4605#0" expanded="true" />
+                <element signature="e#4624#4625#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MoveMaker.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chai/MoveMaker.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="12" column="4" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="336">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -113,7 +126,7 @@
       <file leaf-file-name="ChessGame.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ChessGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="4" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1296">
+            <state line="16" column="76" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="13" max-vertical-offset="1280">
               <folding />
             </state>
           </provider>
@@ -122,7 +135,7 @@
       <file leaf-file-name="RandomAI.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/RandomAI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="1" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="320">
+            <state line="8" column="38" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="320">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -130,11 +143,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MinimaxAI.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI.java">
+      <file leaf-file-name="Position.class" pinned="false" current="true" current-in-tab="true">
+        <entry file="jar://$PROJECT_DIR$/Chesspresso-lib.jar!/chesspresso/position/Position.class">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="63" selection-start="325" selection-end="325" vertical-scroll-proportion="0.2153432" vertical-offset="0" max-vertical-offset="743">
-              <folding />
+            <state line="223" column="29" selection-start="8819" selection-end="8829" vertical-scroll-proportion="0.3318182" vertical-offset="3422" max-vertical-offset="4544">
+              <folding>
+                <element signature="e#0#11134#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -149,9 +164,11 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
+        <option value="$PROJECT_DIR$/src/chai/ChessClient.java" />
         <option value="$PROJECT_DIR$/src/chai/AIMoveTask.java" />
         <option value="$PROJECT_DIR$/src/chai/MinimaxAI.java" />
-        <option value="$PROJECT_DIR$/src/chai/ChessClient.java" />
+        <option value="$PROJECT_DIR$/src/chai/CutOffTest.java" />
+        <option value="$PROJECT_DIR$/src/chai/ChessGame.java" />
       </list>
     </option>
   </component>
@@ -252,6 +269,42 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="provided_chess" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="provided_chess" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="provided_chess" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chesspresso-lib.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="META-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="provided_chess" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="provided_chess" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Chesspresso-lib.jar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="chesspresso" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -554,12 +607,12 @@
       <created>1392692188530</created>
       <updated>1392692188530</updated>
       <workItem from="1392692190375" duration="54000" />
-      <workItem from="1392692255256" duration="2430000" />
+      <workItem from="1392692255256" duration="3571000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="2484000" />
+    <option name="totallyTimeSpent" value="3625000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -570,7 +623,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32769832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -615,13 +668,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/chai/MoveMaker.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="4" selection-start="349" selection-end="349" vertical-scroll-proportion="0.2153432" vertical-offset="0" max-vertical-offset="743">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/BoardView.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="67" column="52" selection-start="1985" selection-end="1985" vertical-scroll-proportion="-12.923077" vertical-offset="432" max-vertical-offset="4048">
@@ -631,50 +677,77 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/RandomAI.java">
+    <entry file="file://$PROJECT_DIR$/src/chai/MoveMaker.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="1" selection-start="288" selection-end="288" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="320">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ChessAI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="17" selection-start="71" selection-end="71" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="208">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/AIMoveTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="1" selection-start="378" selection-end="378" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="448">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ChessGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="4" selection-start="477" selection-end="477" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1296">
+        <state line="12" column="4" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="336">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="0" selection-start="671" selection-end="671" vertical-scroll-proportion="-3.0769231" vertical-offset="0" max-vertical-offset="3408">
+        <state line="123" column="35" selection-start="3651" selection-end="3651" vertical-scroll-proportion="42.03846" vertical-offset="2789" max-vertical-offset="3440">
           <folding>
             <element signature="e#1764#1857#0" expanded="true" />
             <element signature="e#1852#1853#0" expanded="true" />
+            <element signature="e#4604#4605#0" expanded="true" />
+            <element signature="e#4624#4625#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/ChessAI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="17" selection-start="95" selection-end="95" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="208">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/CutOffTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="0" selection-start="87" selection-end="87" vertical-scroll-proportion="0.26069248" vertical-offset="0" max-vertical-offset="491">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="63" selection-start="325" selection-end="325" vertical-scroll-proportion="0.2153432" vertical-offset="0" max-vertical-offset="743">
+        <state line="21" column="5" selection-start="444" selection-end="444" vertical-scroll-proportion="0.6537634" vertical-offset="0" max-vertical-offset="496">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/AIMoveTask.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="1" selection-start="379" selection-end="379" vertical-scroll-proportion="-14.153846" vertical-offset="0" max-vertical-offset="480">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/ChessGame.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="76" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="13" max-vertical-offset="1280">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/RandomAI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="38" selection-start="198" selection-end="198" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="320">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/Chesspresso-lib.jar!/chesspresso/position/Position.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="223" column="29" selection-start="8819" selection-end="8829" vertical-scroll-proportion="0.3318182" vertical-offset="3422" max-vertical-offset="4544">
+          <folding>
+            <element signature="e#0#11134#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

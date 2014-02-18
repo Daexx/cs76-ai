@@ -89,7 +89,7 @@ public class ChessClient extends Application {
 		primaryStage.show();
 
 		// sets the game world's game loop (Timeline)
-		Timeline timeline = new Timeline(1.0);
+		Timeline timeline = new Timeline(2.0);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(
 				new KeyFrame(Duration.seconds(.05), new GameHandler()));

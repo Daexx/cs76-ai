@@ -15,7 +15,6 @@ public class ChessGame {
 	public ChessGame() {
 		position = new Position(
 				"rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-
 	}
 
 	public int getStone(int col, int row) {
