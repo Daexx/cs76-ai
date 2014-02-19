@@ -7,24 +7,20 @@ import chesspresso.position.Position;
  * Created by JackGuan on 2/17/14.
  */
 public class ABPruning implements ChessAI {
-    public int currD; // current depth
     public static boolean MAX_TURN = true, MIN_TURN = false;
     private boolean terminalFound;
 
     public class MoveValuePair {
-        public short move;
+        public short move = 0;
         public int eval;
-        public boolean init;
 
         MoveValuePair() {
-            init = false;
         }
 
         public void updateMinMax(short m, int e, boolean findMax) {
-            if (!init || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
+            if (move == 0 || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
                 this.move = m;
                 this.eval = e;
-                init = true;
             }
         }
     }
@@ -53,7 +49,8 @@ public class ABPruning implements ChessAI {
                 MoveValuePair childMove = ABMaxMinValue(position, depth - 1, alpha, beta, !maxTurn);
                 bestMove.updateMinMax(move, childMove.eval, maxTurn);
                 position.undoMove();
-                if(doPruning(bestMove.eval, alpha, beta, maxTurn))
+                if(false && doPruning(bestMove.eval, alpha, beta, maxTurn))
+                    System.out.println("prunning at depth: " + depth);
                     return bestMove;
             }
             return bestMove;

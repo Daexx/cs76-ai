@@ -8,7 +8,6 @@ import org.omg.CORBA.INTERNAL;
  * Created by JackGuan on 2/17/14.
  */
 public class MinimaxAI_V2 implements ChessAI {
-    public int currD; // current depth
     public static boolean MAX_TURN = true, MIN_TURN = false;
     private boolean terminalFound;
 
