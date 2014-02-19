@@ -89,7 +89,7 @@
       <file leaf-file-name="ChessClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="74" selection-start="2811" selection-end="2811" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="3638">
+            <state line="38" column="21" selection-start="1221" selection-end="1221" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3655">
               <folding />
             </state>
           </provider>
@@ -98,16 +98,18 @@
       <file leaf-file-name="ABPruning.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/chai/ABPruning.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="24" selection-start="372" selection-end="372" vertical-scroll-proportion="0.03359684" vertical-offset="204" max-vertical-offset="1615">
-              <folding />
+            <state line="59" column="5" selection-start="2039" selection-end="2039" vertical-scroll-proportion="1.2395834" vertical-offset="408" max-vertical-offset="2057">
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RandomAI.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/chai/RandomAI.java">
+      <file leaf-file-name="ABPruningTrans.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTrans.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="20" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+            <state line="55" column="71" selection-start="1962" selection-end="1962" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="1955">
               <folding />
             </state>
           </provider>
@@ -116,7 +118,16 @@
       <file leaf-file-name="MinimaxAI_V2.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI_V2.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="42" selection-start="0" selection-end="2870" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1496">
+            <state line="79" column="57" selection-start="2979" selection-end="2979" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChessGame.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chai/ChessGame.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="53" column="0" selection-start="1156" selection-end="1381" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="1411">
               <folding />
             </state>
           </provider>
@@ -125,7 +136,7 @@
       <file leaf-file-name="Config.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/Config.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="28" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+            <state line="9" column="0" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
               <folding />
             </state>
           </provider>
@@ -143,13 +154,15 @@
       <list>
         <option value="$PROJECT_DIR$/src/chai/AIMoveTask.java" />
         <option value="$PROJECT_DIR$/src/chai/CutOffTest.java" />
-        <option value="$PROJECT_DIR$/src/chai/ChessGame.java" />
-        <option value="$PROJECT_DIR$/src/chai/MinimaxAI.java" />
         <option value="$PROJECT_DIR$/src/chai/MinimaxAI_V3.java" />
-        <option value="$PROJECT_DIR$/src/chai/Config.java" />
-        <option value="$PROJECT_DIR$/src/chai/MinimaxAI_V2.java" />
         <option value="$PROJECT_DIR$/src/chai/RandomAI.java" />
+        <option value="$PROJECT_DIR$/src/chai/ChessGame.java" />
         <option value="$PROJECT_DIR$/src/chai/ChessClient.java" />
+        <option value="$PROJECT_DIR$/src/chai/Config.java" />
+        <option value="$PROJECT_DIR$/src/chai/ABPruning_Trans.java" />
+        <option value="$PROJECT_DIR$/src/chai/MinimaxAI.java" />
+        <option value="$PROJECT_DIR$/src/chai/MinimaxAI_V2.java" />
+        <option value="$PROJECT_DIR$/src/chai/ABPruningTrans.java" />
         <option value="$PROJECT_DIR$/src/chai/ABPruning.java" />
       </list>
     </option>
@@ -290,7 +303,7 @@
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
     <property name="FullScreen" value="false" />
-    <property name="SearchEverywhereHistory" value="max&#10;pa&#10;b&#10;l&#10;mov&#10;randomai" />
+    <property name="SearchEverywhereHistory" value="time&#10;max&#10;pa&#10;b&#10;l&#10;mov&#10;randomai" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
@@ -568,12 +581,12 @@
       <workItem from="1392692255256" duration="19261000" />
       <workItem from="1392712825649" duration="19384000" />
       <workItem from="1392782171407" duration="13460000" />
-      <workItem from="1392822652786" duration="3481000" />
+      <workItem from="1392822652786" duration="11265000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="55640000" />
+    <option name="totallyTimeSpent" value="63424000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -584,6 +597,7 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39921975" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -604,16 +618,15 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769832" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32899868" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
@@ -632,8 +645,8 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769832" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
@@ -668,7 +681,9 @@
     <entry file="file://$PROJECT_DIR$/src/chai/ABPruning.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="13" selection-start="156" selection-end="156" vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1666">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -783,26 +798,10 @@
         <state line="6" column="19" selection-start="169" selection-end="169" vertical-scroll-proportion="0.11142062" vertical-offset="0" max-vertical-offset="4528" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ChessGame.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="54" column="64" selection-start="1241" selection-end="1241" vertical-scroll-proportion="0.3043478" vertical-offset="713" max-vertical-offset="1428">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/MoveMaker.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="16" selection-start="315" selection-end="315" vertical-scroll-proportion="0.30237153" vertical-offset="0" max-vertical-offset="506">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="36" selection-start="1062" selection-end="1062" vertical-scroll-proportion="0.82368773" vertical-offset="0" max-vertical-offset="2091">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -825,38 +824,70 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/Config.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="28" selection-start="108" selection-end="108" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/RandomAI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="20" selection-start="322" selection-end="322" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
+        <state line="12" column="20" selection-start="0" selection-end="328" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="323">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
+    <entry file="file://$PROJECT_DIR$/src/chai/ChessGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="74" selection-start="2811" selection-end="2811" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="3638">
+        <state line="53" column="0" selection-start="1156" selection-end="1381" vertical-scroll-proportion="0.0" vertical-offset="585" max-vertical-offset="1411">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/Config.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="0" selection-start="148" selection-end="148" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="255">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="3" selection-start="305" selection-end="379" vertical-scroll-proportion="0.30822873" vertical-offset="0" max-vertical-offset="2091">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0/src.zip!/java/lang/Integer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="19" selection-start="1149" selection-end="1149" vertical-scroll-proportion="0.33243608" vertical-offset="229" max-vertical-offset="26826">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI_V2.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="42" selection-start="0" selection-end="2870" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="1496">
+        <state line="79" column="57" selection-start="2979" selection-end="2979" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1734">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="21" selection-start="1221" selection-end="1221" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3655">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTrans.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="71" selection-start="1962" selection-end="1962" vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="1955">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/ABPruning.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="24" selection-start="372" selection-end="372" vertical-scroll-proportion="0.03359684" vertical-offset="204" max-vertical-offset="1615">
-          <folding />
+        <state line="59" column="5" selection-start="2039" selection-end="2039" vertical-scroll-proportion="1.2395834" vertical-offset="408" max-vertical-offset="2057">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

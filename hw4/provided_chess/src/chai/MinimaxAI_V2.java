@@ -4,11 +4,16 @@ import chesspresso.move.IllegalMoveException;
 import chesspresso.position.Position;
 import org.omg.CORBA.INTERNAL;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 /**
  * Created by JackGuan on 2/17/14.
  */
 public class MinimaxAI_V2 implements ChessAI {
     public static boolean MAX_TURN = true, MIN_TURN = false;
+    public static int MATE = Integer.MAX_VALUE, BE_MATED = Integer.MIN_VALUE;
     private boolean terminalFound;
 
     public class MoveValuePair {
@@ -28,7 +33,20 @@ public class MinimaxAI_V2 implements ChessAI {
 
     @Override
     public short getMove(Position position)  throws IllegalMoveException{
-        return minimaxIDS(position, Config.IDS_DEPTH);
+        long start = System.currentTimeMillis();
+        short result =  minimaxIDS(position, Config.IDS_DEPTH);
+        long elapsedTime = System.currentTimeMillis() - start;
+        try {
+            FileOutputStream timecompete = new FileOutputStream("timecompete.txt", true);
+            timecompete.write((elapsedTime / 1000. + "\n").getBytes());
+            timecompete.close();
+        } catch (FileNotFoundException ex) {
+            System.out.println("FileNotFoundException : " + ex);
+        } catch (IOException ioe) {
+            System.out.println("IOException : " + ioe);
+        }
+        System.out.println("Minimax making move " + elapsedTime/1000.);
+        return result;
     }
 
     private short minimaxIDS(Position position, int maxDepth) throws IllegalMoveException{
@@ -59,7 +77,7 @@ public class MinimaxAI_V2 implements ChessAI {
         MoveValuePair finalMove = new MoveValuePair();
         if (position.isTerminal() && position.isMate()) {
             this.terminalFound = position.isTerminal();
-            finalMove.eval = (maxTurn ? Integer.MIN_VALUE : Integer.MAX_VALUE);
+            finalMove.eval = (maxTurn ? BE_MATED : MATE);
         } else if (position.isTerminal() && position.isStaleMate())
              finalMove.eval = 0;
         else {

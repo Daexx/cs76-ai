@@ -10,8 +10,8 @@ import chesspresso.position.Position;
  * Created by JackGuan on 2/17/14.
  */
 public class MinimaxAI implements ChessAI {
-    public int currD; // current depth
     public static boolean GET_MAX = true, GET_MIN = false;
+    public static int MATE = Integer.MAX_VALUE, BE_MATED = Integer.MIN_VALUE;
     private boolean terminalFound;
 
     public class MoveValuePair {

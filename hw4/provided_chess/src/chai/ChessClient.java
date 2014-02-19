@@ -1,5 +1,7 @@
 package chai;
 
+import chesspresso.game.Game;
+import chesspresso.pgn.PGNReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
@@ -19,6 +21,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import chesspresso.Chess;
 import chesspresso.position.Position;
+
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.AbstractCollection;
 
 public class ChessClient extends Application {
 
@@ -43,7 +50,7 @@ public class ChessClient extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws URISyntaxException, FileNotFoundException {
         primaryStage.setTitle("CS 76 Chess");
 
         game = new ChessGame();
@@ -75,8 +82,9 @@ public class ChessClient extends Application {
         // from a server, depending on which type is used.
         moveMaker = new MoveMaker[2];
 //		moveMaker[Chess.BLACK] = new TextFieldMoveMaker();
+
         moveMaker[Chess.BLACK] = new AIMoveMaker(new RandomAI());
-        moveMaker[Chess.WHITE] = new AIMoveMaker(new MinimaxAI_V2());
+        moveMaker[Chess.WHITE] = new AIMoveMaker(new ABPruning());
 //		moveMaker[Chess.WHITE] = new TextFieldMoveMaker();
 
         VBox vb = new VBox();

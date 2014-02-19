@@ -51,12 +51,11 @@ public class ChessGame {
 	public void doMove(short move) {
 		try {
 
-            if(Config.IS_WHITE)
-			    System.out.println("white making move " + move);
-            else
-                System.out.println("black making move " + move);
-
-            Config.IS_WHITE = !Config.IS_WHITE;
+//            if(Config.IS_WHITE)
+//			    System.out.println("white making move " + move);
+//            else
+//                System.out.println("black making move " + move);
+//            Config.IS_WHITE = !Config.IS_WHITE;
             position.doMove(move);
 			// System.out.println(position);
 		} catch (IllegalMoveException e) {

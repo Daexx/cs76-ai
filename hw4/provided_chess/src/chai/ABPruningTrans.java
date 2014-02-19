@@ -6,13 +6,12 @@ import chesspresso.position.Position;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.*;
 
 
 /**
  * Created by JackGuan on 2/17/14.
  */
-public class ABPruning implements ChessAI {
+public class ABPruningTrans implements ChessAI {
     public static boolean MAX_TURN = true, MIN_TURN = false;
     public static int MATE = Integer.MAX_VALUE, BE_MATED = Integer.MIN_VALUE;
     private boolean terminalFound;
