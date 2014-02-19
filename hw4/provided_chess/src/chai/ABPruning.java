@@ -2,27 +2,29 @@ package chai;
 
 import chesspresso.move.IllegalMoveException;
 import chesspresso.position.Position;
-import org.omg.CORBA.INTERNAL;
 
 /**
  * Created by JackGuan on 2/17/14.
  */
-public class MinimaxAI_V2 implements ChessAI {
+public class ABPruning implements ChessAI {
     public int currD; // current depth
     public static boolean MAX_TURN = true, MIN_TURN = false;
     private boolean terminalFound;
 
     public class MoveValuePair {
-        public short move = 0;
+        public short move;
         public int eval;
+        public boolean init;
 
         MoveValuePair() {
+            init = false;
         }
 
         public void updateMinMax(short m, int e, boolean findMax) {
-            if (move == 0 || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
+            if (!init || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
                 this.move = m;
                 this.eval = e;
+                init = true;
             }
         }
     }
@@ -36,24 +38,30 @@ public class MinimaxAI_V2 implements ChessAI {
         this.terminalFound = false;
         MoveValuePair bestMove = new MoveValuePair();
         for (int d = 1; d <= maxDepth && !this.terminalFound; d++) {
-            bestMove = maxMinValue(position, maxDepth - 1, MAX_TURN);
+            bestMove = ABMaxMinValue(position, maxDepth - 1, Integer.MIN_VALUE, Integer.MAX_VALUE, MAX_TURN);
         }
         return bestMove.move;
     }
 
-    private MoveValuePair maxMinValue(Position position, int depth, boolean maxTurn) throws IllegalMoveException{
+    private MoveValuePair ABMaxMinValue(Position position, int depth, int alpha, int beta, boolean maxTurn) throws IllegalMoveException{
         if (depth <= 0 || position.isTerminal()) {
             return handleTerminal(position, maxTurn);
         } else {
             MoveValuePair bestMove = new MoveValuePair();
             for (short move : position.getAllMoves()) {
                 position.doMove(move);
-                MoveValuePair childMove = maxMinValue(position, depth - 1, !maxTurn);
+                MoveValuePair childMove = ABMaxMinValue(position, depth - 1, alpha, beta, !maxTurn);
                 bestMove.updateMinMax(move, childMove.eval, maxTurn);
                 position.undoMove();
+                if(doPruning(bestMove.eval, alpha, beta, maxTurn))
+                    return bestMove;
             }
             return bestMove;
         }
+    }
+
+    private boolean doPruning(int value, int alpha, int beta, boolean maxTurn ){
+        return (maxTurn && value >= beta ) || (!maxTurn && value <= alpha) ;
     }
 
     private MoveValuePair handleTerminal(Position position, boolean maxTurn) {
