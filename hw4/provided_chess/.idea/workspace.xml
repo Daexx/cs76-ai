@@ -100,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ABPruningTransOrder.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ABPruningTransOrder.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="103" column="27" selection-start="4496" selection-end="4496" vertical-scroll-proportion="0.798419" vertical-offset="1228" max-vertical-offset="1785">
+            <state line="36" column="0" selection-start="1275" selection-end="1275" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1785">
               <folding>
                 <element signature="e#4148#4466#0" expanded="true" />
                 <element signature="e#4455#4456#0" expanded="true" />
@@ -112,10 +112,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ABPruningTransOrderQs.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ABPruningTransOrderQs.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="145" column="0" selection-start="6185" selection-end="6543" vertical-scroll-proportion="0.0" vertical-offset="2078" max-vertical-offset="2584">
+            <state line="143" column="37" selection-start="6174" selection-end="6174" vertical-scroll-proportion="0.61103636" vertical-offset="1841" max-vertical-offset="2584">
               <folding>
                 <element signature="e#6223#6541#0" expanded="true" />
                 <element signature="e#6530#6531#0" expanded="true" />
@@ -607,12 +607,12 @@
       <workItem from="1392822652786" duration="14101000" />
       <workItem from="1392844636741" duration="16568000" />
       <workItem from="1392871272512" duration="7219000" />
-      <workItem from="1392879170229" duration="5467000" />
+      <workItem from="1392879170229" duration="6597000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="95514000" />
+    <option name="totallyTimeSpent" value="96644000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -638,7 +638,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.206875" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30819246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="0" y="304" width="1600" height="252" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30819246" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="0" y="304" width="1600" height="252" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1064,22 +1064,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java">
+    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="145" column="0" selection-start="6185" selection-end="6543" vertical-scroll-proportion="0.0" vertical-offset="2078" max-vertical-offset="2584">
+        <state line="36" column="0" selection-start="1275" selection-end="1275" vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="1785">
           <folding>
-            <element signature="e#6223#6541#0" expanded="true" />
-            <element signature="e#6530#6531#0" expanded="true" />
+            <element signature="e#4148#4466#0" expanded="true" />
+            <element signature="e#4455#4456#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrder.java">
+    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="27" selection-start="4496" selection-end="4496" vertical-scroll-proportion="0.798419" vertical-offset="1228" max-vertical-offset="1785">
+        <state line="143" column="37" selection-start="6174" selection-end="6174" vertical-scroll-proportion="0.61103636" vertical-offset="1841" max-vertical-offset="2584">
           <folding>
-            <element signature="e#4148#4466#0" expanded="true" />
-            <element signature="e#4455#4456#0" expanded="true" />
+            <element signature="e#6223#6541#0" expanded="true" />
+            <element signature="e#6530#6531#0" expanded="true" />
           </folding>
         </state>
       </provider>
