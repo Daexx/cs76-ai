@@ -89,12 +89,12 @@
       <file leaf-file-name="ChessClient.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="86" column="65" selection-start="2728" selection-end="2728" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="3774">
+            <state line="88" column="0" selection-start="2807" selection-end="2807" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="3774">
               <folding>
                 <element signature="e#2183#2300#0" expanded="true" />
                 <element signature="e#2289#2290#0" expanded="true" />
-                <element signature="e#6533#6762#0" expanded="true" />
-                <element signature="e#6747#6748#0" expanded="true" />
+                <element signature="e#6545#6774#0" expanded="true" />
+                <element signature="e#6759#6760#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -103,8 +103,11 @@
       <file leaf-file-name="ABPruningTransOrder.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrder.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="85" column="20" selection-start="3628" selection-end="3628" vertical-scroll-proportion="0.6956522" vertical-offset="974" max-vertical-offset="1717">
-              <folding />
+            <state line="103" column="27" selection-start="4496" selection-end="4496" vertical-scroll-proportion="0.798419" vertical-offset="1228" max-vertical-offset="1785">
+              <folding>
+                <element signature="e#4148#4466#0" expanded="true" />
+                <element signature="e#4455#4456#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -112,7 +115,19 @@
       <file leaf-file-name="ABPruningTransOrderQs.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="41" selection-start="1397" selection-end="1397" vertical-scroll-proportion="0.0" vertical-offset="1190" max-vertical-offset="2244">
+            <state line="145" column="0" selection-start="6185" selection-end="6543" vertical-scroll-proportion="0.0" vertical-offset="2078" max-vertical-offset="2584">
+              <folding>
+                <element signature="e#6223#6541#0" expanded="true" />
+                <element signature="e#6530#6531#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ABPruningTrans.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTrans.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="44" column="57" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.0" vertical-offset="277" max-vertical-offset="1445">
               <folding />
             </state>
           </provider>
@@ -121,7 +136,7 @@
       <file leaf-file-name="Config.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/Config.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="25" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="612">
+            <state line="21" column="49" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0" vertical-offset="93" max-vertical-offset="612">
               <folding />
             </state>
           </provider>
@@ -130,7 +145,7 @@
       <file leaf-file-name="ABPruning.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/chai/ABPruning.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="5" selection-start="1254" selection-end="1254" vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="2108">
+            <state line="98" column="0" selection-start="3530" selection-end="4156" vertical-scroll-proportion="-6.1538463" vertical-offset="1387" max-vertical-offset="2108">
               <folding />
             </state>
           </provider>
@@ -164,11 +179,11 @@
         <option value="$PROJECT_DIR$/src/chai/MinimaxAI.java" />
         <option value="$PROJECT_DIR$/src/chai/MinimaxAI_V2.java" />
         <option value="$PROJECT_DIR$/src/chai/ABPruningTransV2.java" />
-        <option value="$PROJECT_DIR$/src/chai/ABPruningTrans.java" />
-        <option value="$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java" />
         <option value="$PROJECT_DIR$/src/chai/ABPruning.java" />
+        <option value="$PROJECT_DIR$/src/chai/ABPruningTrans.java" />
         <option value="$PROJECT_DIR$/src/chai/Config.java" />
         <option value="$PROJECT_DIR$/src/chai/ChessClient.java" />
+        <option value="$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java" />
         <option value="$PROJECT_DIR$/src/chai/ABPruningTransOrder.java" />
       </list>
     </option>
@@ -592,12 +607,12 @@
       <workItem from="1392822652786" duration="14101000" />
       <workItem from="1392844636741" duration="16568000" />
       <workItem from="1392871272512" duration="7219000" />
-      <workItem from="1392879170229" duration="3581000" />
+      <workItem from="1392879170229" duration="5467000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93628000" />
+    <option name="totallyTimeSpent" value="95514000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -688,8 +703,8 @@
           <folding>
             <element signature="e#2183#2300#0" expanded="true" />
             <element signature="e#2289#2290#0" expanded="true" />
-            <element signature="e#6533#6762#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
+            <element signature="e#6545#6774#0" expanded="true" />
+            <element signature="e#6759#6760#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -711,7 +726,10 @@
     <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrder.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="98" column="33" selection-start="4222" selection-end="4222" vertical-scroll-proportion="0.0" vertical-offset="1666" max-vertical-offset="1819">
-          <folding />
+          <folding>
+            <element signature="e#4148#4466#0" expanded="true" />
+            <element signature="e#4455#4456#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -742,8 +760,8 @@
           <folding>
             <element signature="e#2183#2300#0" expanded="true" />
             <element signature="e#2289#2290#0" expanded="true" />
-            <element signature="e#6533#6762#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
+            <element signature="e#6545#6774#0" expanded="true" />
+            <element signature="e#6759#6760#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -799,8 +817,8 @@
           <folding>
             <element signature="e#2183#2300#0" expanded="true" />
             <element signature="e#2289#2290#0" expanded="true" />
-            <element signature="e#6533#6762#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
+            <element signature="e#6545#6774#0" expanded="true" />
+            <element signature="e#6759#6760#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -832,8 +850,8 @@
           <folding>
             <element signature="e#2183#2300#0" expanded="true" />
             <element signature="e#2289#2290#0" expanded="true" />
-            <element signature="e#6533#6762#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
+            <element signature="e#6545#6774#0" expanded="true" />
+            <element signature="e#6759#6760#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -872,8 +890,8 @@
           <folding>
             <element signature="e#2183#2300#0" expanded="true" />
             <element signature="e#2289#2290#0" expanded="true" />
-            <element signature="e#6533#6762#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
+            <element signature="e#6545#6774#0" expanded="true" />
+            <element signature="e#6759#6760#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -992,13 +1010,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTrans.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="21" selection-start="638" selection-end="638" vertical-scroll-proportion="-0.487214" vertical-offset="685" max-vertical-offset="1428">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/MinimaxAI_V2.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="67" column="0" selection-start="2435" selection-end="2435" vertical-scroll-proportion="0.011080332" vertical-offset="1029" max-vertical-offset="1751">
@@ -1020,43 +1031,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java">
+    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTrans.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="41" selection-start="1397" selection-end="1397" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="2346">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/chai/ABPruning.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="5" selection-start="1254" selection-end="1254" vertical-scroll-proportion="0.0" vertical-offset="493" max-vertical-offset="2108">
+        <state line="44" column="57" selection-start="1476" selection-end="1476" vertical-scroll-proportion="0.0" vertical-offset="277" max-vertical-offset="1445">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/Config.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="25" selection-start="538" selection-end="538" vertical-scroll-proportion="0.0" vertical-offset="51" max-vertical-offset="612">
+        <state line="21" column="49" selection-start="636" selection-end="636" vertical-scroll-proportion="0.0" vertical-offset="93" max-vertical-offset="612">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/ChessClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="86" column="65" selection-start="2728" selection-end="2728" vertical-scroll-proportion="0.0" vertical-offset="714" max-vertical-offset="3774">
+        <state line="88" column="0" selection-start="2807" selection-end="2807" vertical-scroll-proportion="0.0" vertical-offset="663" max-vertical-offset="3774">
           <folding>
             <element signature="e#2183#2300#0" expanded="true" />
             <element signature="e#2289#2290#0" expanded="true" />
-            <element signature="e#6533#6762#0" expanded="true" />
-            <element signature="e#6747#6748#0" expanded="true" />
+            <element signature="e#6545#6774#0" expanded="true" />
+            <element signature="e#6759#6760#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/ABPruning.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="98" column="0" selection-start="3530" selection-end="4156" vertical-scroll-proportion="-6.1538463" vertical-offset="1387" max-vertical-offset="2108">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrderQs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="145" column="0" selection-start="6185" selection-end="6543" vertical-scroll-proportion="0.0" vertical-offset="2078" max-vertical-offset="2584">
+          <folding>
+            <element signature="e#6223#6541#0" expanded="true" />
+            <element signature="e#6530#6531#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/chai/ABPruningTransOrder.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="85" column="20" selection-start="3628" selection-end="3628" vertical-scroll-proportion="0.6956522" vertical-offset="974" max-vertical-offset="1717">
-          <folding />
+        <state line="103" column="27" selection-start="4496" selection-end="4496" vertical-scroll-proportion="0.798419" vertical-offset="1228" max-vertical-offset="1785">
+          <folding>
+            <element signature="e#4148#4466#0" expanded="true" />
+            <element signature="e#4455#4456#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

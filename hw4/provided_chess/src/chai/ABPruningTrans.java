@@ -42,6 +42,7 @@ public class ABPruningTrans extends ABPruning{
             System.out.println("IOException : " + ioe);
         }
         System.out.println("ABPT  making move " + elapsedTime / 1000. + "\t");
+        Config.tryBreakTie(position.getToPlay(), result);
         return result;
     }
 

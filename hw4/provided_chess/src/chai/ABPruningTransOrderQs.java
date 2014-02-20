@@ -32,6 +32,7 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
             System.out.println("IOException : " + ioe);
         }
         System.out.println("ABPTOQS  making move " + elapsedTime / 1000. + "\t");
+        Config.tryBreakTie(position.getToPlay(), result);
         return result;
     }
 
@@ -90,13 +91,11 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
 
     protected int quiescence(Position position, int alpha, int beta, boolean maxTurn) throws IllegalMoveException {
         int evaluation = handleTerminal(position, maxTurn).eval;
-        if (evaluation > beta) {
+        if (evaluation >= beta)
             return beta;
-        }
         if (evaluation > alpha)
             alpha = evaluation;
 
-        MoveValuePair theMove = new MoveValuePair();
         LinkedList<MoveValuePair> sortedMoves = getCapturingSortedMoves(position, maxTurn);
         for (MoveValuePair movepair : sortedMoves) {
             short move = movepair.move;
@@ -111,6 +110,20 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         return alpha;
     }
 
+
+    protected MoveValuePair handleTerminal(Position position, boolean maxTurn) {
+        MoveValuePair finalMove = new MoveValuePair();
+        if (position.isTerminal() && position.isMate()) {
+            this.terminalFound = position.isTerminal();
+            finalMove.eval = (maxTurn ? BE_MATED : MATE);
+        } else if (position.isTerminal() && position.isStaleMate())
+            finalMove.eval = 0;
+        else {
+            finalMove.eval = (int) ( (position.getMaterial() + position.getDomination()));
+        }
+//        System.out.print(finalMove.eval + " ");
+        return finalMove;
+    }
     protected LinkedList<MoveValuePair> getCapturingSortedMoves(Position position, boolean maxTurn) throws IllegalMoveException {
         LinkedList<MoveValuePair> sortedMoves = new LinkedList<MoveValuePair>();
         short[] moves = position.getAllCapturingMoves();
@@ -123,13 +136,20 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
                 theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
             } else {
                 // for max turn, I assign worst values those unvisited positions
-                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
-//                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
-//                theMove = new MoveValuePair(move, eval);
+//                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
+                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
+                theMove = new MoveValuePair(move, eval);
             }
             position.undoMove();
             sortedMoves.add(theMove);
         }
+        Collections.sort(sortedMoves, new Comparator<MoveValuePair>() {
+            @Override
+            public int compare(MoveValuePair c1, MoveValuePair c2) {
+//                System.out.println(c1.eval + " vs " + c2.eval);
+                return (int) ((ASCENDING ? 1 : -1) * Math.signum(c1.eval - c2.eval)); // use your logic
+            }
+        });
         return sortedMoves;
     }
 }
