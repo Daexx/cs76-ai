@@ -85,9 +85,9 @@ public class ABPruningTransOrder extends ABPruningTrans {
                 theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
             } else {
                 // for max turn, I assign worst values those unvisited positions
-                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
-//                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
-//                theMove = new MoveValuePair(move, eval);
+//                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
+                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
+                theMove = new MoveValuePair(move, eval);
             }
             position.undoMove();
             sortedMoves.add(theMove);

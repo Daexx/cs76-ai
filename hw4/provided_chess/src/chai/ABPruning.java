@@ -2,6 +2,7 @@ package chai;
 
 import chesspresso.move.IllegalMoveException;
 import chesspresso.position.Position;
+import com.sun.corba.se.spi.activation._RepositoryImplBase;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -58,6 +59,7 @@ public class ABPruning implements ChessAI {
             System.out.println("IOException : " + ioe);
         }
         System.out.print("ABP  making move " + elapsedTime / 1000. + "\t");
+        Config.tryBreakTie(position.getToPlay(), result);
         return result;
     }
 
