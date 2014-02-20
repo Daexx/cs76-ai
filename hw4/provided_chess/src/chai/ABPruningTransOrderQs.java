@@ -14,7 +14,7 @@ import java.util.LinkedList;
 /**
  * Created by JackGuan on 2/17/14.
  */
-public class ABPruningTransOrderQs extends ABPruningTrans {
+public class ABPruningTransOrderQs extends ABPruningTransOrder {
     public static boolean ASCENDING;
 
     @Override
@@ -40,7 +40,7 @@ public class ABPruningTransOrderQs extends ABPruningTrans {
     protected MoveValuePair ABMaxMinValue(Position position, int depth, int alpha, int beta, boolean maxTurn)
             throws IllegalMoveException {
         if (depth <= 0 || position.isTerminal()) {
-            return handleTerminal(position, maxTurn);
+            return handleTerminal(position, maxTurn, alpha, beta);
         } else {
             MoveValuePair bestMove = new MoveValuePair();
             LinkedList<MoveValuePair> sortedMoves = getSortedMoves(position, maxTurn);
@@ -74,30 +74,31 @@ public class ABPruningTransOrderQs extends ABPruningTrans {
         }
     }
 
-    protected LinkedList<MoveValuePair> getSortedMoves(Position position, boolean maxTurn) throws IllegalMoveException {
-        LinkedList<MoveValuePair> sortedMoves = new LinkedList<MoveValuePair>();
-        short[] moves = position.getAllMoves();
-        MoveValuePair theMove = null;
-        ASCENDING = maxTurn ? false : true;
-
-        for (short move : moves) {
-            position.doMove(move);
-            if (p2tte.containsKey(position.getHashCode()))
-                theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
-            else
-                // for max turn, I assign worst values those unvisited positions
-                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
-            position.undoMove();
-            sortedMoves.add(theMove);
+    protected MoveValuePair handleTerminal(Position position, boolean maxTurn, int alpha, int beta) {
+        MoveValuePair finalMove = new MoveValuePair();
+        if (position.isTerminal() && position.isMate()) {
+            this.terminalFound = position.isTerminal();
+            finalMove.eval = (maxTurn ? BE_MATED : MATE);
+        } else if (position.isTerminal() && position.isStaleMate())
+            finalMove.eval = 0;
+        else {
+            quiescence(position, finalMove, alpha, beta, maxTurn);
         }
+//        System.out.print(finalMove.eval + " ");
+        return finalMove;
+    }
 
-        Collections.sort(sortedMoves, new Comparator<MoveValuePair>() {
-            @Override
-            public int compare(MoveValuePair c1, MoveValuePair c2) {
-//                System.out.println(c1.eval + " vs " + c2.eval);
-                return (int) ((ASCENDING ? 1 : -1) * Math.signum(c1.eval - c2.eval)); // use your logic
-            }
-        });
-        return sortedMoves;
+    protected void quiescence(Position position, MoveValuePair theMove, int alpha, int beta, boolean maxTurn){
+        int evaluation = (int) ( (maxTurn ? 1 : -1) * (position.getMaterial() + position.getDomination()));
+        if(evaluation > beta){
+            theMove.eval = beta;
+            return;
+        }
+        if(evaluation > alpha)
+            theMove.eval = evaluation;
+
+        short[] moves = position.getAllCapturingMoves();
+//        if(moves.length == 0)
+        return;
     }
 }
