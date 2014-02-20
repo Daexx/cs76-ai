@@ -2,30 +2,19 @@ package chai;
 
 import chesspresso.move.IllegalMoveException;
 import chesspresso.position.Position;
+import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.*;
 
 
 /**
  * Created by JackGuan on 2/17/14.
  */
-public class ABPruningTrans extends ABPruning{
-    protected HashMap<Long, TransTableEntry> p2tte = new HashMap<Long, TransTableEntry>();
-
-    public class TransTableEntry {
-        public int eval;
-        public int depth;
-        public short move;
-
-        TransTableEntry(int e, int d, short m) {
-            eval = e;
-            depth = d;
-            move = m;
-        }
-    }
+public class ABPruningTransOrder extends ABPruningTrans {
+    public static boolean ASCENDING;
 
     @Override
     public short getMove(Position position) throws IllegalMoveException {
@@ -41,7 +30,7 @@ public class ABPruningTrans extends ABPruning{
         } catch (IOException ioe) {
             System.out.println("IOException : " + ioe);
         }
-        System.out.println("ABPT  making move " + elapsedTime / 1000. + "\t");
+        System.out.println("ABPTO  making move " + elapsedTime / 1000. + "\t");
         return result;
     }
 
@@ -53,7 +42,9 @@ public class ABPruningTrans extends ABPruning{
             return handleTerminal(position, maxTurn);
         } else {
             MoveValuePair bestMove = new MoveValuePair();
-            for (short move : position.getAllMoves()) {
+            LinkedList<MoveValuePair> sortedMoves = getSortedMoves(position, maxTurn);
+            for (MoveValuePair movepair : sortedMoves) {
+                short move = movepair.move;
                 // collect values from further moves
                 // get and update transposition table if possible
                 position.doMove(move);
@@ -75,10 +66,37 @@ public class ABPruningTrans extends ABPruning{
                 else
                     beta = bestMove.eval;
                 // prune the subtree if needed
-                if(alpha >= beta)
+                if (alpha >= beta)
                     return bestMove;
             }
             return bestMove;
         }
+    }
+
+    protected LinkedList<MoveValuePair> getSortedMoves(Position position, boolean maxTurn) throws IllegalMoveException {
+        LinkedList<MoveValuePair> sortedMoves = new LinkedList<MoveValuePair>();
+        short[] moves = position.getAllMoves();
+        MoveValuePair theMove = null;
+        ASCENDING = maxTurn ? false : true;
+
+        for (short move : moves) {
+            position.doMove(move);
+            if (p2tte.containsKey(position.getHashCode()))
+                theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
+            else
+                // for max turn, I assign worst values those unvisited positions
+                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
+            position.undoMove();
+            sortedMoves.add(theMove);
+        }
+
+        Collections.sort(sortedMoves, new Comparator<MoveValuePair>() {
+            @Override
+            public int compare(MoveValuePair c1, MoveValuePair c2) {
+//                System.out.println(c1.eval + " vs " + c2.eval);
+                return (int) ((ASCENDING ? 1 : -1) * Math.signum(c1.eval - c2.eval)); // use your logic
+            }
+        });
+        return sortedMoves;
     }
 }

@@ -84,7 +84,7 @@ public class ChessClient extends Application {
 //		moveMaker[Chess.BLACK] = new TextFieldMoveMaker();
 
         moveMaker[Chess.BLACK] = new AIMoveMaker(new RandomAI());
-        moveMaker[Chess.WHITE] = new AIMoveMaker(new ABPruning());
+        moveMaker[Chess.WHITE] = new AIMoveMaker(new ABPruningTransOrder());
 //		moveMaker[Chess.WHITE] = new TextFieldMoveMaker();
 
         VBox vb = new VBox();

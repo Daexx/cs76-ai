@@ -14,14 +14,19 @@ import java.lang.*;
  */
 public class ABPruning implements ChessAI {
     public static boolean MAX_TURN = true, MIN_TURN = false;
-    public static int MATE = Integer.MAX_VALUE, BE_MATED = Integer.MIN_VALUE;
-    private boolean terminalFound;
+    public static int MATE = (int) (Integer.MAX_VALUE * 0.9), BE_MATED = (int) (Integer.MIN_VALUE * 0.9);
+    protected boolean terminalFound;
 
-    public class MoveValuePair {
+    public class MoveValuePair implements Comparable<MoveValuePair> {
         public short move = 0;
         public int eval;
 
         MoveValuePair() {
+        }
+
+        MoveValuePair(short m, int e) {
+            move = m;
+            eval = e;
         }
 
         public void updateMinMax(short m, int e, boolean findMax) {
@@ -29,6 +34,12 @@ public class ABPruning implements ChessAI {
                 this.move = m;
                 this.eval = e;
             }
+        }
+
+        @Override
+        public int compareTo(MoveValuePair o) {
+            // default sort, ascending
+            return (int) Math.signum(eval - o.eval);
         }
     }
 
@@ -50,7 +61,7 @@ public class ABPruning implements ChessAI {
         return result;
     }
 
-    private short minimaxIDS(Position position, int maxDepth) throws IllegalMoveException {
+    protected short minimaxIDS(Position position, int maxDepth) throws IllegalMoveException {
         this.terminalFound = false;
         MoveValuePair bestMove = new MoveValuePair();
         for (int d = 1; d <= maxDepth && !this.terminalFound; d++) {
@@ -59,34 +70,31 @@ public class ABPruning implements ChessAI {
         return bestMove.move;
     }
 
-    private MoveValuePair ABMaxMinValue(Position position, int depth, int alpha, int beta, boolean maxTurn) throws IllegalMoveException {
+    protected MoveValuePair ABMaxMinValue(Position position, int depth, int alpha, int beta, boolean maxTurn) throws IllegalMoveException {
         if (depth <= 0 || position.isTerminal()) {
             return handleTerminal(position, maxTurn);
         } else {
             MoveValuePair bestMove = new MoveValuePair();
             for (short move : position.getAllMoves()) {
+                // collect values from further moves
                 position.doMove(move);
                 MoveValuePair childMove = ABMaxMinValue(position, depth - 1, alpha, beta, !maxTurn);
                 bestMove.updateMinMax(move, childMove.eval, maxTurn);
                 position.undoMove();
+                // update the alpha beta boundary
                 if(maxTurn)
                     alpha = bestMove.eval;
                 else
                     beta = bestMove.eval;
-                if (doPruning(bestMove.eval, alpha, beta, maxTurn)) {
-//                    System.out.println("prunning at depth: " + depth);
+                // prune the subtree if needed
+                if(alpha >= beta)
                     return bestMove;
-                }
             }
             return bestMove;
         }
     }
 
-    private boolean doPruning(int value, int alpha, int beta, boolean maxTurn) {
-        return (maxTurn && value >= beta) || (!maxTurn && value <= alpha);
-    }
-
-    private MoveValuePair handleTerminal(Position position, boolean maxTurn) {
+    protected MoveValuePair handleTerminal(Position position, boolean maxTurn) {
         MoveValuePair finalMove = new MoveValuePair();
         if (position.isTerminal() && position.isMate()) {
             this.terminalFound = position.isTerminal();
@@ -94,14 +102,14 @@ public class ABPruning implements ChessAI {
         } else if (position.isTerminal() && position.isStaleMate())
             finalMove.eval = 0;
         else {
-            finalMove.eval = (maxTurn ? 1 : -1) * position.getMaterial();
+            finalMove.eval = (int) ( (maxTurn ? 1 : -1) * (position.getMaterial() + position.getDomination()));
         }
 //        System.out.print(finalMove.eval + " ");
         return finalMove;
     }
 
 
-    private Position positionMove(Position position, short move) {
+    protected Position positionMove(Position position, short move) {
         try {
 //            System.out.println("positionMove making move " + move);
             position.doMove(move);

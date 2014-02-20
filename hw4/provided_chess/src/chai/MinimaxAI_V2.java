@@ -64,6 +64,7 @@ public class MinimaxAI_V2 implements ChessAI {
         } else {
             MoveValuePair bestMove = new MoveValuePair();
             for (short move : position.getAllMoves()) {
+                // collect values from further moves
                 position.doMove(move);
                 MoveValuePair childMove = maxMinValue(position, depth - 1, !maxTurn);
                 bestMove.updateMinMax(move, childMove.eval, maxTurn);
