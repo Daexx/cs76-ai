@@ -31,7 +31,7 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         } catch (IOException ioe) {
             System.out.println("IOException : " + ioe);
         }
-        System.out.println("ABPTO  making move " + elapsedTime / 1000. + "\t");
+        System.out.println("ABPTOQS  making move " + elapsedTime / 1000. + "\t");
         return result;
     }
 
@@ -74,7 +74,7 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         }
     }
 
-    protected MoveValuePair handleTerminal(Position position, boolean maxTurn, int alpha, int beta) {
+    protected MoveValuePair handleTerminal(Position position, boolean maxTurn, int alpha, int beta) throws IllegalMoveException {
         MoveValuePair finalMove = new MoveValuePair();
         if (position.isTerminal() && position.isMate()) {
             this.terminalFound = position.isTerminal();
@@ -82,23 +82,54 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         } else if (position.isTerminal() && position.isStaleMate())
             finalMove.eval = 0;
         else {
-            quiescence(position, finalMove, alpha, beta, maxTurn);
+            finalMove.eval = quiescence(position, alpha, beta, maxTurn);
         }
 //        System.out.print(finalMove.eval + " ");
         return finalMove;
     }
 
-    protected void quiescence(Position position, MoveValuePair theMove, int alpha, int beta, boolean maxTurn){
-        int evaluation = (int) ( (maxTurn ? 1 : -1) * (position.getMaterial() + position.getDomination()));
-        if(evaluation > beta){
-            theMove.eval = beta;
-            return;
+    protected int quiescence(Position position, int alpha, int beta, boolean maxTurn) throws IllegalMoveException {
+        int evaluation = handleTerminal(position, maxTurn).eval;
+        if (evaluation > beta) {
+            return beta;
         }
-        if(evaluation > alpha)
-            theMove.eval = evaluation;
+        if (evaluation > alpha)
+            alpha = evaluation;
 
+        MoveValuePair theMove = new MoveValuePair();
+        LinkedList<MoveValuePair> sortedMoves = getCapturingSortedMoves(position, maxTurn);
+        for (MoveValuePair movepair : sortedMoves) {
+            short move = movepair.move;
+            position.doMove(move);
+            int value = -quiescence(position, -alpha, -beta, !maxTurn);
+            position.undoMove();
+            if(value >= beta)
+                return beta;
+            if(value > alpha)
+                alpha = value;
+        }
+        return alpha;
+    }
+
+    protected LinkedList<MoveValuePair> getCapturingSortedMoves(Position position, boolean maxTurn) throws IllegalMoveException {
+        LinkedList<MoveValuePair> sortedMoves = new LinkedList<MoveValuePair>();
         short[] moves = position.getAllCapturingMoves();
-//        if(moves.length == 0)
-        return;
+        MoveValuePair theMove = null;
+        ASCENDING = maxTurn ? false : true;
+
+        for (short move : moves) {
+            position.doMove(move);
+            if (p2tte.containsKey(position.getHashCode())) {
+                theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
+            } else {
+                // for max turn, I assign worst values those unvisited positions
+                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
+//                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
+//                theMove = new MoveValuePair(move, eval);
+            }
+            position.undoMove();
+            sortedMoves.add(theMove);
+        }
+        return sortedMoves;
     }
 }
