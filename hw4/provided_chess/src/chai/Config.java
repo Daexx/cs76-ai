@@ -7,24 +7,53 @@ import sun.launcher.resources.launcher;
  */
 public class Config {
     static int IDS_DEPTH = 5;
+    static int[] IDS_DEPTHS = {5, 5};
+    static int NMH_R = 2;
     static short[] last_moves = {0, 0, 0, 0};
-    static int pointer = 0;
+    static Double[][] last_time = {{0.95, 0.95, 0.95},{0.95, 0.95, 0.95}};
+    static int repeat_pointer = 0;
+    static int time_pointer = 0;
     static short repeat_cnt = 0;
 
     public static void tryBreakTie(int turn, short move) {
         if (turn == 0) {
-            last_moves[pointer] = move;
-            pointer = (pointer + 1) % 4;
+            last_moves[repeat_pointer] = move;
+            repeat_pointer = (repeat_pointer + 1) % 4;
             if (last_moves[0] == last_moves[2]
                     && last_moves[1] == last_moves[3]) {
                 IDS_DEPTH++;
+                IDS_DEPTHS[0]++;
+                IDS_DEPTHS[1]++;
                 repeat_cnt++;
                 System.out.println("breaking tie: " + IDS_DEPTH);
             } else if (repeat_cnt != 0) {
                 IDS_DEPTH -= repeat_cnt;
+                IDS_DEPTHS[0] -= repeat_cnt;
+                IDS_DEPTHS[1] -= repeat_cnt;
                 repeat_cnt = 0;
                 System.out.println("tie solved: " + IDS_DEPTH);
             }
+        }
+    }
+
+    public static void tuneDepth(Double timeSec, int turn){
+        if(repeat_cnt != 0) return;
+        Double mean = 0.;
+        last_time[turn][(time_pointer++) % last_time.length] = timeSec;
+//        System.out.print("Player " + turn + " mean time: ");
+        for(int i = 0; i < last_time[turn].length; i++){
+            mean += last_time[turn][i];
+//            System.out.print(last_time[turn][i] + ", ");
+        }
+        mean /= last_time[turn].length;
+//        System.out.println();
+        if(mean <= .5){
+//            IDS_DEPTHS[turn]++;
+            System.out.println("Player " + turn + " has depth: " + IDS_DEPTHS[turn]);
+        }
+        if(mean >= 1.1){
+//            IDS_DEPTHS[turn]--;
+            System.out.println("Player " + turn + " has depth: " + IDS_DEPTHS[turn]);
         }
     }
 }

@@ -2,24 +2,26 @@ package chai;
 
 import chesspresso.move.IllegalMoveException;
 import chesspresso.position.Position;
-import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
 
 
 /**
  * Created by JackGuan on 2/17/14.
  */
-public class ABPruningTransOrder extends ABPruningTrans {
+public class ABPruningTransOrderNm extends ABPruningTransOrder {
     public static boolean ASCENDING;
 
     @Override
     public short getMove(Position position) throws IllegalMoveException {
         long start = System.currentTimeMillis();
-        short result = minimaxIDS(position, Config.IDS_DEPTH);
+        short result = minimaxIDS(position, Config.IDS_DEPTHS[position.getToPlay()]);
+//        short result = minimaxIDS(position, Config.IDS_DEPTH);
         long elapsedTime = System.currentTimeMillis() - start;
         try {
             FileOutputStream timecompete = new FileOutputStream("timecompete.txt", true);
@@ -30,7 +32,7 @@ public class ABPruningTransOrder extends ABPruningTrans {
         } catch (IOException ioe) {
             System.out.println("IOException : " + ioe);
         }
-        System.out.println("ABPTO  making move " + elapsedTime / 1000. + "\t");
+        System.out.println("ABPTON  making move " + elapsedTime / 1000. + "\t");
         Config.tryBreakTie(position.getToPlay(), result);
         Config.tuneDepth(elapsedTime / 1000., position.getToPlay());
         return result;
@@ -45,6 +47,15 @@ public class ABPruningTransOrder extends ABPruningTrans {
         } else {
             MoveValuePair bestMove = new MoveValuePair();
             LinkedList<MoveValuePair> sortedMoves = getSortedMoves(position, maxTurn);
+
+            if (depth > Config.NMH_R) {
+                position.setToPlay((position.getToPlay() + 1) % 2);
+                int value = ABMaxMinValue(position, depth - Config.NMH_R, alpha, beta, !maxTurn).eval;
+                position.setToPlay((position.getToPlay() + 1) % 2);
+                if ((maxTurn && value >= beta) || (!maxTurn && value <= alpha))
+                    return maxTurn ? bestMove.setGetVal(beta) : bestMove.setGetVal(alpha);
+            }
+
             for (MoveValuePair movepair : sortedMoves) {
                 short move = movepair.move;
                 // collect values from further moves
@@ -73,35 +84,5 @@ public class ABPruningTransOrder extends ABPruningTrans {
             }
             return bestMove;
         }
-    }
-
-    protected LinkedList<MoveValuePair> getSortedMoves(Position position, boolean maxTurn) throws IllegalMoveException {
-        LinkedList<MoveValuePair> sortedMoves = new LinkedList<MoveValuePair>();
-        short[] moves = position.getAllMoves();
-        MoveValuePair theMove = null;
-        ASCENDING = maxTurn ? false : true;
-
-        for (short move : moves) {
-            position.doMove(move);
-            if (p2tte.containsKey(position.getHashCode())) {
-                theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
-            } else {
-                // for max turn, I assign worst values those unvisited positions
-                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
-//                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
-//                theMove = new MoveValuePair(move, eval);
-            }
-            position.undoMove();
-            sortedMoves.add(theMove);
-        }
-
-        Collections.sort(sortedMoves, new Comparator<MoveValuePair>() {
-            @Override
-            public int compare(MoveValuePair c1, MoveValuePair c2) {
-//                System.out.println(c1.eval + " vs " + c2.eval);
-                return (int) ((ASCENDING ? 1 : -1) * Math.signum(c1.eval - c2.eval)); // use your logic
-            }
-        });
-        return sortedMoves;
     }
 }

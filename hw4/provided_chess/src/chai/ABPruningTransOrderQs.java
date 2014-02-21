@@ -69,7 +69,7 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
                     beta = bestMove.eval;
                 // prune the subtree if needed
                 if (alpha >= beta)
-                    return bestMove;
+                    return maxTurn ? bestMove.setGetVal(beta) : bestMove.setGetVal(alpha);
             }
             return bestMove;
         }
@@ -83,9 +83,15 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         } else if (position.isTerminal() && position.isStaleMate())
             finalMove.eval = 0;
         else {
-            finalMove.eval = quiescence(position, alpha, beta, maxTurn);
+//            if(true)
+//                finalMove.eval = (int) ( (maxTurn ? 1 : -1) * (position.getMaterial() + position.getDomination()));
+//            else
+            if(maxTurn)
+                finalMove.eval = -quiescence(position, -alpha, -beta, !maxTurn);
+            else
+                finalMove.eval = quiescence(position, alpha, beta, !maxTurn);
         }
-//        System.out.print(finalMove.eval + " ");
+//        System.out.print(finalMove.eval + "\t");
         return finalMove;
     }
 
@@ -115,7 +121,7 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         MoveValuePair finalMove = new MoveValuePair();
         if (position.isTerminal() && position.isMate()) {
             this.terminalFound = position.isTerminal();
-            finalMove.eval = (maxTurn ? BE_MATED : MATE);
+            finalMove.eval = (maxTurn ? MATE : BE_MATED);
         } else if (position.isTerminal() && position.isStaleMate())
             finalMove.eval = 0;
         else {
@@ -136,9 +142,9 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
                 theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
             } else {
                 // for max turn, I assign worst values those unvisited positions
-//                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
-                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
-                theMove = new MoveValuePair(move, eval);
+                theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
+//                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
+//                theMove = new MoveValuePair(move, eval);
             }
             position.undoMove();
             sortedMoves.add(theMove);

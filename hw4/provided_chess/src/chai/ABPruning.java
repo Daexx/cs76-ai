@@ -21,19 +21,27 @@ public class ABPruning implements ChessAI {
     public class MoveValuePair implements Comparable<MoveValuePair> {
         public short move = 0;
         public int eval;
+        public boolean init = false;
 
         MoveValuePair() {
+        }
+
+        MoveValuePair setGetVal(int e) {
+            eval = e;
+            return this;
         }
 
         MoveValuePair(short m, int e) {
             move = m;
             eval = e;
+            init = true;
         }
 
         public void updateMinMax(short m, int e, boolean findMax) {
-            if (move == 0 || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
+            if (!init || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
                 this.move = m;
                 this.eval = e;
+                this.init = true;
             }
         }
 
@@ -47,7 +55,8 @@ public class ABPruning implements ChessAI {
     @Override
     public short getMove(Position position) throws IllegalMoveException {
         long start = System.currentTimeMillis();
-        short result = minimaxIDS(position, Config.IDS_DEPTH);
+        short result = minimaxIDS(position, Config.IDS_DEPTHS[position.getToPlay()]);
+//        short result = minimaxIDS(position, Config.IDS_DEPTH);
         long elapsedTime = System.currentTimeMillis() - start;
         try {
             FileOutputStream timecompete = new FileOutputStream("timecompete.txt", true);
@@ -58,8 +67,9 @@ public class ABPruning implements ChessAI {
         } catch (IOException ioe) {
             System.out.println("IOException : " + ioe);
         }
-        System.out.print("ABP  making move " + elapsedTime / 1000. + "\t");
+        System.out.println("ABP  making move " + elapsedTime / 1000. + "\t");
         Config.tryBreakTie(position.getToPlay(), result);
+        Config.tuneDepth(elapsedTime / 1000., position.getToPlay());
         return result;
     }
 
@@ -90,7 +100,7 @@ public class ABPruning implements ChessAI {
                     beta = bestMove.eval;
                 // prune the subtree if needed
                 if(alpha >= beta)
-                    return bestMove;
+                    return maxTurn ? bestMove.setGetVal(beta) : bestMove.setGetVal(alpha);
             }
             return bestMove;
         }
@@ -106,7 +116,7 @@ public class ABPruning implements ChessAI {
         else {
             finalMove.eval = (int) ( (maxTurn ? 1 : -1) * (position.getMaterial() + position.getDomination()));
         }
-//        System.out.print(finalMove.eval + " ");
+//        System.out.print(finalMove.eval + "\t");
         return finalMove;
     }
 

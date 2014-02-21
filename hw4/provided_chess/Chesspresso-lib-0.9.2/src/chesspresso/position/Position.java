@@ -2161,13 +2161,13 @@ public final class Position extends AbstractMoveablePosition
     public double getDomination()
     {
         int[] SQUARE_IMPORTANCE = {1, 1, 1, 1, 1, 1, 1, 1,
-        1, 2, 2, 2, 2, 2, 2, 1,
-        1, 2, 4, 6, 6, 4, 2, 1,
-        1, 2, 5,10,10, 5, 1, 1,
-        1, 2, 5,10,10, 5, 1, 1,
-        1, 2, 4, 6, 6, 4, 2, 1,
-        1, 2, 2, 2, 2, 2, 2, 1,
-        1, 1, 1, 1, 1, 1, 1, 1};
+                                    1, 2, 2, 2, 2, 2, 2, 1,
+                                    1, 2, 4, 6, 6, 4, 2, 1,
+                                    1, 2, 5,10,10, 5, 1, 1,
+                                    1, 2, 5,10,10, 5, 1, 1,
+                                    1, 2, 4, 6, 6, 4, 2, 1,
+                                    1, 2, 2, 2, 2, 2, 2, 1,
+                                    1, 1, 1, 1, 1, 1, 1, 1};
         
         double value = 0;
         for (int sqi = 0; sqi < Chess.NUM_OF_SQUARES; sqi++) {

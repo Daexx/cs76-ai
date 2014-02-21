@@ -30,7 +30,8 @@ public class ABPruningTrans extends ABPruning{
     @Override
     public short getMove(Position position) throws IllegalMoveException {
         long start = System.currentTimeMillis();
-        short result = minimaxIDS(position, Config.IDS_DEPTH);
+        short result = minimaxIDS(position, Config.IDS_DEPTHS[position.getToPlay()]);
+//        short result = minimaxIDS(position, Config.IDS_DEPTH);
         long elapsedTime = System.currentTimeMillis() - start;
         try {
             FileOutputStream timecompete = new FileOutputStream("timecompete.txt", true);
@@ -77,7 +78,7 @@ public class ABPruningTrans extends ABPruning{
                     beta = bestMove.eval;
                 // prune the subtree if needed
                 if(alpha >= beta)
-                    return bestMove;
+                    return maxTurn ? bestMove.setGetVal(beta) : bestMove.setGetVal(alpha);
             }
             return bestMove;
         }
