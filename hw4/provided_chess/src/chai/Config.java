@@ -7,7 +7,7 @@ import sun.launcher.resources.launcher;
  */
 public class Config {
     static int IDS_DEPTH = 5;
-    static int[] IDS_DEPTHS = {5, 5};
+    static double[] IDS_DEPTHS = {3., 3.};
     static int NMH_R = 2;
     static short[] last_moves = {0, 0, 0, 0};
     static Double[][] last_time = {{0.95, 0.95, 0.95},{0.95, 0.95, 0.95}};
@@ -25,13 +25,13 @@ public class Config {
                 IDS_DEPTHS[0]++;
                 IDS_DEPTHS[1]++;
                 repeat_cnt++;
-                System.out.println("breaking tie: " + IDS_DEPTH);
+//                System.out.println("breaking tie: " + IDS_DEPTH);
             } else if (repeat_cnt != 0) {
                 IDS_DEPTH -= repeat_cnt;
                 IDS_DEPTHS[0] -= repeat_cnt;
                 IDS_DEPTHS[1] -= repeat_cnt;
                 repeat_cnt = 0;
-                System.out.println("tie solved: " + IDS_DEPTH);
+//                System.out.println("tie solved: " + IDS_DEPTH);
             }
         }
     }
@@ -40,20 +40,21 @@ public class Config {
         if(repeat_cnt != 0) return;
         Double mean = 0.;
         last_time[turn][(time_pointer++) % last_time.length] = timeSec;
-//        System.out.print("Player " + turn + " mean time: ");
         for(int i = 0; i < last_time[turn].length; i++){
             mean += last_time[turn][i];
-//            System.out.print(last_time[turn][i] + ", ");
         }
         mean /= last_time[turn].length;
-//        System.out.println();
         if(mean <= .5){
-//            IDS_DEPTHS[turn]++;
-            System.out.println("Player " + turn + " has depth: " + IDS_DEPTHS[turn]);
+            IDS_DEPTHS[turn]+=1;
+        }else if(mean <= 1.5){
+            IDS_DEPTHS[turn]+=0.25;
         }
-        if(mean >= 1.1){
-//            IDS_DEPTHS[turn]--;
-            System.out.println("Player " + turn + " has depth: " + IDS_DEPTHS[turn]);
+        if(mean >= 10){
+            IDS_DEPTHS[turn]-=2;
+        }else if(mean >= 3){
+            IDS_DEPTHS[turn]-=1;
+        }else if(mean >= 1.5){
+            IDS_DEPTHS[turn]-=0.25;
         }
     }
 }

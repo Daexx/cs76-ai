@@ -84,21 +84,20 @@ public class ABPruningTransOrder extends ABPruningTrans {
         for (short move : moves) {
             position.doMove(move);
             if (p2tte.containsKey(position.getHashCode())) {
+                // use the evaluation from previous search
                 theMove = new MoveValuePair(move, p2tte.get(position.getHashCode()).eval);
             } else {
-                // for max turn, I assign worst values those unvisited positions
+                // I assign worst values those unvisited positions
                 theMove = new MoveValuePair(move, maxTurn ? BE_MATED : MATE);
-//                int eval = (int) ((maxTurn ? -1 : 1) * (position.getMaterial() + position.getDomination()));
-//                theMove = new MoveValuePair(move, eval);
             }
             position.undoMove();
             sortedMoves.add(theMove);
         }
 
+        // do the sorting
         Collections.sort(sortedMoves, new Comparator<MoveValuePair>() {
             @Override
             public int compare(MoveValuePair c1, MoveValuePair c2) {
-//                System.out.println(c1.eval + " vs " + c2.eval);
                 return (int) ((ASCENDING ? 1 : -1) * Math.signum(c1.eval - c2.eval)); // use your logic
             }
         });

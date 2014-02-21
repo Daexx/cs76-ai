@@ -83,34 +83,31 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         } else if (position.isTerminal() && position.isStaleMate())
             finalMove.eval = 0;
         else {
-//            if(true)
-//                finalMove.eval = (int) ( (maxTurn ? 1 : -1) * (position.getMaterial() + position.getDomination()));
-//            else
-            if(maxTurn)
-                finalMove.eval = -quiescence(position, -alpha, -beta, !maxTurn);
-            else
-                finalMove.eval = quiescence(position, alpha, beta, !maxTurn);
+            finalMove.eval = maxTurn ? -quiescence(position, -alpha, -beta, !maxTurn) :
+                     quiescence(position, alpha, beta, !maxTurn);
         }
-//        System.out.print(finalMove.eval + "\t");
         return finalMove;
     }
 
     protected int quiescence(Position position, int alpha, int beta, boolean maxTurn) throws IllegalMoveException {
         int evaluation = handleTerminal(position, maxTurn).eval;
+        // set the stand pat value,
+        // in case there is no capturing
         if (evaluation >= beta)
             return beta;
         if (evaluation > alpha)
             alpha = evaluation;
 
+        // this part is similar the AB pruning
         LinkedList<MoveValuePair> sortedMoves = getCapturingSortedMoves(position, maxTurn);
         for (MoveValuePair movepair : sortedMoves) {
             short move = movepair.move;
             position.doMove(move);
             int value = -quiescence(position, -alpha, -beta, !maxTurn);
             position.undoMove();
-            if(value >= beta)
+            if (value >= beta)
                 return beta;
-            if(value > alpha)
+            if (value > alpha)
                 alpha = value;
         }
         return alpha;
@@ -125,11 +122,12 @@ public class ABPruningTransOrderQs extends ABPruningTransOrder {
         } else if (position.isTerminal() && position.isStaleMate())
             finalMove.eval = 0;
         else {
-            finalMove.eval = (int) ( (position.getMaterial() + position.getDomination()));
+            finalMove.eval = (int) ((position.getMaterial() + position.getDomination()));
         }
 //        System.out.print(finalMove.eval + " ");
         return finalMove;
     }
+
     protected LinkedList<MoveValuePair> getCapturingSortedMoves(Position position, boolean maxTurn) throws IllegalMoveException {
         LinkedList<MoveValuePair> sortedMoves = new LinkedList<MoveValuePair>();
         short[] moves = position.getAllCapturingMoves();

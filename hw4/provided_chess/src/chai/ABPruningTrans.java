@@ -30,7 +30,7 @@ public class ABPruningTrans extends ABPruning{
     @Override
     public short getMove(Position position) throws IllegalMoveException {
         long start = System.currentTimeMillis();
-        short result = minimaxIDS(position, Config.IDS_DEPTHS[position.getToPlay()]);
+        short result = minimaxIDS(position, (int) Config.IDS_DEPTHS[position.getToPlay()]);
 //        short result = minimaxIDS(position, Config.IDS_DEPTH);
         long elapsedTime = System.currentTimeMillis() - start;
         try {
@@ -44,6 +44,7 @@ public class ABPruningTrans extends ABPruning{
         }
         System.out.println("ABPT  making move " + elapsedTime / 1000. + "\t");
         Config.tryBreakTie(position.getToPlay(), result);
+        Config.tuneDepth(elapsedTime / 1000., position.getToPlay());
         return result;
     }
 
@@ -72,10 +73,8 @@ public class ABPruningTrans extends ABPruning{
                 }
                 position.undoMove();
                 // update the alpha beta boundary
-                if (maxTurn)
-                    alpha = bestMove.eval;
-                else
-                    beta = bestMove.eval;
+                alpha = maxTurn ? bestMove.eval : alpha;
+                beta = !maxTurn ? bestMove.eval : beta;
                 // prune the subtree if needed
                 if(alpha >= beta)
                     return maxTurn ? bestMove.setGetVal(beta) : bestMove.setGetVal(alpha);

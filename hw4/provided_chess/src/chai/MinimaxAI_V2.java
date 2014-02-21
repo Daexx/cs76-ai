@@ -45,7 +45,7 @@ public class MinimaxAI_V2 implements ChessAI {
         } catch (IOException ioe) {
             System.out.println("IOException : " + ioe);
         }
-        System.out.println("Minimax making move " + elapsedTime/1000.);
+        System.out.println("Minimax making move\t" + elapsedTime/1000.);
         return result;
     }
 
@@ -60,11 +60,13 @@ public class MinimaxAI_V2 implements ChessAI {
 
     private MoveValuePair maxMinValue(Position position, int depth, boolean maxTurn) throws IllegalMoveException{
         if (depth <= 0 || position.isTerminal()) {
+            // the base case of recursion
             return handleTerminal(position, maxTurn);
         } else {
+            // get all the legal moves
             MoveValuePair bestMove = new MoveValuePair();
             for (short move : position.getAllMoves()) {
-                // collect values from further moves
+                // collect values from further moves by recursion
                 position.doMove(move);
                 MoveValuePair childMove = maxMinValue(position, depth - 1, !maxTurn);
                 bestMove.updateMinMax(move, childMove.eval, maxTurn);
@@ -82,22 +84,8 @@ public class MinimaxAI_V2 implements ChessAI {
         } else if (position.isTerminal() && position.isStaleMate())
              finalMove.eval = 0;
         else {
-            finalMove.eval = (maxTurn ? 1 : -1) * position.getMaterial();
+            finalMove.eval = (int) ((maxTurn ? 1 : -1) * (position.getMaterial()+position.getDomination()));
         }
-//        System.out.print(finalMove.eval + " ");
         return finalMove;
-    }
-
-
-    private Position positionMove(Position position, short move) {
-        try {
-//            System.out.println("positionMove making move " + move);
-            position.doMove(move);
-            //System.out.println(position);
-            return position;
-        } catch (IllegalMoveException e) {
-            System.out.println("illegal move here!");
-            return null;
-        }
     }
 }

@@ -1,0 +1,9 @@
+x = 1 : size(hw4rewrite,2);
+hw4rewrite=hw4rewrite(1:2,:)
+smooth(hw4rewrite);
+
+figure()
+plot(hw4rewrite');
+axis([0 17 0 12])
+figure()
+semilogy(hw4rewrite');

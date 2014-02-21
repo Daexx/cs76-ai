@@ -20,7 +20,7 @@ public class ABPruningTransOrderNm extends ABPruningTransOrder {
     @Override
     public short getMove(Position position) throws IllegalMoveException {
         long start = System.currentTimeMillis();
-        short result = minimaxIDS(position, Config.IDS_DEPTHS[position.getToPlay()]);
+        short result = minimaxIDS(position, (int) Config.IDS_DEPTHS[position.getToPlay()]);
 //        short result = minimaxIDS(position, Config.IDS_DEPTH);
         long elapsedTime = System.currentTimeMillis() - start;
         try {

@@ -21,7 +21,6 @@ public class ABPruning implements ChessAI {
     public class MoveValuePair implements Comparable<MoveValuePair> {
         public short move = 0;
         public int eval;
-        public boolean init = false;
 
         MoveValuePair() {
         }
@@ -34,14 +33,12 @@ public class ABPruning implements ChessAI {
         MoveValuePair(short m, int e) {
             move = m;
             eval = e;
-            init = true;
         }
 
         public void updateMinMax(short m, int e, boolean findMax) {
-            if (!init || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
+            if (move == 0 || (findMax && (this.eval < e)) || (!findMax && (this.eval > e))) {
                 this.move = m;
                 this.eval = e;
-                this.init = true;
             }
         }
 
@@ -55,7 +52,7 @@ public class ABPruning implements ChessAI {
     @Override
     public short getMove(Position position) throws IllegalMoveException {
         long start = System.currentTimeMillis();
-        short result = minimaxIDS(position, Config.IDS_DEPTHS[position.getToPlay()]);
+        short result = minimaxIDS(position, (int) Config.IDS_DEPTHS[position.getToPlay()]);
 //        short result = minimaxIDS(position, Config.IDS_DEPTH);
         long elapsedTime = System.currentTimeMillis() - start;
         try {
@@ -94,10 +91,8 @@ public class ABPruning implements ChessAI {
                 bestMove.updateMinMax(move, childMove.eval, maxTurn);
                 position.undoMove();
                 // update the alpha beta boundary
-                if(maxTurn)
-                    alpha = bestMove.eval;
-                else
-                    beta = bestMove.eval;
+                alpha = maxTurn ? bestMove.eval : alpha;
+                beta = !maxTurn ? bestMove.eval : beta;
                 // prune the subtree if needed
                 if(alpha >= beta)
                     return maxTurn ? bestMove.setGetVal(beta) : bestMove.setGetVal(alpha);
@@ -118,18 +113,5 @@ public class ABPruning implements ChessAI {
         }
 //        System.out.print(finalMove.eval + "\t");
         return finalMove;
-    }
-
-
-    protected Position positionMove(Position position, short move) {
-        try {
-//            System.out.println("positionMove making move " + move);
-            position.doMove(move);
-            //System.out.println(position);
-            return position;
-        } catch (IllegalMoveException e) {
-            System.out.println("illegal move here!");
-            return null;
-        }
     }
 }
