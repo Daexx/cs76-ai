@@ -31,6 +31,7 @@ public abstract class UUSearchProblem {
 	protected UUSearchNode startNode;
 
 	protected interface UUSearchNode {
+
 		public ArrayList<UUSearchNode> getSuccessors();
 
 		public boolean goalTest();

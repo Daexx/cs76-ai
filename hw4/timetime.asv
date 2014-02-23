@@ -1,9 +1,0 @@
-x = 1 : size(hw4rewrite,2);
-hw4rewrite2=hw4rewrite(2:3,:)
-smooth(hw4rewrite);
-
-semilogy(hw4rewrite');
-xlabel('steps');
-ylabel('time (s)')
-axis([0 17 0 12])
-grid on;
