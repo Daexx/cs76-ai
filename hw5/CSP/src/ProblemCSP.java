@@ -5,7 +5,6 @@ import java.util.*;
  */
 public class ProblemCSP {
     LinkedList<Variable> variables;
-    HashSet<Variable> assigened;
     Constraints cons;
 
     ProblemCSP() {
@@ -13,13 +12,14 @@ public class ProblemCSP {
     }
 
     ProblemCSP(LinkedList<Variable> v, Constraints c) {
-        assigened = new HashSet<>();
         variables = v;
         cons = c;
     }
 
     protected void cspSearch() {
-        if (cspDFS(0)) {
+        LinkedList<Variable> remain =
+                new LinkedList<>((Collection<? extends Variable>) variables.clone());
+        if (cspDFS(remain)) {
             System.out.println("solution found!!");
             for (int i = 0; i < variables.size(); i++) {
                 System.out.println("[" + i + "," + variables.get(i).assignment + "]");
@@ -29,26 +29,38 @@ public class ProblemCSP {
         }
     }
 
-    protected boolean cspDFS(int varId) {
-        if (assigened.size() == variables.size())
+    protected boolean cspDFS(LinkedList<Variable> remain) {
+        if (remain.size() == 0)
             return true;
 
-        Variable var = variables.get(varId);
-        // keep track of this assigment
-        assigened.add(var);
-        // shrink the domain of based on constraints
+        Variable var = picMRV(remain);
+        System.out.println("assigning: " + var.id);
+        // up the domains based on constraints
         updateDomains(var);
         // iterate all the remain domain
         for (Domain domain : var.domains) {
             var.assignment = domain.d;
-            // try to assign the next variable
-            if (cspDFS(varId + 1))
+            // try to assign the next variable in the remain
+            if (cspDFS(remain))
                 return true;  // solution found!
         }
-        // if not found, reset the assignment
+        // not found, reset assignment
+        // and put variable back to remain
         var.assignment = -1;
-        assigened.remove(var);
+        remain.add(var);
         return false;
+    }
+
+    protected Variable picMRV(LinkedList<Variable> remain){
+        Collections.sort(remain);
+        Iterator<Variable> it = remain.iterator();
+        Variable picked = it.next();
+        it.remove();
+        return picked;
+    }
+
+    protected void cspMRV(){
+        Collections.sort(variables);
     }
 
     protected int updateDomains(Variable var) {
@@ -58,6 +70,7 @@ public class ProblemCSP {
             if(cons.conflictTest(variables, var))
                 it.remove();
         }
+        var.assignment = -1;
         return var.domains.size();
     }
 }

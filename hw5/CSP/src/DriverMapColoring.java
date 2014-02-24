@@ -12,7 +12,7 @@ public class DriverMapColoring {
     public static HashMap<Integer, String> varInt2name = new HashMap<>();
     public static HashMap<Integer, String> domainInt2name = new HashMap<>();
     public static ArrayList<String> domainList = new ArrayList<>(
-            Arrays.asList("Red", "Yellow", "Green" )
+            Arrays.asList("Red", "Yellow", "Green" , "Blue")
     );
     public static ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>(
             Arrays.asList(
@@ -23,7 +23,7 @@ public class DriverMapColoring {
                             Arrays.asList("NT", "WA", "SA", "Q")
                     ),
                     new ArrayList<String>(
-                            Arrays.asList("SA", "WA", "NT", "Q")
+                            Arrays.asList("SA", "WA", "NT", "Q", "NSW")
                     ),
                     new ArrayList<String>(
                             Arrays.asList("Q", "NT", "SA", "NSW")
@@ -73,9 +73,9 @@ public class DriverMapColoring {
             Integer var = varName2int.get(map.get(i).get(0));
             for (int j = 1; j < map.get(i).size(); j++) {
                 Integer adjVar = varName2int.get(map.get(i).get(j));
-                constraint.addConstraint(var, "!=", adjVar);
-                constraint.addConstraint(adjVar, "!=", var);
+                constraint.addConstraint(variables.get(var), "!=", variables.get(adjVar));
             }
+            variables.get(var).degree = map.get(i).size() - 1;
         }
 
         ProblemCSP csp = new ProblemCSP(variables, constraint);

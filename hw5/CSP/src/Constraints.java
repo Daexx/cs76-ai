@@ -9,23 +9,23 @@ import java.util.LinkedList;
  * Created by JackGuan on 2/23/14.
  */
 public interface Constraints {
-    public void addConstraint(Integer var1, String relatinshp, Integer var2);
+    public void addConstraint(Variable var1, String relatinshp, Variable var2);
     public boolean isSatisfied(Variable var1, Variable var2);
     public boolean conflictTest(LinkedList<Variable> vars, Variable var);
     public boolean conflictTest(LinkedList<Variable> vars);
 
     public class VarPair {
-        Integer first;
-        Integer second;
+        Variable first;
+        Variable second;
 
-        VarPair(Integer v1, Integer v2) {
+        VarPair(Variable v1, Variable v2) {
             first = v1;
             second = v2;
         }
 
         @Override
         public int hashCode() {
-            return first * Config.VAR_NUM_SUPRT + second;
+            return first.id * Config.VAR_NUM_SUPRT + second.id;
         }
 
         @Override

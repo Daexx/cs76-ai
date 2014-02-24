@@ -11,7 +11,7 @@ public class ConstraintsMapColoring implements Constraints{
     // binary contraint, map from a pair of variable to a relationship
     public HashMap<VarPair, Integer> binary;
     // contraint graph
-    public HashMap<Integer, ArrayList<Integer>> adjacents;
+    public HashMap<Variable, ArrayList<Variable>> adjacents;
 
     ConstraintsMapColoring(){
         binary = new HashMap<>();
@@ -29,7 +29,7 @@ public class ConstraintsMapColoring implements Constraints{
      * @param relatinshp the relationship
      * @param var2       the second variable
      */
-    public void addConstraint(Integer var1, String relatinshp, Integer var2) {
+    public void addConstraint(Variable var1, String relatinshp, Variable var2) {
         Integer r;
         if (relatinshp.equals("=") || relatinshp.equals("==")) {
             r = EQ;
@@ -51,13 +51,13 @@ public class ConstraintsMapColoring implements Constraints{
         binary.put(new VarPair(var1, var2), r);
 
         // build the graph
-        if(!adjacents.containsKey(var1)) adjacents.put(var1, new ArrayList<Integer>());
+        if(!adjacents.containsKey(var1)) adjacents.put(var1, new ArrayList<Variable>());
         adjacents.get(var1).add(var2);
         return;
     }
 
     public boolean isSatisfied(Variable var1, Variable var2){
-        VarPair varpair = new VarPair(var1.id, var2.id);
+        VarPair varpair = new VarPair(var1, var2);
         if (binary.containsKey(varpair)) {
             int r = binary.get(varpair);
             switch (r) {
@@ -82,12 +82,12 @@ public class ConstraintsMapColoring implements Constraints{
     }
 
     public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
-        ArrayList<Integer> adjs = adjacents.get(var.id);
+        ArrayList<Variable> adjs = adjacents.get(var);
         if (adjs == null)
             return false; // no adjacent in constraint graph, no conflict
-        for (Integer adj : adjs) {
-            if (vars.get(adj).assignment != -1
-                    && !isSatisfied(var, vars.get(adj))) {
+        for (Variable adj : adjs) {
+            if (adj.assignment != -1
+                    && !isSatisfied(var, adj) ) {
                 return true;
             }
         }
