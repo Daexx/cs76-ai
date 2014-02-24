@@ -34,14 +34,7 @@ public class ProblemCSP {
         }
     }
 
-//    protected void cspIDS(int depth){
-//        for(int d = depth; d <= depth; d++ ){
-//            if(cspDFS(0, depth))
-//                System.out.println("Map coloring complete at depth: " + d);
-//            else
-//                System.out.println("Map coloring fail at depth: " + d);
-//        }
-//    }
+    protected void back
 
     protected boolean cspDFS(int var, HashSet<Integer> domain) {
         if (var >= asgnmnts.size()) return true;
