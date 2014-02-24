@@ -67,7 +67,7 @@
       <file leaf-file-name="ProblemCSP.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ProblemCSP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="69" column="38" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.7740586" vertical-offset="687" max-vertical-offset="1818">
+            <state line="70" column="8" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.42259413" vertical-offset="957" max-vertical-offset="1836">
               <folding />
             </state>
           </provider>
@@ -76,7 +76,7 @@
       <file leaf-file-name="Domain.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Domain.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="36" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
+            <state line="5" column="10" selection-start="114" selection-end="120" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
               <folding />
             </state>
           </provider>
@@ -516,12 +516,12 @@
       <created>1393182123475</created>
       <updated>1393182123475</updated>
       <workItem from="1393182127601" duration="23916000" />
-      <workItem from="1393226975064" duration="19057000" />
+      <workItem from="1393226975064" duration="20106000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="42973000" />
+    <option name="totallyTimeSpent" value="44022000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -688,14 +688,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Domain.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="36" selection-start="242" selection-end="242" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
+        <state line="5" column="10" selection-start="114" selection-end="120" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="396">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ProblemCSP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="69" column="38" selection-start="2116" selection-end="2116" vertical-scroll-proportion="0.7740586" vertical-offset="687" max-vertical-offset="1818">
+        <state line="70" column="8" selection-start="2113" selection-end="2113" vertical-scroll-proportion="0.42259413" vertical-offset="957" max-vertical-offset="1836">
           <folding />
         </state>
       </provider>

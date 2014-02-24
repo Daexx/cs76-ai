@@ -64,6 +64,7 @@ public class ProblemCSP {
         for (Domain domain : var.domains) {
             var.assignment = domain.d;
             // try to assign the next variable in the remain
+            domain.h = 0.;
             for(Variable v : remain)
                 domain.h += remainingDomains(var);
         }
