@@ -14,27 +14,27 @@ public class DriverMapColoring {
     public static ArrayList<String> domainList = new ArrayList<>(
             Arrays.asList("Red", "Yellow", "Green" , "Blue")
     );
-    public static ArrayList<ArrayList<String>> map = new ArrayList<ArrayList<String>>(
+    public static ArrayList<ArrayList<String>> map = new ArrayList<>(
             Arrays.asList(
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("WA", "NT", "SA")
                     ),
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("NT", "WA", "SA", "Q")
                     ),
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("SA", "WA", "NT", "Q", "NSW")
                     ),
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("Q", "NT", "SA", "NSW")
                     ),
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("NSW", "Q", "SA", "V")
                     ),
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("V", "SA", "NSW")
                     ),
-                    new ArrayList<String>(
+                    new ArrayList<>(
                             Arrays.asList("T")
                     )
             )

@@ -33,10 +33,8 @@ public class ProblemCSP {
         if (remain.size() == 0)
             return true;
 
-        Variable var = picMRV(remain);
-        System.out.println("assigning: " + var.id);
-        // up the domains based on constraints
-        updateDomains(var);
+        Variable var = pickMRV(remain);
+        sortLCV(var, remain);
         // iterate all the remain domain
         for (Domain domain : var.domains) {
             var.assignment = domain.d;
@@ -51,7 +49,7 @@ public class ProblemCSP {
         return false;
     }
 
-    protected Variable picMRV(LinkedList<Variable> remain){
+    protected Variable pickMRV(LinkedList<Variable> remain){
         Collections.sort(remain);
         Iterator<Variable> it = remain.iterator();
         Variable picked = it.next();
@@ -59,8 +57,29 @@ public class ProblemCSP {
         return picked;
     }
 
-    protected void cspMRV(){
-        Collections.sort(variables);
+    protected void sortLCV(Variable var, LinkedList<Variable> remain) {
+        // update the remaining domains based on constraints
+        updateDomains(var);
+        // compute value heuristic by trying
+        for (Domain domain : var.domains) {
+            var.assignment = domain.d;
+            // try to assign the next variable in the remain
+            for(Variable v : remain)
+                domain.h += remainingDomains(var);
+        }
+        Collections.sort(var.domains);
+    }
+
+    protected int remainingDomains(Variable var){
+        int remainDomain = 0;
+        for(Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ){
+            // try to assign a domain and test if conflict exists
+            var.assignment = it.next().d;
+            if(!cons.conflictTest(variables, var))
+                remainDomain++;
+        }
+        var.assignment = -1;
+        return remainDomain;
     }
 
     protected int updateDomains(Variable var) {
