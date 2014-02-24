@@ -9,7 +9,7 @@ import java.util.HashSet;
  * Created by JackGuan on 2/23/14.
  */
 public class DriverMapColoring {
-    public static ArrayList<Integer> asgnmnts = new ArrayList<>(); // remember to undo when using dfs
+    public static HashSet<Integer> variables = new HashSet<>(); // remember to undo when using dfs
     public static HashSet<Integer> domain = new HashSet<>();
     public static Constraint constraint = new Constraint();
     public static HashMap<String, Integer> varName2int = new HashMap<>();
@@ -78,10 +78,13 @@ public class DriverMapColoring {
         }
 
         // initiate assigments
+        HashMap<Integer, HashSet<Integer>> domains = new HashMap<>();
         for (int i = 0; i < map.size(); i++) {
-            asgnmnts.add(-1); // no domain assigned yet
+            variables.add(i); // no domain assigned yet
+            domains.put(i, (HashSet<Integer>) domain.clone());
         }
 
-        ProblemCSP csp = new ProblemCSP(asgnmnts, domain, constraint);
+        ProblemCSP csp = new ProblemCSP(variables, domains, constraint);
+        csp.cspSearch();
     }
 }
