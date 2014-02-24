@@ -1,17 +1,12 @@
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by JackGuan on 2/23/14.
  */
 public class DriverMapColoring {
-    public static HashSet<Integer> variables = new HashSet<>(); // remember to undo when using dfs
-    public static HashSet<Integer> domain = new HashSet<>();
-    public static Constraint constraint = new Constraint();
+    public static LinkedList<Variable> variables = new LinkedList<>(); // remember to undo when using dfs
+    public static LinkedList<Domain> domains = new LinkedList<>();
+    public static ConstraintsMapColoring constraint = new ConstraintsMapColoring();
     public static HashMap<String, Integer> varName2int = new HashMap<>();
     public static HashMap<String, Integer> domainName2int = new HashMap<>();
     public static HashMap<Integer, String> varInt2name = new HashMap<>();
@@ -61,6 +56,18 @@ public class DriverMapColoring {
         // build the name and integer mapping
         createNameIntMapping();
 
+        // initiate domain
+        for (int i = 0; i < domainList.size(); i++) {
+            int domainInt = domainName2int.get(domainList.get(i));
+            domains.add(new Domain(domainInt));
+        }
+
+        // initiate variables and assigments
+        for (int i = 0; i < map.size(); i++) {
+            // no assignment yet, which is -1
+            variables.add(new Variable(i, (LinkedList<Domain>) domains.clone(), -1));
+        }
+
         // build the constraint
         for (int i = 0; i < map.size(); i++) {
             Integer var = varName2int.get(map.get(i).get(0));
@@ -71,20 +78,7 @@ public class DriverMapColoring {
             }
         }
 
-        // initiate domain
-        for (int i = 0; i < domainList.size(); i++) {
-            int domainInt = domainName2int.get(domainList.get(i));
-            domain.add(domainInt);
-        }
-
-        // initiate assigments
-        HashMap<Integer, HashSet<Integer>> domains = new HashMap<>();
-        for (int i = 0; i < map.size(); i++) {
-            variables.add(i); // no domain assigned yet
-            domains.put(i, (HashSet<Integer>) domain.clone());
-        }
-
-        ProblemCSP csp = new ProblemCSP(variables, domains, constraint);
+        ProblemCSP csp = new ProblemCSP(variables, constraint);
         csp.cspSearch();
     }
 }

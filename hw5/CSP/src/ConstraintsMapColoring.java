@@ -1,13 +1,11 @@
-import com.sun.jndi.url.iiop.iiopURLContext;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
- * Created by JackGuan on 2/23/14.
+ * Created by JackGuan on 2/24/14.
  */
-public class Constraint {
+public class ConstraintsMapColoring implements Constraints{
     // define the 6 basic relationship
     public static final int EQ = 0, GE = 1, LE = 2, GT = 3, LT = 4, NE = 5;
     // binary contraint, map from a pair of variable to a relationship
@@ -15,7 +13,7 @@ public class Constraint {
     // contraint graph
     public HashMap<Integer, ArrayList<Integer>> adjacents;
 
-    Constraint(){
+    ConstraintsMapColoring(){
         binary = new HashMap<>();
         adjacents = new HashMap<>();
     }
@@ -58,23 +56,23 @@ public class Constraint {
         return;
     }
 
-    public boolean isSatisfied(int var1, int val1, int var2, int val2){
-        VarPair varpair = new VarPair(var1, var2);
+    public boolean isSatisfied(Variable var1, Variable var2){
+        VarPair varpair = new VarPair(var1.id, var2.id);
         if (binary.containsKey(varpair)) {
             int r = binary.get(varpair);
             switch (r) {
                 case EQ:
-                    return val1 == val2;
+                    return var1.assignment == var2.assignment;
                 case GE:
-                    return val1 >= val2;
+                    return var1.assignment >= var2.assignment;
                 case LE:
-                    return val1 <= val2;
+                    return var1.assignment <= var2.assignment;
                 case GT:
-                    return val1 > val2;
+                    return var1.assignment > var2.assignment;
                 case LT:
-                    return val1 < val2;
+                    return var1.assignment < var2.assignment;
                 case NE:
-                    return val1 != val2;
+                    return var1.assignment != var2.assignment;
                 default:
                     break;
             }
@@ -83,29 +81,21 @@ public class Constraint {
         return true;
     }
 
-    public class VarPair {
-        Integer first;
-        Integer second;
-
-        VarPair(Integer v1, Integer v2) {
-            first = v1;
-            second = v2;
+    public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
+        ArrayList<Integer> adjs = adjacents.get(var.id);
+        if (adjs == null)
+            return false; // no adjacent in constraint graph, no conflict
+        for (Integer adj : adjs) {
+            if (vars.get(adj).assignment != -1
+                    && !isSatisfied(var, vars.get(adj))) {
+                return true;
+            }
         }
+        return false;
+    }
 
-        @Override
-        public int hashCode() {
-            return first * Config.VAR_NUM_SUPRT + second;
-        }
-
-        @Override
-        public String toString() {
-            return "[" + first + "," + second + "]";
-        }
-
-        @Override
-        public boolean equals(Object other) {
-            return first == ((VarPair) other).first
-                    && second == ((VarPair) other).second;
-        }
+    @Override
+    public boolean conflictTest(LinkedList<Variable> vars) {
+        return false;
     }
 }
