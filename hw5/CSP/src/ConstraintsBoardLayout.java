@@ -21,7 +21,6 @@ public class ConstraintsBoardLayout extends Constraints{
      * so you need to call this twice every time
      *
      * @param var1       the first variable
-     * @param relatinshp the relationship
      * @param var2       the second variable
      */
     public void addConstraint(Variable var1, Variable var2) {

@@ -41,9 +41,8 @@ public class ProblemCSP {
         for (Domain domain : var.getDomains()) {
             var.assign(domain);
             // try to assign the next variable in the remain
-            LinkedList<Variable> snapshot = (LinkedList<Variable>) remain.clone();
-            if (MAC3Inference(var, snapshot)) {
-                if (cspDFS(snapshot)) {
+            if (MAC3Inference(var, remain)) {
+                if (cspDFS(remain)) {
                     return true;  // solution found!
                 }
             }
