@@ -76,30 +76,6 @@ public class ConstraintsMapColoring extends Constraints{
         return true;
     }
 
-    public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
-        LinkedList<Variable> adjs = adjacents.get(var);
-        if (adjs == null)
-            return false; // no adjacent in constraint graph, no conflict
-        for (Variable adj : adjs) {
-            if (!isSatisfied(var, adj) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean consistentTest(Variable var, Variable adj) {
-        for(Domain domain : adj.domains){
-            adj.assignment = domain.d;
-            if(isSatisfied(var, adj)){
-                adj.assignment = -1;
-                return true;
-            }
-        }
-        adj.assignment = -1;
-        return false;
-    }
-
     @Override
     public boolean conflictTest(LinkedList<Variable> vars) {
         return false;
