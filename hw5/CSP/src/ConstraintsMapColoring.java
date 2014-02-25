@@ -90,6 +90,10 @@ public class ConstraintsMapColoring extends Constraints{
         return false;
     }
 
+    public boolean consistentTest(Variable var1, Variable var2) {
+        return false;
+    }
+
     @Override
     public boolean conflictTest(LinkedList<Variable> vars) {
         return false;

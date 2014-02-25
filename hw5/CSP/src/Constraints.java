@@ -22,6 +22,10 @@ public class Constraints {
         return false;
     }
 
+    public boolean consistentTest(Variable var1, Variable var2) {
+        return false;
+    }
+
     public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
         return false;
     }

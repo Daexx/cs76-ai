@@ -18,6 +18,13 @@ public class Variable implements Comparable<Variable> {
         assignment = ass;
     }
 
+    Variable(Variable v){
+        id = v.id;
+        assignment = v.assignment;
+        degree = v.degree;
+        domains = (LinkedList<Domain>) v.domains.clone();
+    }
+
     Variable(int i, LinkedList<Domain> d, int ass){
         id = i;
         domains = d;

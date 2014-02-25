@@ -88,7 +88,7 @@
       <file leaf-file-name="UUSearchProblem.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/UUSearchProblem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="36" column="34" selection-start="957" selection-end="957" vertical-scroll-proportion="0.5087483" vertical-offset="0" max-vertical-offset="3870">
+            <state line="23" column="63" selection-start="628" selection-end="628" vertical-scroll-proportion="0.19380888" vertical-offset="0" max-vertical-offset="3870">
               <folding />
             </state>
           </provider>
@@ -448,12 +448,12 @@
       <updated>1393182187205</updated>
       <workItem from="1393182190114" duration="1605000" />
       <workItem from="1393187537181" duration="5626000" />
-      <workItem from="1393293675111" duration="232000" />
+      <workItem from="1393293675111" duration="1184000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7463000" />
+    <option name="totallyTimeSpent" value="8415000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -575,7 +575,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/UUSearchProblem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="36" column="34" selection-start="957" selection-end="957" vertical-scroll-proportion="0.5087483" vertical-offset="0" max-vertical-offset="3870">
+        <state line="23" column="63" selection-start="628" selection-end="628" vertical-scroll-proportion="0.19380888" vertical-offset="0" max-vertical-offset="3870">
           <folding />
         </state>
       </provider>

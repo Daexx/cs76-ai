@@ -30,7 +30,7 @@ public class ProblemCSP {
     }
 
     protected boolean cspDFS(LinkedList<Variable> remain) {
-        if (remain.size() == 0)  return true;
+        if (remain.size() == 0) return true;
 
         Variable var = pickMRV(remain);
         sortLCV(var, remain);
@@ -38,9 +38,11 @@ public class ProblemCSP {
         for (Domain domain : var.domains) {
             var.assignment = domain.d;
             // try to assign the next variable in the remain
-//            MAC3Inference(var, remain);
-            if (cspDFS(remain))
-                return true;  // solution found!
+            if (MAC3Inference(var, remain)) {
+                if (cspDFS(remain)) {
+                    return true;  // solution found!
+                }
+            }
         }
         // not found, reset assignment
         // and put variable back to remain
@@ -48,17 +50,60 @@ public class ProblemCSP {
         return false;
     }
 
-    protected void revertVariable(Variable var,LinkedList<Variable> remain){
+    protected void revertVariable(Variable var, LinkedList<Variable> remain) {
         var.assignment = -1;
         remain.add(var);
     }
 
-    protected boolean MAC3Inference(Variable var, LinkedList<Variable> remain){
+    protected boolean MAC3Inference(Variable thisVar, LinkedList<Variable> remain) {
+        Variable var = new Variable(thisVar);
         LinkedList<Variable> adjs = cons.adjacents.get(var);
+        if(adjs == null) return true;
+        adjs = findIntersection(adjs, remain);
+        LinkedList<Variable> checkedAdj = new LinkedList<>();
+
+        while (!adjs.isEmpty()) {
+            Variable adj = adjs.removeFirst();
+            checkedAdj.add(adj);
+            if (revise(var, adj)) {
+                if (var.domains.isEmpty())
+                    return false;
+                adjs.addAll(checkedAdj);
+                checkedAdj.clear();
+            }
+        }
         return false;
     }
 
-    protected Variable pickMRV(LinkedList<Variable> remain){
+    protected boolean revise(Variable var, Variable adj) {
+        for (Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ) {
+            // try to assign a domain and test if conflict exists
+            var.assignment = it.next().d;
+            if (!cons.consistentTest(var, adj)) {
+                it.remove();
+                return true;
+            }
+        }
+        var.assignment = -1;
+        return false;
+    }
+
+    protected LinkedList<Variable> findIntersection(LinkedList<Variable> list1, LinkedList<Variable> list2) {
+        LinkedList<Variable> intersection = new LinkedList<>();
+        HashSet<Variable> exited = new HashSet<>();
+
+        for (Iterator<Variable> it = list1.iterator(); it.hasNext(); ) {
+            exited.add(it.next());
+        }
+        for (Iterator<Variable> it = list2.iterator(); it.hasNext(); ) {
+            Variable found = it.next();
+            if (exited.contains(found))
+                intersection.add(found);
+        }
+        return intersection;
+    }
+
+    protected Variable pickMRV(LinkedList<Variable> remain) {
         Collections.sort(remain);
         Iterator<Variable> it = remain.iterator();
         Variable picked = it.next();
@@ -74,18 +119,18 @@ public class ProblemCSP {
             var.assignment = domain.d;
             // try to assign the next variable in the remain
             domain.h = 0.;
-            for(Variable v : remain)
+            for (Variable v : remain)
                 domain.h += remainingDomains(var);
         }
         Collections.sort(var.domains);
     }
 
-    protected int remainingDomains(Variable var){
+    protected int remainingDomains(Variable var) {
         int remainDomain = 0;
-        for(Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ){
+        for (Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
             var.assignment = it.next().d;
-            if(!cons.conflictTest(variables, var))
+            if (!cons.conflictTest(variables, var))
                 remainDomain++;
         }
         var.assignment = -1;
@@ -93,10 +138,10 @@ public class ProblemCSP {
     }
 
     protected int updateDomains(Variable var) {
-        for(Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ){
+        for (Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
             var.assignment = it.next().d;
-            if(cons.conflictTest(variables, var))
+            if (cons.conflictTest(variables, var))
                 it.remove();
         }
         var.assignment = -1;
