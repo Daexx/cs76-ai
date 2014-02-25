@@ -20,7 +20,7 @@ public class Constraints {
     public boolean isSatisfied(Variable var1, Variable var2) {
         return false;
     }
-    
+
     public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
         LinkedList<Variable> adjs = adjacents.get(var);
         if (adjs == null)
@@ -34,14 +34,14 @@ public class Constraints {
     }
 
     public boolean consistentTest(Variable var, Variable adj) {
-        for(Domain domain : adj.domains){
-            adj.assignment = domain.d;
+        for(Domain domain : adj.getDomains()){
+            adj.assign(domain);
             if(isSatisfied(var, adj)){
-                adj.assignment = -1;
+                adj.undoAssign();
                 return true;
             }
         }
-        adj.assignment = -1;
+        adj.undoAssign();
         return false;
     }
 
@@ -88,7 +88,7 @@ public class Constraints {
 
         @Override
         public int hashCode() {
-            return first.id * Config.VAR_NUM_SUPRT + second.id;
+            return first.getId() * Config.VAR_NUM_SUPRT + second.getId();
         }
 
         @Override

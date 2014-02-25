@@ -2,7 +2,7 @@
  * Created by JackGuan on 2/24/14.
  */
 public class Domain implements Comparable<Domain> {
-    Integer d;
+    int d;
     Double h;
 
     Domain(int d){

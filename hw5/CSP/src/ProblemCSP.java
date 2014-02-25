@@ -24,7 +24,7 @@ public class ProblemCSP {
         if (cspDFS(remain)) {
             System.out.println("solution found!!");
             for (int i = 0; i < variables.size(); i++) {
-                System.out.println("[" + i + "," + variables.get(i).assignment + "]");
+                System.out.println("[" + i + "," + variables.get(i).getAssignment() + "]");
             }
         } else {
             System.out.println("solution not found!!");
@@ -38,8 +38,8 @@ public class ProblemCSP {
         // update domain and sort the values based on Least Constraining
         sortLCV(var, remain);
         // iterate all the remain domain
-        for (Domain domain : var.domains) {
-            var.assignment = domain.d;
+        for (Domain domain : var.getDomains()) {
+            var.assign(domain);
             // try to assign the next variable in the remain
             LinkedList<Variable> snapshot = (LinkedList<Variable>) remain.clone();
             if (MAC3Inference(var, snapshot)) {
@@ -54,7 +54,7 @@ public class ProblemCSP {
     }
 
     protected void undoAssignment(Variable var, LinkedList<Variable> remain) {
-        var.assignment = -1;
+        var.undoAssign();
         remain.add(var);
     }
 
@@ -65,7 +65,7 @@ public class ProblemCSP {
         while (!arcs.isEmpty()) {
             Constraints.ArcPair arc = arcs.removeFirst();
             if (revise(arc.first, arc.second)) {
-                if (var.domains.isEmpty())
+                if (var.getDomains().isEmpty())
                     return false;
                 arcs.addAll(cons.getAdjArcsInvert(arc.first, arc.second, remain));
             }
@@ -74,16 +74,16 @@ public class ProblemCSP {
     }
 
     protected boolean revise(Variable var, Variable adj) {
-        for (Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ) {
+        for (Iterator<Domain> it = var.getDomains().iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
-            var.assignment = it.next().d;
+            var.assign(it.next());
             if (!cons.consistentTest(var, adj)) {
                 it.remove();
-                var.assignment = -1;
+                var.undoAssign();
                 return true;
             }
         }
-        var.assignment = -1;
+        var.undoAssign();
         return false;
     }
 
@@ -114,35 +114,35 @@ public class ProblemCSP {
         // update the remaining domains based on constraints
         updateDomains(var);
         // compute value heuristic by trying
-        for (Domain domain : var.domains) {
-            var.assignment = domain.d;
+        for (Domain domain : var.getDomains()) {
+            var.assign(domain);
             // try to assign the next variable in the remain
             domain.h = 0.;
             for (Variable v : remain)
                 domain.h += remainingDomains(v);
         }
-        Collections.sort(var.domains);
+        Collections.sort(var.getDomains());
     }
 
     protected int remainingDomains(Variable var) {
         int remainDomain = 0;
-        for (Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ) {
+        for (Iterator<Domain> it = var.getDomains().iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
-            var.assignment = it.next().d;
+            var.assign(it.next());
             if (!cons.conflictTest(variables, var))
                 remainDomain++;
         }
-        var.assignment = -1;
+        var.undoAssign();
         return remainDomain;
     }
 
     protected int updateDomains(Variable var) {
-        for (Iterator<Domain> it = var.domains.iterator(); it.hasNext(); ) {
+        for (Iterator<Domain> it = var.getDomains().iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
-            var.assignment = it.next().d;
+            var.assign(it.next());
             if (cons.conflictTest(variables, var))
                 it.remove();
         }
-        return var.domains.size();
+        return var.domainSize();
     }
 }

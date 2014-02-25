@@ -41,7 +41,6 @@ public class DriverMapColoring {
     );
 
     public static void createNameIntMapping() {
-        // noted that I choose to use i + 1
         for (int i = 0; i < map.size(); i++) {
             varName2int.put(map.get(i).get(0), i);
             varInt2name.put(i, map.get(i).get(0));
@@ -75,7 +74,7 @@ public class DriverMapColoring {
                 Integer adjVar = varName2int.get(map.get(i).get(j));
                 constraint.addConstraint(variables.get(var), "!=", variables.get(adjVar));
             }
-            variables.get(var).degree = map.get(i).size() - 1;
+            variables.get(var).setDegree(map.get(i).size() - 1);
         }
 
         ProblemCSP csp = new ProblemCSP(variables, constraint);

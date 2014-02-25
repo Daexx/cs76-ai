@@ -24,27 +24,7 @@ public class ConstraintsBoardLayout extends Constraints{
      * @param relatinshp the relationship
      * @param var2       the second variable
      */
-    public void addConstraint(Variable var1, String relatinshp, Variable var2) {
-        Integer r;
-        if (relatinshp.equals("=") || relatinshp.equals("==")) {
-            r = EQ;
-        } else if (relatinshp.equals(">=")) {
-            r = GE;
-        } else if (relatinshp.equals("<=")) {
-            r = LE;
-        } else if (relatinshp.equals(">")) {
-            r = GT;
-        } else if (relatinshp.equals("<")) {
-            r = LT;
-        } else if (relatinshp.equals("!=")) {
-            r = NE;
-        } else {
-            System.out.print("illegal relation ship!");
-            r = -1;
-        }
-        // add the relationship
-        ConsArc.put(new ArcPair(var1, var2), r);
-
+    public void addConstraint(Variable var1, Variable var2) {
         // build the graph
         if(!adjacents.containsKey(var1)) adjacents.put(var1, new LinkedList<Variable>());
         adjacents.get(var1).add(var2);
@@ -74,23 +54,6 @@ public class ConstraintsBoardLayout extends Constraints{
         }
         // System.out.println("No constraint between " + varpair);
         return true;
-    }
-
-    public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
-        LinkedList<Variable> adjs = adjacents.get(var);
-        if (adjs == null)
-            return false; // no adjacent in constraint graph, no conflict
-        for (Variable adj : adjs) {
-            if (adj.assignment != -1
-                    && !isSatisfied(var, adj) ) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean consistentTest(Variable var1, Variable var2) {
-        return false;
     }
 
     @Override
