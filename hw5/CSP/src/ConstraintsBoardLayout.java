@@ -4,11 +4,11 @@ import java.util.LinkedList;
 /**
  * Created by JackGuan on 2/24/14.
  */
-public class ConstraintsMapColoring extends Constraints{
+public class ConstraintsBoardLayout extends Constraints{
     // define the 6 basic relationship
     public static final int EQ = 0, GE = 1, LE = 2, GT = 3, LT = 4, NE = 5;
 
-    ConstraintsMapColoring(){
+    ConstraintsBoardLayout(){
         ConsArc = new HashMap<>();
         adjacents = new HashMap<>();
     }
@@ -81,22 +81,15 @@ public class ConstraintsMapColoring extends Constraints{
         if (adjs == null)
             return false; // no adjacent in constraint graph, no conflict
         for (Variable adj : adjs) {
-            if (!isSatisfied(var, adj) ) {
+            if (adj.assignment != -1
+                    && !isSatisfied(var, adj) ) {
                 return true;
             }
         }
         return false;
     }
 
-    public boolean consistentTest(Variable var, Variable adj) {
-        for(Domain domain : adj.domains){
-            adj.assignment = domain.d;
-            if(isSatisfied(var, adj)){
-                adj.assignment = -1;
-                return true;
-            }
-        }
-        adj.assignment = -1;
+    public boolean consistentTest(Variable var1, Variable var2) {
         return false;
     }
 

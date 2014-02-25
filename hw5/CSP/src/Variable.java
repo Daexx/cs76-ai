@@ -41,4 +41,19 @@ public class Variable implements Comparable<Variable> {
             // return the one with maximum degree
             return (int) Math.signum(o.degree - degree);
     }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "[" + id + "," + assignment + "]";
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return id == ((Variable) other).id;
+    }
 }

@@ -1,17 +1,16 @@
-import com.sun.jndi.url.iiop.iiopURLContext;
+import sun.awt.image.ImageWatched;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
  * Created by JackGuan on 2/23/14.
  */
 public class Constraints {
-    // binary contraint, map from a pair of variable to a relationship
-    public HashMap<VarPair, Integer> binary = null;
-    // contraint graph
+    // constraint, map from a pair of variable to a relationship
+    public HashMap<ArcPair, Integer> ConsArc = null;
+    // constraint graph
     public HashMap<Variable, LinkedList<Variable>> adjacents = null;
 
     public void addConstraint(Variable var1, String relatinshp, Variable var2) {
@@ -22,7 +21,7 @@ public class Constraints {
         return false;
     }
 
-    public boolean consistentTest(Variable var1, Variable var2) {
+    public boolean consistentTest(Variable var, Variable var2) {
         return false;
     }
 
@@ -34,11 +33,39 @@ public class Constraints {
         return false;
     }
 
-    public class VarPair {
+    public LinkedList<ArcPair> getAdjArcs(Variable var, LinkedList<Variable> remain) {
+        LinkedList<ArcPair> arcs = new LinkedList<>();
+        LinkedList<Variable> adjs = adjacents.get(var);
+
+        if (adjs != null) {
+            for (Iterator<Variable> it = adjs.iterator(); it.hasNext(); ) {
+                Variable adj = it.next();
+                if (remain.contains(adj))
+                    arcs.add(new ArcPair(var, adj));
+            }
+        }
+        return arcs;
+    }
+
+    public LinkedList<ArcPair> getAdjArcsInvert(Variable var, Variable exclude, LinkedList<Variable> remain) {
+        LinkedList<ArcPair> arcs = new LinkedList<>();
+        LinkedList<Variable> adjs = adjacents.get(var);
+
+        if (adjs != null) {
+            for (Iterator<Variable> it = adjs.iterator(); it.hasNext(); ) {
+                Variable adj = it.next();
+                if (remain.contains(adj) && exclude != adj)
+                    arcs.add(new ArcPair(adj, var));
+            }
+        }
+        return arcs;
+    }
+
+    public class ArcPair {
         Variable first;
         Variable second;
 
-        VarPair(Variable v1, Variable v2) {
+        ArcPair(Variable v1, Variable v2) {
             first = v1;
             second = v2;
         }
@@ -55,8 +82,8 @@ public class Constraints {
 
         @Override
         public boolean equals(Object other) {
-            return first == ((VarPair) other).first
-                    && second == ((VarPair) other).second;
+            return first == ((ArcPair) other).first
+                    && second == ((ArcPair) other).second;
         }
     }
 }

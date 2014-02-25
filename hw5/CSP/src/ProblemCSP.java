@@ -1,3 +1,5 @@
+import sun.util.resources.cldr.hi.TimeZoneNames_hi;
+
 import java.util.*;
 
 /**
@@ -31,48 +33,44 @@ public class ProblemCSP {
 
     protected boolean cspDFS(LinkedList<Variable> remain) {
         if (remain.size() == 0) return true;
-
+        // pick a Minimum Remaining Variable
         Variable var = pickMRV(remain);
+        // update domain and sort the values based on Least Constraining
         sortLCV(var, remain);
         // iterate all the remain domain
         for (Domain domain : var.domains) {
             var.assignment = domain.d;
             // try to assign the next variable in the remain
-            if (MAC3Inference(var, remain)) {
-                if (cspDFS(remain)) {
+            LinkedList<Variable> snapshot = (LinkedList<Variable>) remain.clone();
+            if (MAC3Inference(var, snapshot)) {
+                if (cspDFS(snapshot)) {
                     return true;  // solution found!
                 }
             }
         }
-        // not found, reset assignment
-        // and put variable back to remain
-        revertVariable(var, remain);
+        // not found, reset assignment and put variable back to remain
+        undoAssignment(var, remain);
         return false;
     }
 
-    protected void revertVariable(Variable var, LinkedList<Variable> remain) {
+    protected void undoAssignment(Variable var, LinkedList<Variable> remain) {
         var.assignment = -1;
         remain.add(var);
     }
 
     protected boolean MAC3Inference(Variable thisVar, LinkedList<Variable> remain) {
         Variable var = new Variable(thisVar);
-        LinkedList<Variable> adjs = cons.adjacents.get(var);
-        if(adjs == null) return true;
-        adjs = findIntersection(adjs, remain);
-        LinkedList<Variable> checkedAdj = new LinkedList<>();
+        LinkedList<Constraints.ArcPair> arcs = cons.getAdjArcs(var, remain);
 
-        while (!adjs.isEmpty()) {
-            Variable adj = adjs.removeFirst();
-            checkedAdj.add(adj);
-            if (revise(var, adj)) {
+        while (!arcs.isEmpty()) {
+            Constraints.ArcPair arc = arcs.removeFirst();
+            if (revise(arc.first, arc.second)) {
                 if (var.domains.isEmpty())
                     return false;
-                adjs.addAll(checkedAdj);
-                checkedAdj.clear();
+                arcs.addAll(cons.getAdjArcsInvert(arc.first, arc.second, remain));
             }
         }
-        return false;
+        return true;
     }
 
     protected boolean revise(Variable var, Variable adj) {
@@ -81,6 +79,7 @@ public class ProblemCSP {
             var.assignment = it.next().d;
             if (!cons.consistentTest(var, adj)) {
                 it.remove();
+                var.assignment = -1;
                 return true;
             }
         }
@@ -120,7 +119,7 @@ public class ProblemCSP {
             // try to assign the next variable in the remain
             domain.h = 0.;
             for (Variable v : remain)
-                domain.h += remainingDomains(var);
+                domain.h += remainingDomains(v);
         }
         Collections.sort(var.domains);
     }
@@ -144,7 +143,6 @@ public class ProblemCSP {
             if (cons.conflictTest(variables, var))
                 it.remove();
         }
-        var.assignment = -1;
         return var.domains.size();
     }
 }
