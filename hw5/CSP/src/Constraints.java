@@ -8,11 +8,27 @@ import java.util.LinkedList;
 /**
  * Created by JackGuan on 2/23/14.
  */
-public interface Constraints {
-    public void addConstraint(Variable var1, String relatinshp, Variable var2);
-    public boolean isSatisfied(Variable var1, Variable var2);
-    public boolean conflictTest(LinkedList<Variable> vars, Variable var);
-    public boolean conflictTest(LinkedList<Variable> vars);
+public class Constraints {
+    // binary contraint, map from a pair of variable to a relationship
+    public HashMap<VarPair, Integer> binary = null;
+    // contraint graph
+    public HashMap<Variable, LinkedList<Variable>> adjacents = null;
+
+    public void addConstraint(Variable var1, String relatinshp, Variable var2) {
+
+    }
+
+    public boolean isSatisfied(Variable var1, Variable var2) {
+        return false;
+    }
+
+    public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
+        return false;
+    }
+
+    public boolean conflictTest(LinkedList<Variable> vars) {
+        return false;
+    }
 
     public class VarPair {
         Variable first;

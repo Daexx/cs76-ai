@@ -5,13 +5,9 @@ import java.util.LinkedList;
 /**
  * Created by JackGuan on 2/24/14.
  */
-public class ConstraintsMapColoring implements Constraints{
+public class ConstraintsMapColoring extends Constraints{
     // define the 6 basic relationship
     public static final int EQ = 0, GE = 1, LE = 2, GT = 3, LT = 4, NE = 5;
-    // binary contraint, map from a pair of variable to a relationship
-    public HashMap<VarPair, Integer> binary;
-    // contraint graph
-    public HashMap<Variable, ArrayList<Variable>> adjacents;
 
     ConstraintsMapColoring(){
         binary = new HashMap<>();
@@ -51,7 +47,7 @@ public class ConstraintsMapColoring implements Constraints{
         binary.put(new VarPair(var1, var2), r);
 
         // build the graph
-        if(!adjacents.containsKey(var1)) adjacents.put(var1, new ArrayList<Variable>());
+        if(!adjacents.containsKey(var1)) adjacents.put(var1, new LinkedList<Variable>());
         adjacents.get(var1).add(var2);
         return;
     }
@@ -82,7 +78,7 @@ public class ConstraintsMapColoring implements Constraints{
     }
 
     public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
-        ArrayList<Variable> adjs = adjacents.get(var);
+        LinkedList<Variable> adjs = adjacents.get(var);
         if (adjs == null)
             return false; // no adjacent in constraint graph, no conflict
         for (Variable adj : adjs) {

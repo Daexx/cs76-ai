@@ -30,8 +30,7 @@ public class ProblemCSP {
     }
 
     protected boolean cspDFS(LinkedList<Variable> remain) {
-        if (remain.size() == 0)
-            return true;
+        if (remain.size() == 0)  return true;
 
         Variable var = pickMRV(remain);
         sortLCV(var, remain);
@@ -39,13 +38,23 @@ public class ProblemCSP {
         for (Domain domain : var.domains) {
             var.assignment = domain.d;
             // try to assign the next variable in the remain
+//            MAC3Inference(var, remain);
             if (cspDFS(remain))
                 return true;  // solution found!
         }
         // not found, reset assignment
         // and put variable back to remain
+        revertVariable(var, remain);
+        return false;
+    }
+
+    protected void revertVariable(Variable var,LinkedList<Variable> remain){
         var.assignment = -1;
         remain.add(var);
+    }
+
+    protected boolean MAC3Inference(Variable var, LinkedList<Variable> remain){
+        LinkedList<Variable> adjs = cons.adjacents.get(var);
         return false;
     }
 
