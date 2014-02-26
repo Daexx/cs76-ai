@@ -126,7 +126,7 @@ public class ProblemCSP {
         for (Iterator<Domain> it = var.getDomains().iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
             var.assign(it.next());
-            if (!cons.conflictTest(variables, var))
+            if (!cons.conflictTest(var))
                 remainDomain++;
         }
         var.undoAssign();
@@ -137,7 +137,7 @@ public class ProblemCSP {
         for (Iterator<Domain> it = var.getDomains().iterator(); it.hasNext(); ) {
             // try to assign a domain and test if conflict exists
             var.assign(it.next());
-            if (cons.conflictTest(variables, var))
+            if (cons.conflictTest(var))
                 it.remove();
         }
         return var.domainSize();

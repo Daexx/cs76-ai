@@ -1,18 +1,18 @@
-import sun.awt.image.ImageWatched;
-
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
  * Created by JackGuan on 2/23/14.
  */
 public abstract class Constraints {
-    // constraint graph
-    public HashMap<Variable, LinkedList<Variable>> adjacents = null;
+    // constraint graph based on binary constraints
+    public HashMap<Variable, LinkedList<Variable>> binaryAdjs = null;
+    // the global constraints
+    public HashMap<Integer, HashSet<Variable>> globalAdjs = null;
 
-    public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
-        LinkedList<Variable> adjs = adjacents.get(var);
+    public boolean conflictTest(Variable var) {
+        LinkedList<Variable> adjs = binaryAdjs.get(var);
         if (adjs == null)
             return false; // no adjacent in constraint graph, no conflict
         for (Variable adj : adjs) {
@@ -34,7 +34,26 @@ public abstract class Constraints {
         adj.undoAssign();
         return false;
     }
-    public abstract void addConstraint(Variable var1, Variable var2);
+
+    /**
+     * addConstraint
+     * <p/>
+     * Build the constraint graph based on variable name and
+     * relationship. Remember to build an in-directed graph,
+     * so you need to call this twice every time
+     *
+     * @param var1       the first variable
+     * @param var2       the second variable
+     */
+    public void addConstraint(Variable var1, Variable var2) {
+        // build the graph
+        if(!binaryAdjs.containsKey(var1)) binaryAdjs.put(var1, new LinkedList<Variable>());
+        binaryAdjs.get(var1).add(var2);
+    }
+
+    public void addConstraint(Variable var1) {
+        // TODO: should be overrided if needed
+    }
 
     public abstract boolean isSatisfied(Variable var1, Variable var2);
 
@@ -42,33 +61,9 @@ public abstract class Constraints {
         return false;
     }
 
-    public LinkedList<ArcPair> getAdjArcs(Variable var, LinkedList<Variable> remain) {
-        LinkedList<ArcPair> arcs = new LinkedList<>();
-        LinkedList<Variable> adjs = adjacents.get(var);
+    public abstract LinkedList<ArcPair> getAdjArcs(Variable var, LinkedList<Variable> remain);
 
-        if (adjs != null) {
-            for (Iterator<Variable> it = adjs.iterator(); it.hasNext(); ) {
-                Variable adj = it.next();
-                if (remain.contains(adj))
-                    arcs.add(new ArcPair(var, adj));
-            }
-        }
-        return arcs;
-    }
-
-    public LinkedList<ArcPair> getAdjArcsInvert(Variable var, Variable exclude, LinkedList<Variable> remain) {
-        LinkedList<ArcPair> arcs = new LinkedList<>();
-        LinkedList<Variable> adjs = adjacents.get(var);
-
-        if (adjs != null) {
-            for (Iterator<Variable> it = adjs.iterator(); it.hasNext(); ) {
-                Variable adj = it.next();
-                if (remain.contains(adj) && exclude != adj)
-                    arcs.add(new ArcPair(adj, var));
-            }
-        }
-        return arcs;
-    }
+    public abstract LinkedList<ArcPair> getAdjArcsInvert(Variable var, Variable exclude, LinkedList<Variable> remain);
 
     public class ArcPair {
         Variable first;
