@@ -8,6 +8,23 @@ public class ConstraintsBoardLayout extends Constraints{
         binaryAdjs = new HashMap<>();
     }
 
+    /**
+     * addConstraint
+     * <p/>
+     * Build the constraint graph based on variable name and
+     * relationship. Remember to build an in-directed graph,
+     * so you need to call this twice every time
+     *
+     * @param var1       the first variable
+     * @param var2       the second variable
+     */
+    @Override
+    public void addConstraint(Variable var1, Variable var2) {
+        // build the graph
+        if(!binaryAdjs.containsKey(var1)) binaryAdjs.put(var1, new LinkedList<Variable>());
+        binaryAdjs.get(var1).add(var2);
+        return;
+    }
 
     /**
      *

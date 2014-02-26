@@ -15,12 +15,14 @@ public class VariableBoradLayout extends Variable {
 
     VariableBoradLayout(int i, int ass, int w, int h) {
         id = i;
+        assignment = ass;
         width = w;
         height = h;
     }
 
     VariableBoradLayout(VariableBoradLayout v) {
         id = v.id;
+        assignment = v.assignment;
         degree = v.degree;
         domains = (LinkedList<Domain>) v.domains.clone();
         width = v.width;
@@ -30,17 +32,18 @@ public class VariableBoradLayout extends Variable {
     VariableBoradLayout(int i, LinkedList<Domain> d, int ass, int w, int h) {
         id = i;
         domains = d;
+        assignment = ass;
         width = w;
         height = h;
     }
 
     public int getPixel(int x, int y) {
-        return 0 + x * OFFSET + y;
+        return assignment + x * OFFSET + y;
     }
 
     public int[] getXY(){
         int[] xy = new int[2];
-        int ass = 0;
+        int ass = assignment;
         xy[1] = ass % OFFSET;
         ass /= OFFSET;
         xy[0] = ass % OFFSET;
@@ -55,19 +58,19 @@ public class VariableBoradLayout extends Variable {
         return height;
     }
 
-//    @Override
-//    public ArrayList<Integer> getStates() {
-//        ArrayList<Integer> states = new ArrayList<>();
-//        for(int i = 0; i < width; i++){
-//            states.add(getPixel(i, 0));
-//            states.add(getPixel(i, height - 1));
-//        }
-//        for(int i = 1; i < height - 1; i++){
-//            states.add(getPixel(0, i));
-//            states.add(getPixel(width - 1, i));
-//        }
-//        return states;
-//    }
+    @Override
+    public ArrayList<Integer> getStates() {
+        ArrayList<Integer> states = new ArrayList<>();
+        for(int i = 0; i < width; i++){
+            states.add(getPixel(i, 0));
+            states.add(getPixel(i, height - 1));
+        }
+        for(int i = 1; i < height - 1; i++){
+            states.add(getPixel(0, i));
+            states.add(getPixel(width - 1, i));
+        }
+        return states;
+    }
 
     @Override
     public Variable snapshot(){
