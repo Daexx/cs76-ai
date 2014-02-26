@@ -6,7 +6,7 @@ import java.util.*;
 public class DriverMapColoring {
     public static LinkedList<Variable> variables = new LinkedList<>(); // remember to undo when using dfs
     public static LinkedList<Domain> domains = new LinkedList<>();
-    public static ConstraintsMapColoring constraint = new ConstraintsMapColoring();
+    public static Constraints constraint = new ConstraintsMapColoring();
     public static HashMap<String, Integer> varName2int = new HashMap<>();
     public static HashMap<String, Integer> domainName2int = new HashMap<>();
     public static HashMap<Integer, String> varInt2name = new HashMap<>();
@@ -64,7 +64,7 @@ public class DriverMapColoring {
         // initiate variables and assigments
         for (int i = 0; i < map.size(); i++) {
             // no assignment yet, which is -1
-            variables.add(new Variable(i, (LinkedList<Domain>) domains.clone(), -1));
+            variables.add(new VariableMapColoring(i, (LinkedList<Domain>) domains.clone(), -1));
         }
 
         // build the constraint
@@ -72,7 +72,7 @@ public class DriverMapColoring {
             Integer var = varName2int.get(map.get(i).get(0));
             for (int j = 1; j < map.get(i).size(); j++) {
                 Integer adjVar = varName2int.get(map.get(i).get(j));
-                constraint.addConstraint(variables.get(var), "!=", variables.get(adjVar));
+                constraint.addConstraint(variables.get(var), variables.get(adjVar));
             }
             variables.get(var).setDegree(map.get(i).size() - 1);
         }

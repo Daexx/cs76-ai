@@ -1,16 +1,9 @@
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import java.awt.Graphics;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.*;
-import javax.swing.*;
-
-import javax.swing.*;
 
 
 /**
@@ -30,7 +23,7 @@ public class DriverBoardLayout extends JPanel {
 
     public static LinkedList<Variable> variables = new LinkedList<>(); // remember to undo when using dfs
     public static LinkedList<Domain> domains = new LinkedList<>();
-    public static ConstraintsBoardLayout constraint = new ConstraintsBoardLayout();
+    public static Constraints constraint = new ConstraintsBoardLayout();
     public static HashMap<Rectangle, Integer> varName2int = new HashMap<>();
     public static HashMap<Integer, Rectangle> varInt2name = new HashMap<>();
     public static Rectangle domainRange = new Rectangle(10, 3, Color.WHITE);
@@ -64,14 +57,14 @@ public class DriverBoardLayout extends JPanel {
         // initiate domain
         for (int i = 0; i < domainRange.w; i++) {
             for (int j = 0; j < domainRange.h; j++) {
-                domains.add(new Domain(i * 100 + j));
+                domains.add(new Domain(i * VariableBoradLayout.OFFSET + j));
             }
         }
 
         // initiate variables and assigments
         for (int i = 0; i < rects.size(); i++) {
             // no assignment yet, which is -1
-            variables.add(new Variable(i, (LinkedList<Domain>) domains.clone(), -1));
+            variables.add(new VariableBoradLayout(i, (LinkedList<Domain>) domains.clone(), -1, rects.get(i).w, rects.get(i).h));
         }
 
         // build the constraint
@@ -82,7 +75,7 @@ public class DriverBoardLayout extends JPanel {
                 Integer adjVar = varName2int.get(rects.get(j));
                 constraint.addConstraint(variables.get(var), variables.get(adjVar));
             }
-            variables.get(var).degree = rects.get(i).w * rects.get(i).h;
+            variables.get(var).setDegree(rects.get(i).w * rects.get(i).h);
         }
 
         ProblemCSP csp = new ProblemCSP(variables, constraint);

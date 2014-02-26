@@ -1,91 +1,33 @@
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Objects;
 
 /**
  * Created by JackGuan on 2/24/14.
  */
-public class Variable implements Comparable<Variable> {
-    protected int id;
-    protected int assignment;
-    protected int degree;
-    protected LinkedList<Domain> domains;
+public interface Variable extends Comparable<Variable> {
 
-    Variable(int i){
-        id = i;
-    }
+    public int domainSize();
 
-    Variable(int i, int ass){
-        id = i;
-        assignment = ass;
-    }
+    public void assign(Domain domain);
 
-    Variable(Variable v){
-        id = v.id;
-        assignment = v.assignment;
-        degree = v.degree;
-        domains = (LinkedList<Domain>) v.domains.clone();
-    }
+    public void undoAssign();
 
-    Variable(int i, LinkedList<Domain> d, int ass){
-        id = i;
-        domains = d;
-        assignment = ass;
-    }
+    public int getAssignment();
 
-    public int domainSize(){
-        return domains.size();
-    }
+    public LinkedList<Domain> getDomains();
 
-    public void assign(Domain domain){
-        assignment = domain.d;
-    }
+    public int getId();
 
-    public void undoAssign(){
-        assignment = -1;
-    }
+    public int getDegree();
 
-    public int getAssignment(){
-        return assignment;
-    }
+    public void setDegree(int d);
 
-    public LinkedList<Domain> getDomains(){
-        return domains;
-    }
+    // get state based on the assignment
+    public ArrayList<Integer> getStates();
 
-    public int getId(){
-        return id;
-    }
-
-    public int getDegree(){
-        return degree;
-    }
-
-    public void setDegree(int d){
-        degree = d;
-    }
+    public Variable snapshot();
 
     @Override
-    public int compareTo(Variable o) {
-        int compared = (int) Math.signum(domains.size() - o.domains.size());
-        if(compared != 0)
-            // return the one with minimum remaining values
-            return compared;
-        else
-            // return the one with maximum degree
-            return (int) Math.signum(o.degree - degree);
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
-    @Override
-    public String toString() {
-        return "[" + id + "," + assignment + "]";
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return id == ((Variable) other).id;
-    }
+    public int compareTo(Variable o);
 }

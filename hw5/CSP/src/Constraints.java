@@ -7,19 +7,9 @@ import java.util.LinkedList;
 /**
  * Created by JackGuan on 2/23/14.
  */
-public class Constraints {
-    // constraint, map from a pair of variable to a relationship
-    public HashMap<ArcPair, Integer> ConsArc = null;
+public abstract class Constraints {
     // constraint graph
     public HashMap<Variable, LinkedList<Variable>> adjacents = null;
-
-    public void addConstraint(Variable var1, String relatinshp, Variable var2) {
-
-    }
-
-    public boolean isSatisfied(Variable var1, Variable var2) {
-        return false;
-    }
 
     public boolean conflictTest(LinkedList<Variable> vars, Variable var) {
         LinkedList<Variable> adjs = adjacents.get(var);
@@ -44,6 +34,9 @@ public class Constraints {
         adj.undoAssign();
         return false;
     }
+    public abstract void addConstraint(Variable var1, Variable var2);
+
+    public abstract boolean isSatisfied(Variable var1, Variable var2);
 
     public boolean conflictTest(LinkedList<Variable> vars) {
         return false;

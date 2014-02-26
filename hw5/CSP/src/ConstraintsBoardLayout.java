@@ -1,5 +1,5 @@
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.io.CharArrayReader;
+import java.util.*;
 
 /**
  * Created by JackGuan on 2/24/14.
@@ -9,7 +9,6 @@ public class ConstraintsBoardLayout extends Constraints{
     public static final int EQ = 0, GE = 1, LE = 2, GT = 3, LT = 4, NE = 5;
 
     ConstraintsBoardLayout(){
-        ConsArc = new HashMap<>();
         adjacents = new HashMap<>();
     }
 
@@ -23,6 +22,7 @@ public class ConstraintsBoardLayout extends Constraints{
      * @param var1       the first variable
      * @param var2       the second variable
      */
+    @Override
     public void addConstraint(Variable var1, Variable var2) {
         // build the graph
         if(!adjacents.containsKey(var1)) adjacents.put(var1, new LinkedList<Variable>());
@@ -30,33 +30,18 @@ public class ConstraintsBoardLayout extends Constraints{
         return;
     }
 
-    public boolean isSatisfied(Variable var1, Variable var2){
-        ArcPair varpair = new ArcPair(var1, var2);
-        if (ConsArc.containsKey(varpair)) {
-            int r = ConsArc.get(varpair);
-            switch (r) {
-                case EQ:
-                    return var1.assignment == var2.assignment;
-                case GE:
-                    return var1.assignment >= var2.assignment;
-                case LE:
-                    return var1.assignment <= var2.assignment;
-                case GT:
-                    return var1.assignment > var2.assignment;
-                case LT:
-                    return var1.assignment < var2.assignment;
-                case NE:
-                    return var1.assignment != var2.assignment;
-                default:
-                    break;
-            }
-        }
-        // System.out.println("No constraint between " + varpair);
-        return true;
-    }
-
     @Override
-    public boolean conflictTest(LinkedList<Variable> vars) {
-        return false;
+    public boolean isSatisfied(Variable var1, Variable var2){
+        HashSet<Integer> overlap = new HashSet<>();
+        ArrayList<Integer> states1 = var1.getStates();
+        ArrayList<Integer> states2 = var2.getStates();
+        for(Iterator<Integer> it = states1.iterator(); it.hasNext();){
+            overlap.add(it.next());
+        }
+        for(Iterator<Integer> it = states2.iterator(); it.hasNext();){
+            if(overlap.contains(it.next()))
+                return false;
+        }
+        return true;
     }
 }

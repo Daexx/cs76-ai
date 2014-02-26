@@ -67,25 +67,25 @@
       <file leaf-file-name="CannibalDriver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/CannibalDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="32" selection-start="464" selection-end="464" vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="1242">
+            <state line="23" column="12" selection-start="576" selection-end="576" vertical-scroll-proportion="-15.923077" vertical-offset="0" max-vertical-offset="1242">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CannibalProblem.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="CannibalProblem.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/CannibalProblem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="111" column="40" selection-start="3337" selection-end="3359" vertical-scroll-proportion="0.0" vertical-offset="1998" max-vertical-offset="2556">
+            <state line="43" column="74" selection-start="1337" selection-end="1342" vertical-scroll-proportion="0.22594142" vertical-offset="594" max-vertical-offset="2502">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UUSearchProblem.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="UUSearchProblem.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/UUSearchProblem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="73" column="34" selection-start="2059" selection-end="2059" vertical-scroll-proportion="1.4051144" vertical-offset="0" max-vertical-offset="3870">
+            <state line="32" column="36" selection-start="862" selection-end="874" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3870">
               <folding />
             </state>
           </provider>
@@ -447,12 +447,12 @@
       <workItem from="1393182190114" duration="1605000" />
       <workItem from="1393187537181" duration="5626000" />
       <workItem from="1393293675111" duration="1928000" />
-      <workItem from="1393350076419" duration="1262000" />
+      <workItem from="1393350076419" duration="2905000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10421000" />
+    <option name="totallyTimeSpent" value="12064000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -570,23 +570,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/UUSearchProblem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="36" selection-start="862" selection-end="874" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3870">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/CannibalDriver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="32" selection-start="464" selection-end="464" vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="1242">
+        <state line="23" column="12" selection-start="576" selection-end="576" vertical-scroll-proportion="-15.923077" vertical-offset="0" max-vertical-offset="1242">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/CannibalProblem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="111" column="40" selection-start="3337" selection-end="3359" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1764">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cannibals/src/cannibals/UUSearchProblem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="34" selection-start="2059" selection-end="2059" vertical-scroll-proportion="1.4051144" vertical-offset="0" max-vertical-offset="3870">
+        <state line="43" column="74" selection-start="1337" selection-end="1342" vertical-scroll-proportion="0.22594142" vertical-offset="594" max-vertical-offset="2502">
           <folding />
         </state>
       </provider>

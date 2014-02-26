@@ -1,13 +1,11 @@
-import sun.util.resources.cldr.hi.TimeZoneNames_hi;
-
 import java.util.*;
 
 /**
  * Created by JackGuan on 2/23/14.
  */
 public class ProblemCSP {
-    LinkedList<Variable> variables;
-    Constraints cons;
+    protected LinkedList<Variable> variables;
+    protected Constraints cons;
 
     ProblemCSP() {
 
@@ -24,7 +22,7 @@ public class ProblemCSP {
         if (cspDFS(remain)) {
             System.out.println("solution found!!");
             for (int i = 0; i < variables.size(); i++) {
-                System.out.println("[" + i + "," + variables.get(i).getAssignment() + "]");
+                System.out.println(variables.get(i));
             }
         } else {
             System.out.println("solution not found!!");
@@ -58,7 +56,7 @@ public class ProblemCSP {
     }
 
     protected boolean MAC3Inference(Variable thisVar, LinkedList<Variable> remain) {
-        Variable var = new Variable(thisVar);
+        Variable var = thisVar.snapshot();
         LinkedList<Constraints.ArcPair> arcs = cons.getAdjArcs(var, remain);
 
         while (!arcs.isEmpty()) {

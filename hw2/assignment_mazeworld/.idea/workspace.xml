@@ -64,10 +64,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SearchProblem.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="SearchProblem.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SearchProblem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="22" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="5040">
+            <state line="22" column="23" selection-start="556" selection-end="565" vertical-scroll-proportion="0.43965518" vertical-offset="0" max-vertical-offset="4950">
               <folding />
             </state>
           </provider>
@@ -82,13 +82,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleMazeDriver.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="SimpleMazeDriver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimpleMazeDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="7" selection-start="39" selection-end="39" vertical-scroll-proportion="-0.59833795" vertical-offset="486" max-vertical-offset="4698">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="3" column="7" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="486" max-vertical-offset="4698">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,8 +94,10 @@
       <file leaf-file-name="InformedSearchProblem.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/InformedSearchProblem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="68" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="972">
-              <folding />
+            <state line="12" column="68" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="918">
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -105,7 +105,7 @@
       <file leaf-file-name="MultirobotProblem.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotProblem.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="142" column="45" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.0" vertical-offset="2358" max-vertical-offset="3690">
+            <state line="25" column="12" selection-start="653" selection-end="653" vertical-scroll-proportion="-14.538462" vertical-offset="0" max-vertical-offset="3690">
               <folding />
             </state>
           </provider>
@@ -114,7 +114,7 @@
       <file leaf-file-name="MultirobotDriver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="13" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="396" max-vertical-offset="3960">
+            <state line="22" column="13" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="828" max-vertical-offset="3672">
               <folding />
             </state>
           </provider>
@@ -169,7 +169,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
-    <option name="STATE" value="2" />
+    <option name="STATE" value="0" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1" splitterProportion="0.5">
@@ -184,6 +184,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -222,7 +223,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -492,11 +492,12 @@
       <updated>1393304532502</updated>
       <workItem from="1393304534889" duration="160000" />
       <workItem from="1393304695763" duration="37000" />
+      <workItem from="1393369235957" duration="2519000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197000" />
+    <option name="totallyTimeSpent" value="2716000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -515,7 +516,6 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -527,6 +527,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32769832" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -553,6 +554,64 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SearchProblem.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="22" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0" vertical-offset="162" max-vertical-offset="5040">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimpleMazeProblem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="4" selection-start="444" selection-end="444" vertical-scroll-proportion="0.0" vertical-offset="306" max-vertical-offset="2808">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimpleMazeDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="7" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="486" max-vertical-offset="4698">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/InformedSearchProblem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="68" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="972">
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotProblem.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="142" column="45" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.0" vertical-offset="2556" max-vertical-offset="3798">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="13" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="396" max-vertical-offset="3960">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/Maze.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="13" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="198" max-vertical-offset="2052">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimplexNoise.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="13" selection-start="576" selection-end="576" vertical-scroll-proportion="0.0" vertical-offset="95" max-vertical-offset="8550">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SearchProblem.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="22" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="5040">
           <folding />
         </state>
@@ -568,16 +627,16 @@
     <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimpleMazeDriver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="37" column="26" selection-start="1137" selection-end="1137" vertical-scroll-proportion="0.0" vertical-offset="666" max-vertical-offset="4698">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/InformedSearchProblem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="68" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="216" max-vertical-offset="972">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -609,20 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SearchProblem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="22" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0" vertical-offset="72" max-vertical-offset="4950">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3672">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/Maze.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="13" selection-start="255" selection-end="255" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1944">
@@ -644,26 +689,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimpleMazeDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="7" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0" vertical-offset="486" max-vertical-offset="4698">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="13" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3672">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/InformedSearchProblem.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="68" selection-start="371" selection-end="371" vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="918">
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/MultirobotProblem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="45" selection-start="4035" selection-end="4035" vertical-scroll-proportion="0.0" vertical-offset="2358" max-vertical-offset="3690">
+        <state line="25" column="12" selection-start="653" selection-end="653" vertical-scroll-proportion="-14.538462" vertical-offset="0" max-vertical-offset="3690">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SimpleMazeDriver.java">
+    <entry file="file://$PROJECT_DIR$/src/assignment_mazeworld/SearchProblem.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="7" selection-start="39" selection-end="39" vertical-scroll-proportion="-0.59833795" vertical-offset="486" max-vertical-offset="4698">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="22" column="23" selection-start="556" selection-end="565" vertical-scroll-proportion="0.43965518" vertical-offset="0" max-vertical-offset="4950">
+          <folding />
         </state>
       </provider>
     </entry>
