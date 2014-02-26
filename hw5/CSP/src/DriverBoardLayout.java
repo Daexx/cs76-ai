@@ -21,6 +21,7 @@ public class DriverBoardLayout extends JPanel {
         }
     }
 
+    public static int scale = 50;
     public static LinkedList<Variable> variables = new LinkedList<>(); // remember to undo when using dfs
     public static LinkedList<VariableBoradLayout> solutions = new LinkedList<>(); // remember to undo when using dfs
     public static LinkedList<Domain> domains = new LinkedList<>();
@@ -42,7 +43,7 @@ public class DriverBoardLayout extends JPanel {
             VariableBoradLayout sln = (VariableBoradLayout) it.next();
             graphics.setColor(rects.get(sln.getId()).c);
             int[] xy = sln.getXY();
-            graphics.fillRect(xy[0] * 100, (domainRange.h - xy[1]) * 100, sln.getWidth() * 100, -sln.getHeight() * 100);
+            graphics.fillRect(xy[0] * scale, (domainRange.h - xy[1]) * scale, sln.getWidth() * scale, -sln.getHeight() * scale);
         }
 //        graphics.setColor(Color.red);
 //        graphics.drawRect(10, 10, 100, 100);
@@ -90,7 +91,7 @@ public class DriverBoardLayout extends JPanel {
         // drawing
         DriverBoardLayout canvas = new DriverBoardLayout();
         JFrame frame = new JFrame("Circuit layout board problem");
-        frame.setSize(domainRange.w * 100, domainRange.h * 100);
+        frame.setSize(domainRange.w * scale, domainRange.h * scale);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(canvas);
         frame.setVisible(true);

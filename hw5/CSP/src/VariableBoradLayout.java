@@ -11,7 +11,7 @@ public class VariableBoradLayout implements Variable {
     protected int degree;
     protected LinkedList<Domain> domains;
     protected int width, height;
-    public final static int OFFSET = 100;
+    public final static int OFFSET = 1000;
 
     VariableBoradLayout(int i) {
         id = i;
