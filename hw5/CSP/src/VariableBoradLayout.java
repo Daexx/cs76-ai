@@ -45,6 +45,23 @@ public class VariableBoradLayout implements Variable {
         return assignment + x * OFFSET + y;
     }
 
+    public int[] getXY(){
+        int[] xy = new int[2];
+        int ass = assignment;
+        xy[1] = ass % OFFSET;
+        ass /= OFFSET;
+        xy[0] = ass % OFFSET;
+        return xy;
+    }
+
+    public int getWidth(){
+        return width;
+    }
+
+    public int getHeight(){
+        return height;
+    }
+
     @Override
     public int domainSize() {
         return domains.size();
@@ -131,6 +148,6 @@ public class VariableBoradLayout implements Variable {
 
     @Override
     public boolean equals(Object other) {
-        return id == ((VariableMapColoring) other).id;
+        return id == ((VariableBoradLayout) other).id;
     }
 }

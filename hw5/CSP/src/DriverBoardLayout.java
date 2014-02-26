@@ -22,6 +22,7 @@ public class DriverBoardLayout extends JPanel {
     }
 
     public static LinkedList<Variable> variables = new LinkedList<>(); // remember to undo when using dfs
+    public static LinkedList<VariableBoradLayout> solutions = new LinkedList<>(); // remember to undo when using dfs
     public static LinkedList<Domain> domains = new LinkedList<>();
     public static Constraints constraint = new ConstraintsBoardLayout();
     public static HashMap<Rectangle, Integer> varName2int = new HashMap<>();
@@ -37,8 +38,12 @@ public class DriverBoardLayout extends JPanel {
     );
 
     public void paint(Graphics graphics) {
-        graphics.setColor(Color.yellow);
-        graphics.fillRect(10, 10, 100, 100);
+        for (Iterator<Variable> it = variables.iterator(); it.hasNext(); ) {
+            VariableBoradLayout sln = (VariableBoradLayout) it.next();
+            graphics.setColor(rects.get(sln.getId()).c);
+            int[] xy = sln.getXY();
+            graphics.fillRect(xy[0] * 100, (domainRange.h - xy[1]) * 100, sln.getWidth() * 100, -sln.getHeight() * 100);
+        }
 //        graphics.setColor(Color.red);
 //        graphics.drawRect(10, 10, 100, 100);
     }
@@ -54,17 +59,18 @@ public class DriverBoardLayout extends JPanel {
         // build the name and integer mapping
         createNameIntMapping();
 
-        // initiate domain
-        for (int i = 0; i < domainRange.w; i++) {
-            for (int j = 0; j < domainRange.h; j++) {
-                domains.add(new Domain(i * VariableBoradLayout.OFFSET + j));
-            }
-        }
 
         // initiate variables and assigments
         for (int i = 0; i < rects.size(); i++) {
+            // initiate domain
+            domains = new LinkedList<>();
+            for (int x = 0; x <= domainRange.w - rects.get(i).w; x++) {
+                for (int y = 0; y <= domainRange.h - rects.get(i).h; y++) {
+                    domains.add(new Domain(x * VariableBoradLayout.OFFSET + y));
+                }
+            }
             // no assignment yet, which is -1
-            variables.add(new VariableBoradLayout(i, (LinkedList<Domain>) domains.clone(), -1, rects.get(i).w, rects.get(i).h));
+            variables.add(new VariableBoradLayout(i, domains, -1, rects.get(i).w, rects.get(i).h));
         }
 
         // build the constraint
