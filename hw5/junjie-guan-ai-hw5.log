@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  27 FEB 2014 14:52
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (MiKTeX 2.9 64-bit) (preloaded format=xelatex 2014.1.23)  27 FEB 2014 15:11
 entering extended mode
 **junjie-guan-ai-hw5.tex
 (D:\Github\cs76-ai\hw5\junjie-guan-ai-hw5.tex
@@ -397,20 +397,22 @@ Requested font "cmtt9" at 9.0pt
 ] [6
 
 ]
-Overfull \hbox (55.49602pt too wide) in paragraph at lines 368--382
+Overfull \hbox (55.49602pt too wide) in paragraph at lines 369--383
  [] 
  []
 
 [7
 
 ]
+File: austrilia.jpg Graphic file (type QTm)
+ <use  "austrilia.jpg" > [8
+
+] [9]
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 483.
+(hyperref)                than one, level fixed on input line 560.
 
-[8
-
-] [9] [10]
+[10] [11]
 File: mini_ab.eps Graphic file (type eps)
  <mini_ab.eps>
 File: mini_ab2.eps Graphic file (type eps)
@@ -430,30 +432,26 @@ File: meantime.eps Graphic file (type eps)
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[11
+[12
 
-] [12]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 659.
- [13
+] [13]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 736.
+ [14
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 659.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 736.
  (D:\Github\cs76-ai\hw5\junjie-guan-ai-hw5.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 659.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 659.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 659.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 736.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 736.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 736.
  ) 
 Here is how much of TeX's memory you used:
- 10241 strings out of 429025
- 140070 string characters out of 3167800
- 275346 words of memory out of 3000000
- 13445 multiletter control sequences out of 15000+200000
+ 10306 strings out of 429025
+ 140540 string characters out of 3167800
+ 262346 words of memory out of 3000000
+ 13508 multiletter control sequences out of 15000+200000
  10363 words of font info for 38 fonts, out of 3000000 for 9000
  912 hyphenation exceptions out of 8191
- 30i,9n,45p,618b,1730s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 29i,9n,45p,618b,1100s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on junjie-guan-ai-hw5.pdf (13 pages).
+Output written on junjie-guan-ai-hw5.pdf (14 pages).

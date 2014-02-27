@@ -87,6 +87,7 @@ Figure \ref{classlayout} is an overview my codes design. Basically it can be dev
   \item  The second part is problem defination, theasf the asdf. It contains the basic definition of CSP problem. For example, the Variable, Constraints represent the the set I mentioned above, with necessary methods inside. Such as building constraints, validating the assignment, etc. I implement most of the method in a generic class, while I also extend the basic class for the needs of different problem. Despite of this, solver do not care about the specific problem. It only deal with those lower generic classes.
   \item The third part the problem solver, where I implement the CSP algorihtm that solves the problem, as well as some helper methods such as heuristic compuation.
 \end{itemize}
+
 \begin{figure*}[!h]
 \centering
 \includegraphics[width=0.99\textwidth]{class_layout.png}
@@ -436,15 +437,90 @@ public boolean isSatisfied(Variable var1, Variable var2){
 }
 \end{lstlisting}
 
-\subsection{Testing}
-The following list the the results of Austrilia coloring.
-
 \begin{lstlisting}[numbers=left]   
 public ArrayList<Integer> getStates() {
     return new ArrayList<>(Arrays.asList(getAssignment()));
 }
 \end{lstlisting}
 
+
+\subsection{Testing}
+The following list the the results of Austrilia coloring, with constriants described by figure \ref{aus}\footnote{from Artificial Intelligence A Modern Approach 3rd Edition}
+
+\begin{lstlisting}[numbers=left]   
+[WA->Yellow]
+[NT->Red]
+[SA->Green]
+[Q->Yellow]
+[NSW->Red]
+[V->Yellow]
+[T->Red]
+\end{lstlisting}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.33\textwidth]{austrilia.jpg}
+\caption{Constraint graph of Austrilia map coloring problem. }
+\label{aus}
+\end{figure*}
+
+I also test the solver on US States coloring. \footnote{thanks to data this website help me to build the constraint graph.  \url{http://writeonly.wordpress.com/2009/03/20/adjacency-list-of-states-of-the-united-states-us/}} Here comes the results.
+
+\begin{lstlisting}[numbers=left]   
+[AK->Red]
+[AL->Yellow]
+[AR->Yellow]
+[AZ->Yellow]
+[CA->Red]
+[CO->Green]
+[CT->Green]
+[DC->Yellow]
+[DE->Green]
+[FL->Red]
+[GA->Green]
+[HI->Red]
+[IA->Yellow]
+[ID->Green]
+[IL->Red]
+[IN->Green]
+[KS->Yellow]
+[KY->Yellow]
+[LA->Red]
+[MA->Yellow]
+[MD->Red]
+[ME->Yellow]
+[MI->Yellow]
+[MN->Red]
+[MO->Green]
+[MS->Green]
+[MT->Red]
+[NC->Yellow]
+[ND->Yellow]
+[NE->Red]
+[NH->Red]
+[NJ->blue]
+[NM->blue]
+[NV->blue]
+[NY->Red]
+[OH->Red]
+[OK->Red]
+[OR->Yellow]
+[PA->Yellow]
+[RI->Red]
+[SC->Red]
+[SD->Green]
+[TN->Red]
+[TX->Green]
+[UT->Red]
+[VA->Green]
+[VT->Green]
+[WA->Red]
+[WI->Green]
+[WV->blue]
+[WY->Yellow]
+\end{lstlisting}
+
+This is a much more complex coloring problem, where I can give more analysis on the performance of my CSP solver. 
 
 \section{Circuit board layout problem}
 \section{CS 1 section assignment problem}

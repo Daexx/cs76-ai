@@ -14,11 +14,11 @@
 \contentsline {section}{\numberline {5}Map coloring problem}{8}{section.5}
 \contentsline {subsection}{\numberline {5.1}Important methods}{8}{subsection.5.1}
 \contentsline {subsection}{\numberline {5.2}Testing}{8}{subsection.5.2}
-\contentsline {section}{\numberline {6}Circuit board layout problem}{8}{section.6}
-\contentsline {section}{\numberline {7}CS 1 section assignment problem}{8}{section.7}
-\contentsline {subsubsection}{\numberline {7.0.1}minimaxIDS}{8}{subsubsection.7.0.1}
-\contentsline {subsubsection}{\numberline {7.0.2}maxMinValue}{8}{subsubsection.7.0.2}
-\contentsline {subsubsection}{\numberline {7.0.3}handleTerminal}{9}{subsubsection.7.0.3}
-\contentsline {subsubsection}{\numberline {7.0.4}helper class}{9}{subsubsection.7.0.4}
-\contentsline {section}{\numberline {8}Results demonstration}{11}{section.8}
-\contentsline {section}{\numberline {9}Some related work}{13}{section.9}
+\contentsline {section}{\numberline {6}Circuit board layout problem}{10}{section.6}
+\contentsline {section}{\numberline {7}CS 1 section assignment problem}{10}{section.7}
+\contentsline {subsubsection}{\numberline {7.0.1}minimaxIDS}{10}{subsubsection.7.0.1}
+\contentsline {subsubsection}{\numberline {7.0.2}maxMinValue}{10}{subsubsection.7.0.2}
+\contentsline {subsubsection}{\numberline {7.0.3}handleTerminal}{10}{subsubsection.7.0.3}
+\contentsline {subsubsection}{\numberline {7.0.4}helper class}{11}{subsubsection.7.0.4}
+\contentsline {section}{\numberline {8}Results demonstration}{12}{section.8}
+\contentsline {section}{\numberline {9}Some related work}{14}{section.9}

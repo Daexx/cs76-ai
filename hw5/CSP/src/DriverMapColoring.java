@@ -74,7 +74,7 @@ public class DriverMapColoring {
             line = br.readLine();
         }
 
-        ArrayList<ArrayList<String>> mapused = map;
+        ArrayList<ArrayList<String>> mapused = map2;
 
         // build the name and integer mapping
         createNameIntMapping(mapused);
