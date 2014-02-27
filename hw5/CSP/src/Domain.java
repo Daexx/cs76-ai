@@ -10,6 +10,8 @@ public class Domain implements Comparable<Domain> {
         this.h = 0.;
     }
 
+    public void setHeuristic(){}
+
     @Override
     public int compareTo(Domain o) {
         return (int) Math.signum(o.h - h);

@@ -30,13 +30,16 @@ public class CSPsolver {
         }
     }
 
+    /**
+     * @param remain: list of variables that is not assigned yet
+     * @return: whether the search is successful or not
+     */
     protected boolean cspDFS(LinkedList<Variable> remain) {
+        // base case of recursion
         if (remain.size() == 0) return true;
         nodeCnt++;
         // pick a Minimum Remaining Variable
         Variable var = pickMRV(remain);
-
-//        System.out.println(var.getId() + ": nodes explored: " + ++nodeCnt);
         // update domain and sort the values based on Least Constraining
         sortLCV(var, remain);
         // iterate all the remain domain
@@ -61,6 +64,7 @@ public class CSPsolver {
     }
 
     protected boolean MAC3Inference(Variable thisVar, LinkedList<Variable> remain) {
+        // back up the properties of this variable
         Variable var = thisVar.snapshot();
         int backup = thisVar.getAssignment();
         LinkedList<Constraints.ArcPair> arcs = cons.getAdjArcs(var, remain);
@@ -73,6 +77,7 @@ public class CSPsolver {
                 arcs.addAll(cons.getAdjArcsInvert(arc.first, arc.second, remain));
             }
         }
+        // recover properties of this variable
         thisVar.assign(new Domain(backup));
         return true;
     }
@@ -93,8 +98,9 @@ public class CSPsolver {
 
 
     protected Variable pickMRV(LinkedList<Variable> remain) {
-        Collections.sort(remain);
-        return remain.removeFirst();
+        Variable var = Collections.min(remain);
+        remain.remove(var);
+        return var;
     }
 
     protected void sortLCV(Variable var, LinkedList<Variable> remain) {
@@ -105,6 +111,7 @@ public class CSPsolver {
             var.assign(domain);
             // try to assign the next variable in the remain
             domain.h = 0.;
+            // compute its effect on the remaining varaibles
             for (Variable v : remain)
                 domain.h += remainingDomains(v);
         }

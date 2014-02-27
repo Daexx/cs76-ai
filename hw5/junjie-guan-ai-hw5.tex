@@ -22,23 +22,26 @@
 \definecolor{pred}{rgb}{0.9,0,0}
 \definecolor{pgrey}{rgb}{0.46,0.45,0.48}
  
-\lstset{language=Java,
-basicstyle=\ttfamily,
-  commentstyle=\color{pgreen},
-  keywordstyle=\color{pblue},
-  stringstyle=\color{pred},
-morecomment=[s][\color{javadocblue}]{/**}{*/},
-numbers=left,
-numberstyle=\tiny\color{black},
-stepnumber=2,
-numbersep=10pt,
-tabsize=4,
-showspaces=false,
-showstringspaces=false,
-frame=shadowbox,
-numbers=left,
-%escapechar=\@
-} 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Java,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true
+  tabsize=3
+}
 
 % set the document title, author, and date here.
 %  once set, the \maketitle command (within the document)
@@ -68,7 +71,7 @@ numbers=left,
 
 
 \clearpage
-\section{Overview}
+\section{Solver design}
 \subsection{Problem defination}
 CSP is usually defined  with a tuple $<X, D, C>$, as following:
 $$X = \{X_1, ..., X_n\}$$
@@ -76,7 +79,7 @@ $$D = \{D_1, ..., D_k\}$$
 $$C = \{C_1, ..., C_m\}$$
 where  $X$, $D$ and $C$ is a set of variables, domains and constraints. Our goal is to assign each variable a non-empty domain value from $D$, while satisfying all the constraints in $C$.
 
-\subsection{Design Layout}
+\subsection{Design overview}
 Figure \ref{classlayout} is an overview my codes design. Basically it can be devided into 3 parts.  
 
 \begin{itemize}
@@ -90,6 +93,241 @@ Figure \ref{classlayout} is an overview my codes design. Basically it can be dev
 \caption{Overview of the design}
 \label{classlayout}
 \end{figure*}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\section{Problem definition}
+\subsection{back-tracking}
+
+\textbf{cspDFS} is a recursive style DFS method, which is the outline of the whole back-tracking. The basic procedure is,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\clearpage
+\section{CSP solver}
+\subsection{back-tracking}
+
+\textbf{cspDFS} is a recursive style DFS method, which is the outline of the whole back-tracking. The basic procedure is,
+
+\begin{enumerate}
+  \item  Pick a \emph{variable} from the unassigned variable set;
+  \item And then update all its valid \emph{domain} values;
+  \item After preparation, it pick a \emph{domain} value, and keep recursion of the remaining \emph{variables}. Noted that if its successor report failure of DFS, it will iteratively choose the next \emph{domain} values;
+\item   If it runs out of \emph{domain} values, it will undo the assignemnt and report fail of search to its parent.
+\end{enumerate}
+
+You may already notice some method names such as \textbf{pickMRV}, \textbf{sortLCV} and \textbf{MAC3Inference}. They are optimizations of the back-tracking algorithm, which will be explained in details later.
+
+\begin{lstlisting}[numbers=left]
+/**
+ * @param remain: list of variables that is not assigned yet
+ * @return: whether the search is successful or not
+ */
+protected boolean cspDFS(LinkedList<Variable> remain) {
+  // base case of recursion
+  if (remain.size() == 0) return true;
+  // pick a Minimum Remaining Variable
+  Variable var = pickMRV(remain);
+  // update domain and sort the values based on Least Constraining
+  sortLCV(var, remain);
+  // iterate all the valid domain
+  for (Domain domain : var.getDomains()) {
+    var.assign(domain);
+    // try to assign the next variable in the remain
+    if (MAC3Inference(var, remain)) {
+      if (cspDFS(remain)) {
+        return true;  // solution found!
+      }
+    }
+  }
+  // not found, reset assignment and put variable back to remain
+  undoAssignment(var, remain);
+  return false;
+}
+\end{lstlisting}
+
+
+
+
+
+\clearpage
+\subsection{pickMRV}
+
+The body of \textbf{pickMRV} is fairly simple: it returns the variable with min heuristic based on MRV heuristic.
+
+\begin{lstlisting}[numbers=left]   
+protected Variable pickMRV(LinkedList<Variable> remain) {
+  Variable var = Collections.min(remain);
+  remain.remove(var);
+  return var;
+}
+\end{lstlisting}
+
+The Main idea of MRV heuristic (minimum remaining values), is to find a variable with minimum remaining values, because these kind of value is most likely to cause a fail search. If two variable has the same amount of domain values, we pick the one with larger \emph{degree}, because potentially it also more easy to fail.
+
+\begin{lstlisting}[numbers=left]    
+@Override
+public int compareTo(Variable o) {
+  int compared = (int) Math.signum(domainSize() - o.domainSize());
+  if(compared != 0)
+    // return the one with minimum remaining values
+    return compared;
+  else
+    // return the one with maximum degree
+    return (int) Math.signum(o.getDegree() - getDegree());
+}
+\end{lstlisting}
+
+\subsection{sortLCV}
+
+\textbf{sortLCV} is bascially sort all the valid domain values based LCV heuristic(least constraint value). The key idea is to left domains for the remainning variables as much as possible, so that the search is more likely to succeed earlier.
+
+\begin{lstlisting}[numbers=left]   
+protected void sortLCV(Variable var, LinkedList<Variable> remain) {
+  // update the remaining domains based on constraints
+  updateDomains(var);
+  // compute value heuristic by trying
+  for (Domain domain : var.getDomains()) {
+    var.assign(domain);
+    // try to assign the next variable in the remain
+    domain.h = 0.;
+    // compute its effect on the remaining varaibles
+    for (Variable v : remain)
+      domain.h += remainingDomains(v);
+  }
+  var.undoAssign();
+  Collections.sort(var.getDomains());
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+\clearpage
+\subsection{MAC3Inference}
+
+The body of \textbf{MAC3Inference} prunes the domains and forecast failure by checking arc consistency recursively. Supposed current variable is $X_i$. Line 5 means getting all the arcs $<X_i, X_j>$, where $\{X_j\}$ is the neighbors of $X_i$. Line 13 means getting all the $<X_k, X_i>$, where $\{X_k\}$ is the neighbors of $X_i$ except $X_j$.
+
+This recursion of inference is meant to converge / terminate at some point.  Because it keeping pruning down the domains of the whole variables set, and stops recursion when no more domains can be pruned down. Since domain is a finite set, this inference is expected to termiante.
+
+\begin{lstlisting}[numbers=left]   
+protected boolean MAC3Inference(Variable thisVar,LinkedList<Variable> remain){
+  // back up the properties of this variable
+  Variable var = thisVar.snapshot();
+  int backup = thisVar.getAssignment();
+  LinkedList<Constraints.ArcPair> arcs = cons.getAdjArcs(var, remain);
+
+  while (arcs != null && !arcs.isEmpty()) {
+    Constraints.ArcPair arc = arcs.removeFirst();
+    if (revise(arc.first, arc.second)) {
+      if (var.getDomains().isEmpty())
+        return false;
+      arcs.addAll(cons.getAdjArcsInvert(arc.first, arc.second, remain));
+    }
+  }
+  // recover properties of this variable
+  thisVar.assign(new Domain(backup));
+  return true;
+}
+\end{lstlisting}
+
+The revise function prunes the domain when inconsistency occurs, and report the change of domains.
+
+\begin{lstlisting}[numbers=left]   
+protected boolean revise(Variable var, Variable adj) {
+  for (Iterator<Domain> it = var.getDomains().iterator(); it.hasNext(); ) {
+    // try to assign a domain and test if conflict exists
+    var.assign(it.next());
+    if (!cons.consistentTest(var, adj)) {
+      it.remove();
+      var.undoAssign();
+      return true;
+    }
+  }
+  var.undoAssign();
+  return false;
+}
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
