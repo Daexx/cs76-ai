@@ -43,7 +43,7 @@ public class ProblemCSP {
         for (Domain domain : var.getDomains()) {
             var.assign(domain);
             // try to assign the next variable in the remain
-            if (true && MAC3Inference(var, remain)) {
+            if (MAC3Inference(var, remain)) {
                 if (cspDFS(remain)) {
                     return true;  // solution found!
                 }
@@ -93,7 +93,7 @@ public class ProblemCSP {
 
 
     protected Variable pickMRV(LinkedList<Variable> remain) {
-//        Collections.sort(remain);
+        Collections.sort(remain);
         return remain.removeFirst();
     }
 

@@ -65,10 +65,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ProblemCSP.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ProblemCSP.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ProblemCSP.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="0" selection-start="604" selection-end="604" vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="2592">
+            <state line="24" column="0" selection-start="604" selection-end="604" vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="2592">
               <folding />
             </state>
           </provider>
@@ -123,10 +123,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DriverBoardLayout.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="DriverBoardLayout.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/DriverBoardLayout.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="19" selection-start="2369" selection-end="2376" vertical-scroll-proportion="0.0" vertical-offset="956" max-vertical-offset="1890">
+            <state line="54" column="45" selection-start="2089" selection-end="2089" vertical-scroll-proportion="0.7234042" vertical-offset="632" max-vertical-offset="1890">
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1097#1108#0" expanded="true" />
@@ -157,7 +157,7 @@
       <file leaf-file-name="DriverMapColoring.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DriverMapColoring.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="112" column="57" selection-start="4484" selection-end="4484" vertical-scroll-proportion="-19.846153" vertical-offset="1500" max-vertical-offset="2196">
+            <state line="78" column="50" selection-start="3061" selection-end="3061" vertical-scroll-proportion="-1.1538461" vertical-offset="1374" max-vertical-offset="2196">
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -187,7 +187,6 @@
         <option value="$PROJECT_DIR$/src/VariableBoardLayout.java" />
         <option value="$PROJECT_DIR$/src/ProblemMapColoring.java" />
         <option value="$PROJECT_DIR$/src/ProblemBoardLayout.java" />
-        <option value="$PROJECT_DIR$/src/DriverBoardLayout.java" />
         <option value="$PROJECT_DIR$/src/Assignment.java" />
         <option value="$PROJECT_DIR$/src/VariableMapColoring.java" />
         <option value="$PROJECT_DIR$/src/VariableBoradLayout.java" />
@@ -199,9 +198,10 @@
         <option value="$PROJECT_DIR$/src/ConstraintsCSone.java" />
         <option value="$PROJECT_DIR$/src/DriverCSoneGen.java" />
         <option value="$PROJECT_DIR$/src/Variable.java" />
-        <option value="$PROJECT_DIR$/src/DriverMapColoring.java" />
-        <option value="$PROJECT_DIR$/src/ProblemCSP.java" />
         <option value="$PROJECT_DIR$/src/Domain.java" />
+        <option value="$PROJECT_DIR$/src/ProblemCSP.java" />
+        <option value="$PROJECT_DIR$/src/DriverMapColoring.java" />
+        <option value="$PROJECT_DIR$/src/DriverBoardLayout.java" />
       </list>
     </option>
   </component>
@@ -302,7 +302,7 @@
       <recent name="" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DriverMapColoring">
+  <component name="RunManager" selected="Application.DriverBoardLayout">
     <configuration default="false" name="DriverMapColoring" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="DriverMapColoring" />
@@ -614,10 +614,10 @@
     </list>
     <recent_temporary>
       <list size="4">
-        <item index="0" class="java.lang.String" itemvalue="Application.DriverMapColoring" />
-        <item index="1" class="java.lang.String" itemvalue="Application.DriverCSone" />
-        <item index="2" class="java.lang.String" itemvalue="Application.DriverCSoneGen" />
-        <item index="3" class="java.lang.String" itemvalue="Application.DriverBoardLayout" />
+        <item index="0" class="java.lang.String" itemvalue="Application.DriverBoardLayout" />
+        <item index="1" class="java.lang.String" itemvalue="Application.DriverMapColoring" />
+        <item index="2" class="java.lang.String" itemvalue="Application.DriverCSone" />
+        <item index="3" class="java.lang.String" itemvalue="Application.DriverCSoneGen" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -639,12 +639,12 @@
       <workItem from="1393182127601" duration="23916000" />
       <workItem from="1393226975064" duration="36671000" />
       <workItem from="1393350140400" duration="22450000" />
-      <workItem from="1393428765339" duration="37550000" />
+      <workItem from="1393428765339" duration="39086000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="120587000" />
+    <option name="totallyTimeSpent" value="122123000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
@@ -1030,17 +1030,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DriverBoardLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="19" selection-start="2369" selection-end="2376" vertical-scroll-proportion="0.0" vertical-offset="956" max-vertical-offset="1890">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1097#1108#0" expanded="true" />
-            <element signature="e#1129#1140#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DriverCSone.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="43" column="0" selection-start="1217" selection-end="2315" vertical-scroll-proportion="0.0" vertical-offset="538" max-vertical-offset="1260">
@@ -1071,6 +1060,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Domain.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="35" selection-start="274" selection-end="274" vertical-scroll-proportion="0.5361702" vertical-offset="0" max-vertical-offset="470">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/Variable.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="60" column="30" selection-start="1249" selection-end="1263" vertical-scroll-proportion="0.0" vertical-offset="522" max-vertical-offset="1494">
@@ -1080,24 +1076,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DriverMapColoring.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="112" column="57" selection-start="4484" selection-end="4484" vertical-scroll-proportion="-19.846153" vertical-offset="1500" max-vertical-offset="2196">
+        <state line="78" column="50" selection-start="3061" selection-end="3061" vertical-scroll-proportion="-1.1538461" vertical-offset="1374" max-vertical-offset="2196">
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Domain.java">
+    <entry file="file://$PROJECT_DIR$/src/ProblemCSP.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="38" selection-start="277" selection-end="277" vertical-scroll-proportion="0.5361702" vertical-offset="0" max-vertical-offset="470">
+        <state line="24" column="0" selection-start="604" selection-end="604" vertical-scroll-proportion="0.0" vertical-offset="276" max-vertical-offset="2592">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ProblemCSP.java">
+    <entry file="file://$PROJECT_DIR$/src/DriverBoardLayout.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="0" selection-start="604" selection-end="604" vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="2592">
-          <folding />
+        <state line="54" column="45" selection-start="2089" selection-end="2089" vertical-scroll-proportion="0.7234042" vertical-offset="632" max-vertical-offset="1890">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1097#1108#0" expanded="true" />
+            <element signature="e#1129#1140#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
