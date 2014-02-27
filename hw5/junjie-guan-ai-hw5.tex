@@ -108,15 +108,108 @@ Figure \ref{classlayout} is an overview my codes design. Basically it can be dev
 
 \clearpage
 \section{Problem definition}
-\subsection{back-tracking}
-
-\textbf{cspDFS} is a recursive style DFS method, which is the outline of the whole back-tracking. The basic procedure is,
 
 
 
 
+\subsection{Variable}
+
+Here you can see the outline of \textbf{Variable}. Since most of the methods are very trivial, I am not presenting the details here.
 
 
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |r | l | }
+    \hline
+    Modifier and Type & Field and Description \\ \hline
+    protected int &	assignment                          \\ \hline
+protected Constraints &	cons                            \\ \hline
+protected int &	degree                                  \\ \hline
+protected java.util.LinkedList$<$Domain$>$ &	domains       \\ \hline
+protected java.util.LinkedList$<$Domain$>$ &	domainsBackup \\ \hline
+protected int &	id \\ \hline
+
+  \end{tabular}
+\caption{Field Summary}
+\end{center}
+\end{table}
+
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{| r | l|  }
+    \hline
+    Modifier and Type & Field and Description \\ \hline
+    protected int &	assignment                          \\ \hline
+  boolean	&assign(Domain domain)                     \\ \hline
+int&	compareTo(Variable o)                          \\ \hline
+int	&domainSize()                                    \\ \hline
+void&	domainsRecover()                               \\ \hline
+boolean&	equals(java.lang.Object other)             \\ \hline
+int	&getAssignment()                                 \\ \hline
+int	&getDegree()                                     \\ \hline
+java.util.LinkedList$<$Domain$>$	&getDomains()          \\ \hline
+int&	getId()                                        \\ \hline
+java.util.ArrayList$<$java.lang.Integer$>$&	getStates()  \\ \hline
+int&	hashCode()                                     \\ \hline
+void	&setDegree(int d)                              \\ \hline
+void	&setDomainsBackup()                            \\ \hline
+Variable	&snapshot()                                \\ \hline
+java.lang.String&	toString()                         \\ \hline
+void	&undoAssign()                                  \\ \hline
+    \hline
+  \end{tabular}
+\caption{Method Summary}
+\end{center}
+\end{table}
+
+
+
+	
+
+
+\clearpage
+\subsection{Constraints}
+
+Here you can see the outline of \textbf{Variable}. Since most of the methods are very trivial, I am not presenting the details here.
+
+
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |r | l | }
+    \hline
+    Modifier and Type & Field and Description \\ \hline
+static java.util.HashMap$<$Variable,java.util.LinkedList$<$Variable$>$$>$	&binaryAdjs  \\ \hline
+static java.util.HashMap$<$java.lang.Integer,java.util.HashSet$<$Variable$>$$>$	&globalAdjs  \\ \hline
+
+  \end{tabular}
+\caption{Field Summary}
+\end{center}
+\end{table}
+
+
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |r | l | }
+    \hline
+    Modifier and Type & Field and Description \\ \hline
+void	&addConstraint(Variable var1, Variable var2)                                                                                   \\ \hline
+void	&addGlobalVar(Variable var)                                                                                                    \\ \hline
+boolean	&conflictTest(java.util.LinkedList$<$Variable$>$ vars)                                                                           \\ \hline
+boolean	&conflictTest(Variable var)                                                                                                  \\ \hline
+boolean	&consistentTest(Variable var, Variable adj)                                                                                  \\ \hline
+LinkedList$<$Constraints.ArcPair$>$&	getAdjArcs(Variable var, LinkedList$<$Variable$>$ remain)                          \\ \hline
+LinkedList$<$Constraints.ArcPair$>$	&getAdjArcsInvert(Variable var, Variable exclude, LinkedList$<$Variable$>$ remain)   \\ \hline
+abstract boolean&	isSatisfied(Variable var1, Variable var2)                                                                          \\ \hline
+void	&rmGlobalVar(Variable var)                                                                                                     \\ \hline
+
+  \end{tabular}
+\caption{Method Summary}
+\end{center}
+\end{table}
 
 
 

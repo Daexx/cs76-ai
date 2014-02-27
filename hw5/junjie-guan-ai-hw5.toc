@@ -3,15 +3,16 @@
 \contentsline {subsection}{\numberline {2.1}Problem defination}{2}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}Design overview}{2}{subsection.2.2}
 \contentsline {section}{\numberline {3}Problem definition}{3}{section.3}
-\contentsline {subsection}{\numberline {3.1}back-tracking}{3}{subsection.3.1}
-\contentsline {section}{\numberline {4}CSP solver}{4}{section.4}
-\contentsline {subsection}{\numberline {4.1}back-tracking}{4}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}pickMRV}{5}{subsection.4.2}
-\contentsline {subsection}{\numberline {4.3}sortLCV}{5}{subsection.4.3}
-\contentsline {subsection}{\numberline {4.4}MAC3Inference}{6}{subsection.4.4}
-\contentsline {subsubsection}{\numberline {4.4.1}minimaxIDS}{6}{subsubsection.4.4.1}
-\contentsline {subsubsection}{\numberline {4.4.2}maxMinValue}{7}{subsubsection.4.4.2}
-\contentsline {subsubsection}{\numberline {4.4.3}handleTerminal}{7}{subsubsection.4.4.3}
-\contentsline {subsubsection}{\numberline {4.4.4}helper class}{8}{subsubsection.4.4.4}
-\contentsline {section}{\numberline {5}Results demonstration}{9}{section.5}
-\contentsline {section}{\numberline {6}Some related work}{11}{section.6}
+\contentsline {subsection}{\numberline {3.1}Variable}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Constraints}{4}{subsection.3.2}
+\contentsline {section}{\numberline {4}CSP solver}{5}{section.4}
+\contentsline {subsection}{\numberline {4.1}back-tracking}{5}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}pickMRV}{6}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}sortLCV}{6}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}MAC3Inference}{7}{subsection.4.4}
+\contentsline {subsubsection}{\numberline {4.4.1}minimaxIDS}{7}{subsubsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.2}maxMinValue}{8}{subsubsection.4.4.2}
+\contentsline {subsubsection}{\numberline {4.4.3}handleTerminal}{8}{subsubsection.4.4.3}
+\contentsline {subsubsection}{\numberline {4.4.4}helper class}{9}{subsubsection.4.4.4}
+\contentsline {section}{\numberline {5}Results demonstration}{10}{section.5}
+\contentsline {section}{\numberline {6}Some related work}{12}{section.6}
