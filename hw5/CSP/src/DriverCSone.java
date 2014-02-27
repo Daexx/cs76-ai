@@ -1,10 +1,4 @@
-import com.sun.org.apache.bcel.internal.generic.NEW;
-import com.sun.scenario.effect.impl.state.LinearConvolveKernel;
-import org.omg.PortableInterceptor.INACTIVE;
-
-import java.beans.IntrospectionException;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
@@ -67,7 +61,7 @@ public class DriverCSone {
             variables.add(new VariableCSone(id, domains, -1, constraint));
         }
 
-        ProblemCSP csp = new ProblemCSP(variables, constraint);
+        CSPsolver csp = new CSPsolver(variables, constraint);
         csp.cspSearch();
     }
 }

@@ -1,5 +1,3 @@
-import sun.awt.image.ImageWatched;
-
 import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -103,7 +101,7 @@ public class DriverMapColoring {
             variables.get(var).setDegree(mapused.get(i).size() - 1);
         }
 
-        ProblemCSP csp = new ProblemCSP(variables, constraint);
+        CSPsolver csp = new CSPsolver(variables, constraint);
 
         long start = System.currentTimeMillis();
         csp.cspSearch();

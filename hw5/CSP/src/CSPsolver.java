@@ -3,16 +3,16 @@ import java.util.*;
 /**
  * Created by JackGuan on 2/23/14.
  */
-public class ProblemCSP {
+public class CSPsolver {
     protected LinkedList<Variable> variables;
     protected Constraints cons;
     protected int nodeCnt = 0;
 
-    ProblemCSP() {
+    CSPsolver() {
 
     }
 
-    ProblemCSP(LinkedList<Variable> v, Constraints c) {
+    CSPsolver(LinkedList<Variable> v, Constraints c) {
         variables = v;
         cons = c;
     }

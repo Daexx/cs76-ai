@@ -85,7 +85,7 @@ public class DriverBoardLayout extends JPanel {
             variables.get(var).setDegree(rects.get(i).w * rects.get(i).h);
         }
 
-        ProblemCSP csp = new ProblemCSP(variables, constraint);
+        CSPsolver csp = new CSPsolver(variables, constraint);
         csp.cspSearch();
 
         // drawing

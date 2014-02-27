@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement />
+  <nodes>
+    <node x="112.0" y="586.0">Config</node>
+    <node x="141.0" y="442.0">com</node>
+    <node x="300.0" y="226.0">VariableCSone</node>
+    <node x="0.0" y="370.0">DriverCSoneGen</node>
+    <node x="404.0" y="514.0">Assignment</node>
+    <node x="332.0" y="298.0">netscape</node>
+    <node x="138.0" y="77.0">ConstraintsMapColoring</node>
+    <node x="307.0" y="370.0">oracle</node>
+    <node x="0.0" y="514.0">org</node>
+    <node x="280.0" y="442.0">sun</node>
+    <node x="304.0" y="77.0">ConstraintsBoardLayout</node>
+    <node x="456.0" y="370.0">javax</node>
+    <node x="167.5" y="0.0">Constraints</node>
+    <node x="0.0" y="586.0">Domain</node>
+    <node x="179.5" y="149.0">Variable</node>
+    <node x="0.0" y="298.0">DriverBoardLayout</node>
+    <node x="417.0" y="442.0">DriverCSone</node>
+    <node x="446.0" y="149.0">META-INF</node>
+    <node x="156.0" y="370.0">javafx</node>
+    <node x="167.0" y="298.0">DriverMapColoring</node>
+    <node x="149.0" y="226.0">VariableBoradLayout</node>
+    <node x="136.0" y="514.0">jdk</node>
+    <node x="0.0" y="442.0">java</node>
+    <node x="0.0" y="226.0">VariableMapColoring</node>
+    <node x="270.0" y="514.0">ProblemCSP</node>
+    <node x="0.0" y="77.0">ConstraintsCSone</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ConstraintsBoardLayout" target="Constraints">
+      <point x="0.0" y="-13.5" />
+      <point x="378.0" y="52.0" />
+      <point x="240.0" y="52.0" />
+      <point x="29.0" y="13.5" />
+    </edge>
+    <edge source="VariableBoradLayout" target="Variable">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+    <edge source="ConstraintsCSone" target="Constraints">
+      <point x="0.0" y="-13.5" />
+      <point x="59.0" y="52.0" />
+      <point x="182.0" y="52.0" />
+      <point x="-29.0" y="13.5" />
+    </edge>
+    <edge source="VariableCSone" target="Variable">
+      <point x="0.0" y="-13.5" />
+      <point x="350.5" y="201.0" />
+      <point x="237.83333333333331" y="201.0" />
+      <point x="23.333333333333314" y="13.5" />
+    </edge>
+    <edge source="VariableMapColoring" target="Variable">
+      <point x="0.0" y="-13.5" />
+      <point x="64.5" y="201.0" />
+      <point x="191.16666666666666" y="201.0" />
+      <point x="-23.333333333333343" y="13.5" />
+    </edge>
+    <edge source="ConstraintsMapColoring" target="Constraints">
+      <point x="0.0" y="-13.5" />
+      <point x="0.0" y="13.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.7424960505529226" x="285.4425531914894" y="288.31808510638297" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
