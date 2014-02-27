@@ -46,34 +46,4 @@ public class ConstraintsBoardLayout extends Constraints{
         }
         return true;
     }
-
-    @Override
-    public LinkedList<ArcPair> getAdjArcs(Variable var, LinkedList<Variable> remain) {
-        LinkedList<ArcPair> arcs = new LinkedList<>();
-        LinkedList<Variable> adjs = binaryAdjs.get(var);
-
-        if (adjs != null) {
-            for (Iterator<Variable> it = adjs.iterator(); it.hasNext(); ) {
-                Variable adj = it.next();
-                if (remain.contains(adj))
-                    arcs.add(new ArcPair(var, adj));
-            }
-        }
-        return arcs;
-    }
-
-    @Override
-    public LinkedList<ArcPair> getAdjArcsInvert(Variable var, Variable exclude, LinkedList<Variable> remain) {
-        LinkedList<ArcPair> arcs = new LinkedList<>();
-        LinkedList<Variable> adjs = binaryAdjs.get(var);
-
-        if (adjs != null) {
-            for (Iterator<Variable> it = adjs.iterator(); it.hasNext(); ) {
-                Variable adj = it.next();
-                if (remain.contains(adj) && exclude != adj)
-                    arcs.add(new ArcPair(adj, var));
-            }
-        }
-        return arcs;
-    }
 }

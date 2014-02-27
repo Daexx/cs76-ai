@@ -1,3 +1,9 @@
+import sun.awt.image.ImageWatched;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -12,8 +18,9 @@ public class DriverMapColoring {
     public static HashMap<Integer, String> varInt2name = new HashMap<>();
     public static HashMap<Integer, String> domainInt2name = new HashMap<>();
     public static ArrayList<String> domainList = new ArrayList<>(
-            Arrays.asList("Red", "Yellow", "Green", "blue", "orange")
+            Arrays.asList("Red", "Yellow", "Green", "blue")
     );
+    public static ArrayList<ArrayList<String>> map2 = new ArrayList<>();
     public static ArrayList<ArrayList<String>> map = new ArrayList<>(
             Arrays.asList(
                     new ArrayList<>(
@@ -40,10 +47,10 @@ public class DriverMapColoring {
             )
     );
 
-    public static void createNameIntMapping() {
-        for (int i = 0; i < map.size(); i++) {
-            varName2int.put(map.get(i).get(0), i);
-            varInt2name.put(i, map.get(i).get(0));
+    public static void createNameIntMapping(ArrayList<ArrayList<String>> mapused ) {
+        for (int i = 0; i < mapused.size(); i++) {
+            varName2int.put(mapused.get(i).get(0), i);
+            varInt2name.put(i, mapused.get(i).get(0));
         }
         for (int i = 0; i < domainList.size(); i++) {
             domainName2int.put(domainList.get(i), i);
@@ -51,9 +58,28 @@ public class DriverMapColoring {
         }
     }
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws IOException {
+
+
+        // read dataset
+        BufferedReader br = new BufferedReader(new FileReader("map.txt"));
+        String line = br.readLine();
+        int iline = 0;
+        while (line != null) {
+            String[] sline = line.split(",");
+            if (sline.length >= 1) {
+                ArrayList<String> lineInts = new ArrayList<>();
+                for (int i = 0; i < sline.length; i++)
+                    lineInts.add(sline[i]);
+                map2.add(lineInts);
+            }
+            line = br.readLine();
+        }
+
+        ArrayList<ArrayList<String>> mapused = map2;
+
         // build the name and integer mapping
-        createNameIntMapping();
+        createNameIntMapping(mapused);
 
         // initiate domain
         for (int i = 0; i < domainList.size(); i++) {
@@ -62,22 +88,29 @@ public class DriverMapColoring {
         }
 
         // initiate variables and assigments
-        for (int i = 0; i < map.size(); i++) {
+        for (int i = 0; i < mapused.size(); i++) {
             // no assignment yet, which is -1
             variables.add(new VariableMapColoring(i, (LinkedList<Domain>) domains.clone(), -1));
         }
 
         // build the constraint
-        for (int i = 0; i < map.size(); i++) {
-            Integer var = varName2int.get(map.get(i).get(0));
-            for (int j = 1; j < map.get(i).size(); j++) {
-                Integer adjVar = varName2int.get(map.get(i).get(j));
+        for (int i = 0; i < mapused.size(); i++) {
+            Integer var = varName2int.get(mapused.get(i).get(0));
+            for (int j = 1; j < mapused.get(i).size(); j++) {
+                Integer adjVar = varName2int.get(mapused.get(i).get(j));
                 constraint.addConstraint(variables.get(var), variables.get(adjVar));
             }
-            variables.get(var).setDegree(map.get(i).size() - 1);
+            variables.get(var).setDegree(mapused.get(i).size() - 1);
         }
 
         ProblemCSP csp = new ProblemCSP(variables, constraint);
+
+        long start = System.currentTimeMillis();
         csp.cspSearch();
+        long elapsedTime = System.currentTimeMillis() - start;
+        FileOutputStream timecompete = new FileOutputStream("timecompete.txt", true);
+        timecompete.write((elapsedTime / 1000. + "\t").getBytes());
+        System.out.println("time: " + elapsedTime / 1000.);
+        timecompete.close();
     }
 }

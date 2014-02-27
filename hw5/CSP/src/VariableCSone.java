@@ -1,12 +1,12 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
  * Created by JackGuan on 2/26/14.
  */
 public class VariableCSone extends Variable {
-    protected int width, height;
-    public final static int OFFSET = 1000;
+    public final static int OFFSET = 100;
 
     VariableCSone(int i) {
         id = i;
@@ -14,45 +14,55 @@ public class VariableCSone extends Variable {
 
     VariableCSone(int i, int ass, int w, int h) {
         id = i;
-        width = w;
-        height = h;
     }
 
     VariableCSone(VariableCSone v) {
         id = v.id;
         degree = v.degree;
         domains = (LinkedList<Domain>) v.domains.clone();
-        width = v.width;
-        height = v.height;
+        cons = v.cons;
     }
 
-    VariableCSone(int i, LinkedList<Domain> d, int ass, int w, int h) {
+    VariableCSone(int i, LinkedList<Domain> d, Integer ass, Constraints c) {
         id = i;
         domains = d;
-        width = w;
-        height = h;
+        assignment = ass;
+        cons = c;
     }
 
-    public int getPixel(int x, int y) {
-        return  x * OFFSET + y;
+    public int isLeader(){
+        return id / OFFSET;
     }
 
-    public int[] getXY(){
-        int[] xy = new int[2];
-
-        return xy;
+    @Override
+    public boolean assign(Domain domain) {
+        cons.rmGlobalVar(this); // only exist in 1 global set
+        assignment = domain.d;
+        cons.addGlobalVar(this);
+        return true;
     }
 
-    public int getWidth(){
-        return width;
+    @Override
+    public void undoAssign(){
+        cons.rmGlobalVar(this);
+        assignment = -1;
     }
 
-    public int getHeight(){
-        return height;
+    @Override
+    public Variable snapshot(){
+        return new VariableCSone(this);
     }
 
-    public Variable snapshot(Variable o){
-        return new VariableBoradLayout((VariableBoradLayout) o);
+    @Override
+    public int compareTo(Variable o) {
+        int compared = (int) Math.signum(((VariableCSone)o).isLeader() - isLeader());
+        if(compared != 0)
+            return compared;
+        compared = (int) Math.signum(domainSize() - o.domainSize());
+        if(compared != 0)
+            // return the one with minimum remaining values
+            return compared;
+        // return the one with maximum degree
+        return (int) Math.signum(o.getDegree() - getDegree());
     }
-
 }

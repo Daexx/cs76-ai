@@ -10,7 +10,8 @@ public class Variable implements Comparable<Variable> {
     protected int id;
     protected int assignment;
     protected int degree;
-    protected LinkedList<Domain> domains;
+    protected LinkedList<Domain> domains, domainsBackup;
+    protected Constraints cons; // related to constraint, if needed
 
     public int domainSize(){
         return domains.size();
@@ -51,6 +52,14 @@ public class Variable implements Comparable<Variable> {
 
     public Variable snapshot(){
         return null;
+    }
+
+    public void setDomainsBackup(){
+        domainsBackup = (LinkedList<Domain>) domains.clone();
+    }
+
+    public void domainsRecover(){
+        domains = domainsBackup;
     }
 
     @Override

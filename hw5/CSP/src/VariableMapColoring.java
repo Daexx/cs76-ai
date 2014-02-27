@@ -34,5 +34,4 @@ public class VariableMapColoring extends Variable{
     public Variable snapshot(){
         return new VariableMapColoring(this);
     }
-
 }

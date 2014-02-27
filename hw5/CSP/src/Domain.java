@@ -12,6 +12,6 @@ public class Domain implements Comparable<Domain> {
 
     @Override
     public int compareTo(Domain o) {
-        return (int) Math.signum(o.h - h);
+        return (int) Math.signum(h -o. h);
     }
 }
