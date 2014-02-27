@@ -110,5 +110,11 @@ public class DriverMapColoring {
         timecompete.write((elapsedTime / 1000. + "\t").getBytes());
         System.out.println("time: " + elapsedTime / 1000.);
         timecompete.close();
+
+        for (int i = 0; i < variables.size(); i++) {
+            int id = variables.get(i).getId();
+            int ass = variables.get(i).getAssignment();
+            System.out.println("[" + varInt2name.get(id) + "->" + domainInt2name.get(ass) + "]");
+        }
     }
 }

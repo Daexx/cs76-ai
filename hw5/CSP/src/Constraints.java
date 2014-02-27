@@ -12,6 +12,12 @@ public abstract class Constraints {
     // the global constraints
     public static HashMap<Integer, HashSet<Variable>> globalAdjs = null;
 
+    /***
+     * for an input variable, test if there is
+     * any conflict with its neighbors
+     * @param var: the variable to be tested
+     * @return: whether the conflict exists
+     */
     public boolean conflictTest(Variable var) {
         LinkedList<Variable> adjs = binaryAdjs.get(var);
         if (adjs == null)

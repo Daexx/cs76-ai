@@ -62,12 +62,9 @@ public class VariableBoradLayout extends Variable {
     public ArrayList<Integer> getStates() {
         ArrayList<Integer> states = new ArrayList<>();
         for(int i = 0; i < width; i++){
-            states.add(getPixel(i, 0));
-            states.add(getPixel(i, height - 1));
-        }
-        for(int i = 1; i < height - 1; i++){
-            states.add(getPixel(0, i));
-            states.add(getPixel(width - 1, i));
+            for(int j = 0; j < height; j++){
+                states.add(getPixel(i, j));
+            }
         }
         return states;
     }
