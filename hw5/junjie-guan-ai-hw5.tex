@@ -552,9 +552,35 @@ As you can see, MAC3 explore the same amount of nodes as back tracking does. How
 \section{Circuit board layout problem}
 Circuit board is another classic problem that can be described bt binary constraints. The basic idea is that two layouts should not \emph{overlap } with each other. So, based on my previous work on map coloring, the only thing I need to do is to add a few members and methods to \emph{VariableBoardLayout}, as well as implement the \textbf{isSatisfied} abstract method.
 
+The domains of this problem is the locations of the components. Basically I use the following formula to convert the location into the integer that can be used by my CSP solver. The $OFFSET$ is defined inside VariableBoradLayout.class. I set it to 1000 when I test the code.
+
+$$x * VariableBoradLayout.OFFSET + y$$
 
 \subsection{Important methods}
-As you can see, \textbf{isSatisfied} and \textbf{getStates} are more complex than the previous one. The basic 
+
+
+Let's say I have a component that is $w\times h$, with a $m\times n$ board , and the bottom-left point represent the position of the component. Initially, the domains (position) of this component should be $\{(x, y)\}, $ where $ x\in [0, n - w] $ and $ y\in [0, m - h].$
+
+
+\begin{lstlisting}[numbers=left, caption=DriverBoardLayout.class] 
+...
+// initiate domain
+domains = new LinkedList<>();
+for (int x = 0; x <= domainRange.w - rects.get(i).w; x++) {
+  for (int y = 0; y <= domainRange.h - rects.get(i).h; y++) {
+    domains.add(new Domain(x * VariableBoradLayout.OFFSET + y));
+  }
+}
+...
+\end{lstlisting}
+
+
+
+As you can see, \textbf{isSatisfied} and \textbf{getStates} are more complex than the previous one. The basic idea is to get the pixels location of the one rectanle, and store each pixel into a hashset. And then I traverse through the other rectangle and see if any one already exists in the hash set. The time complexity is $O(m + n)$, where $m$ and $n$ is the size of these two shape.
+
+Currently the getState imply that the shape is a rectangle, by doing I can save some memory. I can implemente VariableBoradLayout.class instead of using mathematical calculation in order to makes it scalable to any kind of shapes.
+
+ 
 
 \begin{lstlisting}[numbers=left, caption=ConstraintsBoardLayout.class] 
 @Override
@@ -574,13 +600,38 @@ public boolean isSatisfied(Variable var1, Variable var2){
 \end{lstlisting}
 
 \begin{lstlisting}[numbers=left , caption=VariableBoradLayout.class]   
+@Override
 public ArrayList<Integer> getStates() {
-    return new ArrayList<>(Arrays.asList(getAssignment()));
+  ArrayList<Integer> states = new ArrayList<>();
+  for(int i = 0; i < width; i++){
+    for(int j = 0; j < height; j++){
+      states.add(getPixel(i, j));
+    }
+  }
+  return states;
 }
 \end{lstlisting}
 
 
 \subsection{Testing}
+First I test the following example in a $10\times3$ board. The result is shown as figure \ref{boardlayout}, where the white area represent the board. 
+\begin{lstlisting}[numbers=left]   
+      bbbbb   cc
+aaa   bbbbb   cc  eeeeeee
+aaa           cc 
+
+..........
+..........
+..........
+\end{lstlisting}
+
+\begin{figure*}[!h]
+\centering
+\includegraphics[width=0.49\textwidth]{boardlayout.JPG}
+\caption{Overview of the design}
+\label{boardlayout}
+\end{figure*}
+
 
 
 

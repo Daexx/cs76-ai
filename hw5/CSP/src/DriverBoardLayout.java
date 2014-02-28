@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 import java.awt.Graphics;
@@ -28,13 +30,28 @@ public class DriverBoardLayout extends JPanel {
     public static Constraints constraint = new ConstraintsBoardLayout();
     public static HashMap<Rectangle, Integer> varName2int = new HashMap<>();
     public static HashMap<Integer, Rectangle> varInt2name = new HashMap<>();
-    public static Rectangle domainRange = new Rectangle(10, 3, Color.WHITE);
+    public static Rectangle domainRange = new Rectangle(10, 10, Color.WHITE);
+    public static Random randLayout = new Random(152);
+//    public static ArrayList<Rectangle> rects = new ArrayList<Rectangle>(
+//            Arrays.<Rectangle>asList(
+//                    new Rectangle(3, 2, Color.RED),
+//                    new Rectangle(5, 2, Color.YELLOW),
+//                    new Rectangle(2, 3, Color.ORANGE),
+//                    new Rectangle(7, 1, Color.BLUE)
+//            )
+//    );
+
     public static ArrayList<Rectangle> rects = new ArrayList<Rectangle>(
             Arrays.<Rectangle>asList(
-                    new Rectangle(3, 2, Color.RED),
-                    new Rectangle(5, 2, Color.YELLOW),
-                    new Rectangle(2, 3, Color.ORANGE),
-                    new Rectangle(7, 1, Color.BLUE)
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255))),
+                    new Rectangle(4, 4, new Color(0, 0, 0)),
+                    new Rectangle(randLayout.nextInt(7), randLayout.nextInt(7), new Color(randLayout.nextInt(255), randLayout.nextInt(255), randLayout.nextInt(255)))
             )
     );
 
@@ -44,9 +61,10 @@ public class DriverBoardLayout extends JPanel {
             graphics.setColor(rects.get(sln.getId()).c);
             int[] xy = sln.getXY();
             graphics.fillRect(xy[0] * scale, (domainRange.h - xy[1]) * scale, sln.getWidth() * scale, -sln.getHeight() * scale);
+//            graphics.setColor(Color.BLACK);
+//            graphics.drawRect(xy[0] * scale, (domainRange.h - xy[1]) * scale, sln.getWidth() * scale, -sln.getHeight() * scale);
         }
-//        graphics.setColor(Color.red);
-//        graphics.drawRect(10, 10, 100, 100);
+
     }
 
     public static void createNameIntMapping() {
@@ -56,12 +74,12 @@ public class DriverBoardLayout extends JPanel {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // build the name and integer mapping
         createNameIntMapping();
 
 
-        // initiate variables and assigments
+        // initiate variables and domains
         for (int i = 0; i < rects.size(); i++) {
             // initiate domain
             domains = new LinkedList<>();
@@ -86,12 +104,21 @@ public class DriverBoardLayout extends JPanel {
         }
 
         CSPsolver csp = new CSPsolver(variables, constraint);
-        csp.cspSearch();
+
+
+        long start = System.currentTimeMillis();
+        boolean found = csp.cspSearch();
+        long elapsedTime = System.currentTimeMillis() - start;
+        FileOutputStream timecompete = new FileOutputStream("timecompetelayout.txt", true);
+        if(found)
+            timecompete.write((elapsedTime / 1000. + "\t").getBytes());
+        System.out.println("time: " + elapsedTime / 1000.);
+        timecompete.close();
 
         // drawing
         DriverBoardLayout canvas = new DriverBoardLayout();
         JFrame frame = new JFrame("Circuit layout board problem");
-        frame.setSize(domainRange.w * scale, domainRange.h * scale);
+        frame.setSize((domainRange.w + 1) * scale, (1 + domainRange.h) * scale);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(canvas);
         frame.setVisible(true);

@@ -17,7 +17,7 @@ public class CSPsolver {
         cons = c;
     }
 
-    protected void cspSearch() {
+    protected boolean cspSearch() {
         LinkedList<Variable> remain =
                 new LinkedList<>((Collection<? extends Variable>) variables.clone());
         if (cspDFS(remain)) {
@@ -25,8 +25,10 @@ public class CSPsolver {
             for (int i = 0; i < variables.size(); i++) {
                 System.out.println(variables.get(i));
             }
+            return true;
         } else {
-            System.out.println("solution not found!!");
+            System.out.println("solution not found after search " + nodeCnt + " nodes");
+            return false;
         }
     }
 
@@ -37,7 +39,9 @@ public class CSPsolver {
     protected boolean cspDFS(LinkedList<Variable> remain) {
         // base case of recursion
         if (remain.size() == 0) return true;
-        nodeCnt++;
+        if (nodeCnt++ > 1000000)
+            return false;
+//        System.out.println("nodes explored:" + nodeCnt);
         // pick a Minimum Remaining Variable
         Variable var = pickMRV(remain);
         // update domain and sort the values based on Least Constraining
@@ -46,8 +50,15 @@ public class CSPsolver {
         for (Domain domain : var.getDomains()) {
             var.assign(domain);
             // try to assign the next variable in the remain
-            if (MAC3Inference(var, remain)) {
-                if (cspDFS(remain)) {
+            LinkedList<Variable> snapshot = (LinkedList<Variable>) remain.clone();
+//            if (MAC3Inference(var, snapshot)) {
+            if (true) {
+                if (var.getId() == 20) {
+
+                    System.out.println("in " + var.getId() + ", " + var.domains.size());
+                    allRemainDomains(snapshot);
+                }
+                if (cspDFS(snapshot)) {
                     return true;  // solution found!
                 }
             }
@@ -55,6 +66,15 @@ public class CSPsolver {
         // not found, reset assignment and put variable back to remain
         undoAssignment(var, remain);
         return false;
+    }
+
+    protected void allRemainDomains(LinkedList<Variable> remain) {
+        int dcnt1 = 0, dcnt2 = 0;
+        for (Variable v : remain) {
+            dcnt1 += remainingDomains(v);
+            dcnt2 += v.domains.size();
+        }
+        System.out.println("domains: " + dcnt1 + " , " + dcnt2);
     }
 
     protected void undoAssignment(Variable var, LinkedList<Variable> remain) {
@@ -68,16 +88,36 @@ public class CSPsolver {
         Variable var = thisVar.snapshot();
         int backup = thisVar.getAssignment();
         LinkedList<Constraints.ArcPair> arcs = cons.getAdjArcs(var, remain);
+        for (Variable v : remain) updateDomains(v);
+
+//        int dcnt = 0;
+//        for (Variable v : remain){
+//            System.out.println("this d: " +  v.domains.size());
+//            dcnt += remainingDomains(v);
+//            dcnt += v.domains.size();
+//        }
+//            System.out.println("+++domains: " + dcnt);
 
         while (arcs != null && !arcs.isEmpty()) {
             Constraints.ArcPair arc = arcs.removeFirst();
+//            System.out.println("++domains: " + arc.first.domains.size());
             if (revise(arc.first, arc.second)) {
+                if (arc.first != var)
+                    System.out.println("shrink!!");
+//                System.out.println("--domains: " + arc.first.domains.size());
                 if (var.getDomains().isEmpty())
                     return false;
                 arcs.addAll(cons.getAdjArcsInvert(arc.first, arc.second, remain));
+
             }
         }
-        // recover properties of this variable
+//        dcnt = 0;
+//        for (Variable v : remain){
+//            System.out.println("this d: " +  v.domains.size());
+//            dcnt += remainingDomains(v);
+//        }
+//        System.out.println("---domains: " + dcnt);
+//        recover properties of this variable
         thisVar.assign(new Domain(backup));
         return true;
     }
@@ -99,8 +139,9 @@ public class CSPsolver {
 
     protected Variable pickMRV(LinkedList<Variable> remain) {
         Variable var = Collections.min(remain);
-        remain.remove(var);
-        return var;
+//        remain.remove(var);
+//        return var;
+        return remain.removeFirst();
     }
 
     protected void sortLCV(Variable var, LinkedList<Variable> remain) {
@@ -116,7 +157,7 @@ public class CSPsolver {
                 domain.h += remainingDomains(v);
         }
         var.undoAssign();
-        Collections.sort(var.getDomains());
+//        Collections.sort(var.getDomains());
     }
 
     protected int remainingDomains(Variable var) {
